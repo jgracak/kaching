@@ -17,7 +17,7 @@ import android.widget.TextView;
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
-	/**
+	/***
 	 * The serialization (saved instance state) Bundle key representing the
 	 * current tab position.
 	 */
