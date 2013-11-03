@@ -1,12 +1,18 @@
 package com.moneyapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.kaching.R;
+import com.moneyapp.database.*;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.app.Fragment;
+import android.app.ActionBar.Tab;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,18 +20,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class MainActivity extends FragmentActivity implements
+public class MainActivity extends Activity implements
 		ActionBar.TabListener {
 
-	/***
-	 * The serialization (saved instance state) Bundle key representing the
-	 * current tab position.
-	 */
-	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+	List<Fragment> fragList = new ArrayList<Fragment>();
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		//setContentView(R.layout.activity_main);
 
 		// Set up the action bar to show tabs.
 		final ActionBar actionBar = getActionBar();
@@ -40,22 +42,34 @@ public class MainActivity extends FragmentActivity implements
 				.setTabListener(this));
 		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.more_light)//.setText(R.string.title_section4)
 				.setTabListener(this));
-	}
-
-	@Override
-	public void onRestoreInstanceState(Bundle savedInstanceState) {
-		// Restore the previously serialized current tab position.
-		if (savedInstanceState.containsKey(STATE_SELECTED_NAVIGATION_ITEM)) {
-			getActionBar().setSelectedNavigationItem(
-					savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM));
-		}
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		// Serialize the current tab position.
-		outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar()
-				.getSelectedNavigationIndex());
+		
+        /**
+         * CRUD Operations
+         * */		
+        MoneyAppDatabaseHelper db = new MoneyAppDatabaseHelper(this);
+        
+        // Inserting Accounts
+        /*
+        Log.d("Insert: ", "Inserting .."); 
+        db.createAccount(new Account("Test",1,123,1,1));        
+        db.createAccount(new Account("Test2",1,155,1,1));   
+        db.createAccount(new Account("Test3",1,167,1,1));   
+        db.createAccount(new Account("Test4",1,178,1,1));   
+        */
+        
+        // Reading all accounts
+        Log.d("Reading: ", "Reading all accounts.."); 
+        List<Account> accounts = db.getAllAccounts();       
+         
+        for (Account account : accounts) {
+            String log = "Id: "+account.getId()+" ,Description: " + account.getDescription() + 
+            		" ,Book ID: " + account.getBookId() + " ,Starting balance: " + account.getStartingBalance() +
+            		" ,Exclude from balance: " + account.getExcludeFromBalance() + " ,Exclude from reports: " +
+            		account.getExcludeFromReports();
+                // Writing Accounts to log
+            
+            Log.d("Name: ", log);
+        }
 	}
 
 	@Override
@@ -68,52 +82,31 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public void onTabSelected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
-		// When the given tab is selected, show the tab contents in the
-		// container view.
-		Fragment fragment = new DummySectionFragment();
-		Bundle args = new Bundle();
-		args.putInt(DummySectionFragment.ARG_SECTION_NUMBER,
-				tab.getPosition() + 1);
-		fragment.setArguments(args);
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.container, fragment).commit();
+		Fragment f = null;
+		TabAccountFragment tf = null;
+		
+		if (fragList.size() > tab.getPosition())
+				fragList.get(tab.getPosition());
+		
+		tf = new TabAccountFragment();
+		Bundle data = new Bundle();
+		data.putInt("idx",  tab.getPosition());
+		tf.setArguments(data);
+		fragList.add(tf);
+		
+		fragmentTransaction.replace(android.R.id.content, tf);
 	}
 
 	@Override
 	public void onTabUnselected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
+		if (fragList.size() > tab.getPosition()) {
+			fragmentTransaction.remove(fragList.get(tab.getPosition()));;
+		}
 	}
 
 	@Override
 	public void onTabReselected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
 	}
-
-	/**
-	 * A dummy fragment representing a section of the app, but that simply
-	 * displays dummy text.
-	 */
-	public static class DummySectionFragment extends Fragment {
-		/**
-		 * The fragment argument representing the section number for this
-		 * fragment.
-		 */
-		public static final String ARG_SECTION_NUMBER = "section_number";
-
-		public DummySectionFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			// Create a new TextView and set its text to the fragment's section
-			// number argument value.
-			TextView textView = new TextView(getActivity());
-			textView.setGravity(Gravity.CENTER);
-			textView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
-			return textView;
-		}
-	}
-
 }
