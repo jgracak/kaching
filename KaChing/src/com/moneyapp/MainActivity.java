@@ -11,7 +11,6 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.app.ActionBar.Tab;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,10 +23,11 @@ public class MainActivity extends Activity implements
 		ActionBar.TabListener {
 
 	List<Fragment> fragList = new ArrayList<Fragment>();
+    private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_main);
 
 		// Set up the action bar to show tabs.
 		final ActionBar actionBar = getActionBar();
@@ -46,16 +46,16 @@ public class MainActivity extends Activity implements
         /**
          * CRUD Operations
          * */		
-        MoneyAppDatabaseHelper db = new MoneyAppDatabaseHelper(this);
+        MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(this);
         
         // Inserting Accounts
-        /*
-        Log.d("Insert: ", "Inserting .."); 
-        db.createAccount(new Account("Test",1,123,1,1));        
-        db.createAccount(new Account("Test2",1,155,1,1));   
-        db.createAccount(new Account("Test3",1,167,1,1));   
-        db.createAccount(new Account("Test4",1,178,1,1));   
-        */
+        
+        //Log.d("Insert: ", "Inserting .."); 
+        //db.createAccount(new Account("Test",1,123,1,1));        
+        //db.createAccount(new Account("Test2",1,155,1,1));   
+        //db.createAccount(new Account("Test3",1,167,1,1));   
+        //db.createAccount(new Account("Test4",1,-178,1,1));   
+        
         
         // Reading all accounts
         Log.d("Reading: ", "Reading all accounts.."); 
@@ -72,6 +72,19 @@ public class MainActivity extends Activity implements
         }
 	}
 
+	
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState.containsKey(STATE_SELECTED_NAVIGATION_ITEM)) {
+            getActionBar().setSelectedNavigationItem(savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM));
+        }
+    }
+    
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar().getSelectedNavigationIndex());
+    }
+    
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -82,6 +95,8 @@ public class MainActivity extends Activity implements
 	@Override
 	public void onTabSelected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
+		// OLD code, fragList is used for some reason
+		/* 
 		Fragment f = null;
 		TabAccountFragment tf = null;
 		
@@ -95,11 +110,42 @@ public class MainActivity extends Activity implements
 		fragList.add(tf);
 		
 		fragmentTransaction.replace(android.R.id.content, tf);
+		*/
+        
+    	if (tab.getPosition() == 0) {   
+            Fragment fragment = new DummySectionFragment();
+            Bundle args = new Bundle();
+            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+            fragment.setArguments(args);
+    		fragmentTransaction.replace(android.R.id.content, fragment);
+    	} 
+    	else if (tab.getPosition() == 1) {    		
+            Fragment fragment = new TabAccountListFragment();
+            Bundle args = new Bundle();
+            args.putInt("idx", tab.getPosition() + 1);
+            fragment.setArguments(args);
+    		fragmentTransaction.replace(android.R.id.content, fragment);
+		}
+    	else if (tab.getPosition() == 2)
+    	{
+            Fragment fragment = new DummySectionFragment();
+            Bundle args = new Bundle();
+            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+            fragment.setArguments(args);
+    		fragmentTransaction.replace(android.R.id.content, fragment);
+    	}
+    	else {  		
+            Fragment fragment = new DummySectionFragment();
+            Bundle args = new Bundle();
+            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+            fragment.setArguments(args);
+    		fragmentTransaction.replace(android.R.id.content, fragment);
+    	}
 	}
 
 	@Override
 	public void onTabUnselected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
+			FragmentTransaction fragmentTransaction) {	
 		if (fragList.size() > tab.getPosition()) {
 			fragmentTransaction.remove(fragList.get(tab.getPosition()));;
 		}
@@ -109,4 +155,24 @@ public class MainActivity extends Activity implements
 	public void onTabReselected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
 	}
+	
+    /**
+     * A dummy fragment representing a section of the app, but that simply displays dummy text.
+     */
+    public static class DummySectionFragment extends Fragment {
+        public DummySectionFragment() {
+        }
+
+        public static final String ARG_SECTION_NUMBER = "section_number";
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+            TextView textView = new TextView(getActivity());
+            textView.setGravity(Gravity.CENTER);
+            Bundle args = getArguments();
+            textView.setText(Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
+            return textView;
+        }
+    }
 }

@@ -11,6 +11,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class MoneyAppDatabaseHelper extends SQLiteOpenHelper { 
+	
+	private static MoneyAppDatabaseHelper sInstance = null;
+	
 	// Logcat tag
     private static final String LOG = "MoneyAppDatabaseHelper";
  
@@ -46,10 +49,25 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	        + COLUMN_EXCLUDEFROMREPORTS + " boolean not null"
 	        + ");";
  
+    public static MoneyAppDatabaseHelper getInstance(Context context) {
+        
+        // Use the application context, which will ensure that you 
+        // don't accidentally leak an Activity's context.
+        // See this article for more information: http://bit.ly/6LRzfx
+        if (sInstance == null) {
+          sInstance = new MoneyAppDatabaseHelper(context.getApplicationContext());
+        }
+        return sInstance;
+      }
+         
 	public MoneyAppDatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
- 
+
+	public MoneyAppDatabaseHelper() {
+		super(null, DATABASE_NAME, null, DATABASE_VERSION);
+	}
+	
 	// Method is called during creation of the database
     @Override
     public void onCreate(SQLiteDatabase db) {
