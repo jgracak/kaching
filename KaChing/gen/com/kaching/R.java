@@ -8,6 +8,9 @@
 package com.kaching;
 
 public final class R {
+    public static final class array {
+        public static final int account_types=0x7f060000;
+    }
     public static final class attr {
     }
     public static final class color {
@@ -155,40 +158,72 @@ public final class R {
     public static final class drawable {
         public static final int accounts=0x7f020000;
         public static final int accounts_light=0x7f020001;
-        public static final int budgets=0x7f020002;
-        public static final int budgets_light=0x7f020003;
-        public static final int ic_accounts=0x7f020004;
-        public static final int ic_budgets=0x7f020005;
-        public static final int ic_launcher=0x7f020006;
-        public static final int ic_more=0x7f020007;
-        public static final int ic_transactions=0x7f020008;
-        public static final int more=0x7f020009;
-        public static final int more_light=0x7f02000a;
-        public static final int reminder=0x7f02000b;
-        public static final int transactions=0x7f02000c;
-        public static final int transactions_light=0x7f02000d;
+        public static final int bank=0x7f020002;
+        public static final int budgets=0x7f020003;
+        public static final int budgets_light=0x7f020004;
+        public static final int cash=0x7f020005;
+        public static final int credit_card=0x7f020006;
+        public static final int ic_accounts=0x7f020007;
+        public static final int ic_budgets=0x7f020008;
+        public static final int ic_launcher=0x7f020009;
+        public static final int ic_more=0x7f02000a;
+        public static final int ic_transactions=0x7f02000b;
+        public static final int more=0x7f02000c;
+        public static final int more_light=0x7f02000d;
+        public static final int plus=0x7f02000e;
+        public static final int reminder=0x7f02000f;
+        public static final int transactions=0x7f020010;
+        public static final int transactions_light=0x7f020011;
     }
     public static final class id {
-        public static final int account_balance=0x7f080001;
-        public static final int account_description=0x7f080000;
-        public static final int container=0x7f080002;
-        public static final int menu_settings=0x7f080003;
+        public static final int accountBalance=0x7f090004;
+        public static final int accountBalanceNew=0x7f090005;
+        public static final int accountIncludeInBalance=0x7f090006;
+        public static final int accountIncludeInBalanceCheck=0x7f090007;
+        public static final int accountIncludeInReports=0x7f090008;
+        public static final int accountIncludeInReportsCheck=0x7f090009;
+        public static final int accountName=0x7f090000;
+        public static final int accountNameEdit=0x7f09000c;
+        public static final int accountNameEditNew=0x7f09000d;
+        public static final int accountNameNew=0x7f090001;
+        public static final int accountType=0x7f090002;
+        public static final int accountTypeChoice=0x7f090003;
+        public static final int account_balance=0x7f090010;
+        public static final int account_description=0x7f09000f;
+        public static final int account_image=0x7f09000e;
+        public static final int buttonCancel=0x7f09000b;
+        public static final int buttonSave=0x7f09000a;
+        public static final int container=0x7f090011;
+        public static final int menu_settings=0x7f090012;
     }
     public static final class layout {
-        public static final int account_fragment=0x7f030000;
-        public static final int account_list_item=0x7f030001;
-        public static final int activity_main=0x7f030002;
+        public static final int account_add=0x7f030000;
+        public static final int account_edit=0x7f030001;
+        public static final int account_fragment=0x7f030002;
+        public static final int account_list_item=0x7f030003;
+        public static final int activity_main=0x7f030004;
     }
     public static final class menu {
-        public static final int activity_main=0x7f070000;
+        public static final int activity_main=0x7f080000;
     }
     public static final class string {
+        public static final int account_add=0x7f050013;
+        public static final int account_balance=0x7f050015;
+        public static final int account_cancel=0x7f050019;
         public static final int account_description=0x7f05000d;
         public static final int account_edit_confirm=0x7f050010;
         public static final int account_edit_description=0x7f05000f;
         public static final int account_edit_summary=0x7f05000e;
+        public static final int account_icon=0x7f050012;
+        public static final int account_include_balance=0x7f050016;
+        public static final int account_include_reports=0x7f050017;
+        public static final int account_name=0x7f050014;
+        public static final int account_name_blank=0x7f05001c;
         public static final int account_row=0x7f050011;
+        public static final int account_save=0x7f050018;
         public static final int account_summary=0x7f05000c;
+        public static final int account_type=0x7f05001a;
+        public static final int account_type_prompt=0x7f05001b;
         public static final int app_name=0x7f050000;
         public static final int hello_world=0x7f050005;
         public static final int menu_delete=0x7f05000b;
@@ -224,10 +259,12 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f060000;
+        public static final int AppBaseTheme=0x7f070000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f060001;
+        public static final int AppTheme=0x7f070001;
+        public static final int MyAppCompatDialogTheme=0x7f070002;
+        public static final int PopupTheme=0x7f070003;
     }
 }

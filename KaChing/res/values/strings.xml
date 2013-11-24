@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">KaChing</string>
     <string name="no_accounts">No accounts are set.</string>
     <string name="title_section3">B</string>
@@ -19,5 +18,21 @@
   	<string name="account_edit_description">Description</string>
   	<string name="account_edit_confirm">Confirm</string>
   	<string name="account_row">Account</string>	
-  		
+  	<string name="account_icon">Account icon</string>
+  	<string name="account_add">Add a new account&#8230;</string>	
+  	<string name="account_name">Name</string>
+  	<string name="account_balance">Initial Balance</string>
+  	<string name="account_include_balance">Include in Balance</string>
+  	<string name="account_include_reports">Include in Reports</string>
+  	<string name="account_save">Save</string>
+  	<string name="account_cancel">Cancel</string>
+  	<string name="account_type">Type</string>
+  	<string name="account_type_prompt">Choose a type</string>
+  	<string name="account_name_blank">Please enter a name for the account.</string>
+  	
+  	<string-array name="account_types">
+        <item>Cash</item>
+        <item>Bank</item>
+        <item>Credit Card</item>
+    </string-array>
 </resources>

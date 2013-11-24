@@ -31,10 +31,11 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
  
     // ACCOUNTS Table - column names
     public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_TYPE = "type";    
     public static final String COLUMN_BOOKID = "bookid";
     public static final String COLUMN_STARTINGBALANCE = "startingbalance";
-    public static final String COLUMN_EXCLUDEFROMBALANCE = "excludefrombalance";
-    public static final String COLUMN_EXCLUDEFROMREPORTS = "excludefromreports";	
+    public static final String COLUMN_INCLUDEINBALANCE = "excludefrombalance";
+    public static final String COLUMN_INCLUDEINREPORTS = "excludefromreports";	
  
     // Table Create Statements
     // Account table create statement
@@ -42,11 +43,12 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
     		+ TABLE_ACCOUNT
 	        + "(" 
 	        + COLUMN_ID + " integer primary key autoincrement, " 
-	        + COLUMN_DESCRIPTION + " text not null, " 
+	        + COLUMN_DESCRIPTION + " text not null," 
+	        + COLUMN_TYPE + " integer not null,"
 	        + COLUMN_BOOKID + " integer not null," 
 	        + COLUMN_STARTINGBALANCE + " real not null,"
-	        + COLUMN_EXCLUDEFROMBALANCE + " boolean not null,"
-	        + COLUMN_EXCLUDEFROMREPORTS + " boolean not null"
+	        + COLUMN_INCLUDEINBALANCE + " boolean not null,"
+	        + COLUMN_INCLUDEINREPORTS + " boolean not null"
 	        + ");";
  
     public static MoneyAppDatabaseHelper getInstance(Context context) {
@@ -96,10 +98,11 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	 
 	    ContentValues values = new ContentValues();
 	    values.put(COLUMN_DESCRIPTION, account.getDescription());
+	    values.put(COLUMN_TYPE, account.getType()); 
 	    values.put(COLUMN_BOOKID, account.getBookId());
 	    values.put(COLUMN_STARTINGBALANCE, account.getStartingBalance());
-	    values.put(COLUMN_EXCLUDEFROMBALANCE, account.getExcludeFromBalance());
-	    values.put(COLUMN_EXCLUDEFROMREPORTS, account.getExcludeFromReports());
+	    values.put(COLUMN_INCLUDEINBALANCE, account.getExcludeFromBalance());
+	    values.put(COLUMN_INCLUDEINREPORTS, account.getExcludeFromReports());
 	 
 	    // insert row
 	    long account_id = db.insert(TABLE_ACCOUNT, null, values);
@@ -113,16 +116,16 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 	 
 	    Cursor cursor = db.query(TABLE_ACCOUNT, new String[] { COLUMN_ID,
-	            COLUMN_DESCRIPTION, COLUMN_BOOKID, COLUMN_STARTINGBALANCE,
-	            COLUMN_EXCLUDEFROMBALANCE, COLUMN_EXCLUDEFROMREPORTS}, COLUMN_ID + "=?",
+	            COLUMN_DESCRIPTION, COLUMN_TYPE, COLUMN_BOOKID, COLUMN_STARTINGBALANCE,
+	            COLUMN_INCLUDEINBALANCE, COLUMN_INCLUDEINREPORTS}, COLUMN_ID + "=?",
 	            new String[] { String.valueOf(id) }, null, null, null, null);
 	    if (cursor != null)
 	        cursor.moveToFirst();
 	 
 	    Account account = new Account(Integer.parseInt(cursor.getString(0)),
-	            cursor.getString(1), Integer.parseInt(cursor.getString(2)),
-	            Float.parseFloat(cursor.getString(3)), Integer.parseInt(cursor.getString(4)),
-	            Integer.parseInt(cursor.getString(5)));
+	            cursor.getString(1), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)),
+	            Float.parseFloat(cursor.getString(4)), Integer.parseInt(cursor.getString(5)),
+	            Integer.parseInt(cursor.getString(6)));
 	    
 	    // return contact
 	    return account;
@@ -143,9 +146,11 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	            Account account = new Account();
 	            account.setId(Integer.parseInt(cursor.getString(0)));
 	            account.setDescription(cursor.getString(1));
-	            account.setStartingBalance(Float.parseFloat(cursor.getString(3)));
-	            account.setExcludeFromBalance(Integer.parseInt(cursor.getString(4)));
-	            account.setExcludeFromReports(Integer.parseInt(cursor.getString(5)));
+	            account.setType(Integer.parseInt(cursor.getString(2)));
+	            account.setBookId(Integer.parseInt(cursor.getString(3)));	            
+	            account.setStartingBalance(Float.parseFloat(cursor.getString(4)));
+	            account.setExcludeFromBalance(Integer.parseInt(cursor.getString(5)));
+	            account.setExcludeFromReports(Integer.parseInt(cursor.getString(6)));
 	            
 	            // Adding contact to list
 	            contactList.add(account);
@@ -173,10 +178,11 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	 
 	    ContentValues values = new ContentValues();
 	    values.put(COLUMN_DESCRIPTION, account.getDescription());
+	    values.put(COLUMN_TYPE, account.getType());	    
 	    values.put(COLUMN_BOOKID, account.getBookId());
 	    values.put(COLUMN_STARTINGBALANCE, account.getStartingBalance());
-	    values.put(COLUMN_EXCLUDEFROMBALANCE, account.getExcludeFromBalance());
-	    values.put(COLUMN_EXCLUDEFROMREPORTS, account.getExcludeFromReports());
+	    values.put(COLUMN_INCLUDEINBALANCE, account.getExcludeFromBalance());
+	    values.put(COLUMN_INCLUDEINREPORTS, account.getExcludeFromReports());
 	 
 	    // updating row
 	    return db.update(TABLE_ACCOUNT, values, COLUMN_ID + " = ?",

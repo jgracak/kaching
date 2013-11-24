@@ -51,10 +51,10 @@ public class MainActivity extends Activity implements
         // Inserting Accounts
         
         //Log.d("Insert: ", "Inserting .."); 
-        //db.createAccount(new Account("Test",1,123,1,1));        
-        //db.createAccount(new Account("Test2",1,155,1,1));   
-        //db.createAccount(new Account("Test3",1,167,1,1));   
-        //db.createAccount(new Account("Test4",1,-178,1,1));   
+        //db.createAccount(new Account("Test",1,1,123,1,1));        
+        //db.createAccount(new Account("Test2",2,1,155,1,1));   
+        //db.createAccount(new Account("Test3",3,1,167,1,1));   
+        //db.createAccount(new Account("Test4",1,1,-178,1,1));   
         
         
         // Reading all accounts
@@ -62,9 +62,9 @@ public class MainActivity extends Activity implements
         List<Account> accounts = db.getAllAccounts();       
          
         for (Account account : accounts) {
-            String log = "Id: "+account.getId()+" ,Description: " + account.getDescription() + 
-            		" ,Book ID: " + account.getBookId() + " ,Starting balance: " + account.getStartingBalance() +
-            		" ,Exclude from balance: " + account.getExcludeFromBalance() + " ,Exclude from reports: " +
+            String log = "Id: "+account.getId()+"| Description: " + account.getDescription() + "| Type: " + account.getType() +
+            		"| Book ID: " + account.getBookId() + "| Starting balance: " + account.getStartingBalance() +
+            		"| Exclude from balance: " + account.getExcludeFromBalance() + "| Exclude from reports: " +
             		account.getExcludeFromReports();
                 // Writing Accounts to log
             

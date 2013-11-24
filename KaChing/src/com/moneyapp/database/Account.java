@@ -3,6 +3,7 @@ package com.moneyapp.database;
 public class Account {
     int id;
     String description;
+    int type;
     int book_id;
     float starting_balance;
     int exclude_from_balance;
@@ -12,19 +13,21 @@ public class Account {
     public Account() {
     }
  
-    public Account(String description, int book_id,float starting_balance,
+    public Account(String description,int type, int book_id,float starting_balance,
     		int exclude_from_balance, int exclude_from_reports) {
         this.description = description;
+        this.type = type;
         this.book_id = book_id;
         this.starting_balance = starting_balance;
         this.exclude_from_balance = exclude_from_balance;
         this.exclude_from_reports = exclude_from_reports;
     }
  
-    public Account(int id, String description, int book_id,float starting_balance,
+    public Account(int id, String description,int type, int book_id,float starting_balance,
     		int exclude_from_balance, int exclude_from_reports) {
         this.id = id;
         this.description = description;
+        this.type = type;
         this.book_id = book_id;
         this.starting_balance = starting_balance;
         this.exclude_from_balance = exclude_from_balance;
@@ -38,6 +41,10 @@ public class Account {
  
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public void setType(int type) {
+    	this.type = type;
     }
  
     public void setBookId(int book_id) {
@@ -57,12 +64,16 @@ public class Account {
     }
     
     // getters
-    public long getId() {
+    public int getId() {
         return this.id;
     }
  
     public String getDescription() {
         return this.description;
+    }
+    
+    public int getType() {
+    	return this.type;
     }
  
     public int getBookId() {

@@ -22,5 +22,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:label="New Account"
+            android:name="com.moneyapp.AccountAddActivity" 
+            android:theme="@android:style/Theme.Dialog"
+            android:excludeFromRecents="true">
+        </activity>
+        <activity            
+            android:label="Edit Account"
+            android:name="com.moneyapp.AccountEditActivity" 
+            android:theme="@android:style/Theme.Dialog"
+            android:excludeFromRecents="true">
+        </activity>
     </application>
 </manifest>
