@@ -20,4 +20,99 @@
 	    android:layout_below="@+id/accountNameEdit"
 	    android:ems="10"
 	    android:inputType="textCapWords" />
+	
+	<TextView
+        android:id="@+id/accountTypeEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"        
+        android:text="@string/account_type"
+	    android:layout_below="@+id/accountNameEditNew"        
+        android:textAppearance="?android:attr/textAppearanceLarge"/>	
+        
+    <Spinner
+        android:id="@+id/accountTypeChoiceEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+	    android:layout_below="@+id/accountTypeEdit"            
+        android:entries="@array/account_types"
+        android:prompt="@string/account_type_prompt" />	
+        
+	<TextView
+        android:id="@+id/accountBalanceEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/account_balance"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/accountTypeChoiceEdit" />
+	
+	<EditText
+	    android:id="@+id/accountBalanceNewEdit"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/accountBalanceEdit"
+	    android:ems="10"
+	    android:inputType="number|numberDecimal|numberSigned" /> 
+
+	<TextView
+        android:id="@+id/accountIncludeInBalanceEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/accountBalanceNewEdit"
+        android:layout_marginTop="14dp"
+        android:text="@string/account_include_balance"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <CheckBox
+        android:id="@+id/accountIncludeInBalanceCheckEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/accountIncludeInBalanceEdit"
+        android:layout_alignBottom="@+id/accountIncludeInBalanceEdit"
+        android:layout_alignRight="@+id/accountBalanceNewEdit"
+        android:checked="true" />	       
+
+	<TextView
+        android:id="@+id/accountIncludeInReportsEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/accountIncludeInBalanceEdit"
+        android:layout_marginTop="14dp"
+        android:text="@string/account_include_reports"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <CheckBox
+        android:id="@+id/accountIncludeInReportsCheckEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/accountIncludeInReportsEdit"
+        android:layout_alignBottom="@+id/accountIncludeInReportsEdit"
+        android:layout_alignRight="@+id/accountBalanceNewEdit"
+        android:checked="true" />
+    
+     <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/account_save"
+        android:layout_below="@+id/accountIncludeInReportsEdit" />
+
+     <Button
+         android:id="@+id/buttonDelete"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/accountIncludeInReportsCheckEdit"
+         android:layout_toRightOf="@+id/buttonSave"
+         android:text="@string/account_delete" />    
+         
+     <Button
+         android:id="@+id/buttonCancel"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/accountIncludeInReportsCheckEdit"
+         android:layout_toRightOf="@+id/buttonDelete"
+         android:text="@string/account_cancel" />    
 </RelativeLayout>

@@ -12,6 +12,10 @@ public class Account {
     // constructors
     public Account() {
     }
+    
+    public Account(int id){
+    	this.id = id;
+    }
  
     public Account(String description,int type, int book_id,float starting_balance,
     		int exclude_from_balance, int exclude_from_reports) {
