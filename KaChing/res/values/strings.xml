@@ -43,12 +43,18 @@
     
   	<!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
-        <item >Transactions</item>
+        <item >Entries</item>
         <item >Accounts</item>
+        <item >Loans</item>
+        <item >Recurring entries</item>
         <item >Reports</item>
+        <item >Savings</item>       
         <item >Budgets</item>
-        <item >Pages</item>
-        <item >What\'s Hot</item>        
+        <item >Projects</item>     
+        <item >Forecast</item>    
+        <item >Categories</item>
+        <item >Database</item>
+        <item >Settings</item>                       
     </string-array>
     
     <!-- Nav Drawer List Item Icons -->
@@ -60,6 +66,12 @@
         <item>@drawable/ic_communities</item>
         <item>@drawable/ic_pages</item>
         <item>@drawable/ic_whats_hot</item>     
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_people</item>
+        <item>@drawable/ic_photos</item>
+        <item>@drawable/ic_communities</item>
+        <item>@drawable/ic_pages</item>
+        <item>@drawable/ic_whats_hot</item>            
     </array>
      
     <!-- Content Description -->

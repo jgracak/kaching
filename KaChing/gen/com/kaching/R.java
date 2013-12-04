@@ -161,6 +161,12 @@ public final class R {
         public static final int WhiteSmoke=0x7f040026;
         public static final int Yellow=0x7f040003;
         public static final int YellowGreen=0x7f040050;
+        public static final int counter_text_bg=0x7f040090;
+        public static final int counter_text_color=0x7f040091;
+        public static final int list_background=0x7f04008d;
+        public static final int list_background_pressed=0x7f04008e;
+        public static final int list_divider=0x7f04008f;
+        public static final int list_item_title=0x7f04008c;
     }
     public static final class drawable {
         public static final int accounts=0x7f020000;
