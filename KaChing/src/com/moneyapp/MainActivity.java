@@ -11,20 +11,17 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.text.format.Time;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -163,7 +160,6 @@ public class MainActivity extends Activity {
         	fragment = new TabAccountListFragment();
             break;
         case 2:
-            
             break;
         case 3:
             
@@ -184,7 +180,7 @@ public class MainActivity extends Activity {
             
             break;
         case 9:
-            
+        	fragment = new CategoriesFragment();
             break;
         case 10:
             
@@ -215,13 +211,7 @@ public class MainActivity extends Activity {
 	public void insertDummyData(){
 		MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(this);
 		
-		/*
-		if (db.getAccountsCount() > 0) {
-			return;
-		}
-		*/
-		
-		db.onUpgrade(null, 1, 1);
+		db.onUpgrade(db.getWritableDatabase(), 1, 1);
 		
 		// Inserting Accounts
 		Log.d("Insert: ", "Inserting .."); 
@@ -249,10 +239,23 @@ public class MainActivity extends Activity {
 		Time time = new Time();
 		time.setToNow();
 		
-        db.createTransaction(new Transaction(time,1,120,"test1",1));        
-        db.createTransaction(new Transaction(time,1,50,"test2",1));     
-        db.createTransaction(new Transaction(time,1,1,"test3",1));     
-        db.createTransaction(new Transaction(time,1,2,"test4",1));             
+        db.createTransaction(new Transaction(time,1,-120,"test1",1));     
+        time.month += 1;       
+        db.createTransaction(new Transaction(time,2,-50,"test2",2));  
+        time.month -= 5;
+        db.createTransaction(new Transaction(time,3,-1,"test3",3));    
+        time.monthDay += 2;
+        db.createTransaction(new Transaction(time,4,-2,"test4",4));             
+        time.monthDay += 5;
+        db.createTransaction(new Transaction(time,5,-155,null,1));  
+        time.monthDay += 3;
+        db.createTransaction(new Transaction(time,6,-76,null,2));  
+        time.monthDay += 1;
+        db.createTransaction(new Transaction(time,7,-23,null,3));  
+        time.monthDay += 3;
+        db.createTransaction(new Transaction(time,8,-76,null,2));  
+        time.monthDay += 1;
+        db.createTransaction(new Transaction(time,9,2000,null,3));  
         
         // Reading all transaction
         Log.d("Reading: ", "Reading all transactions.."); 

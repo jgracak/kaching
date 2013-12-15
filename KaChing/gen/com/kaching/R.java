@@ -231,8 +231,13 @@ public final class R {
         public static final int frame_container=0x7f09001b;
         public static final int icon=0x7f09001d;
         public static final int list_slidermenu=0x7f09001c;
-        public static final int menu_settings=0x7f090021;
+        public static final int menu_settings=0x7f090026;
         public static final int title=0x7f09001e;
+        public static final int transaction_accTxt=0x7f090025;
+        public static final int transaction_amount=0x7f090023;
+        public static final int transaction_catImg=0x7f090021;
+        public static final int transaction_catTxt=0x7f090022;
+        public static final int transaction_subCatTxt=0x7f090024;
         public static final int txtLabel=0x7f090020;
     }
     public static final class layout {
@@ -242,7 +247,9 @@ public final class R {
         public static final int account_list_item=0x7f030003;
         public static final int activity_main=0x7f030004;
         public static final int drawer_list_item=0x7f030005;
-        public static final int fragment_home=0x7f030006;
+        public static final int fragment_categories=0x7f030006;
+        public static final int fragment_transaction=0x7f030007;
+        public static final int transaction_list_item=0x7f030008;
     }
     public static final class menu {
         public static final int activity_main=0x7f080000;
@@ -268,9 +275,14 @@ public final class R {
         public static final int account_type_prompt=0x7f05001b;
         public static final int action_settings=0x7f05001e;
         public static final int app_name=0x7f050000;
+        /**  Category names 
+         */
+        public static final int category1=0x7f050021;
+        public static final int category2=0x7f050022;
+        public static final int category3=0x7f050023;
         /**  Content Description 
          */
-        public static final int desc_list_item_icon=0x7f050021;
+        public static final int desc_list_item_icon=0x7f05002a;
         public static final int drawer_close=0x7f050020;
         public static final int drawer_open=0x7f05001f;
         public static final int hello_world=0x7f050005;
@@ -278,6 +290,17 @@ public final class R {
         public static final int menu_insert=0x7f05000a;
         public static final int menu_settings=0x7f050006;
         public static final int no_accounts=0x7f050001;
+        /**  Subcategory names 
+ Food 
+         */
+        public static final int subCategory1=0x7f050024;
+        public static final int subCategory2=0x7f050025;
+        public static final int subCategory3=0x7f050026;
+        /**  Home 
+         */
+        public static final int subCategory4=0x7f050027;
+        public static final int subCategory5=0x7f050028;
+        public static final int subCategory6=0x7f050029;
         public static final int title_activity_accounts=0x7f050008;
         public static final int title_activity_transaction=0x7f050007;
         public static final int title_section1=0x7f050004;

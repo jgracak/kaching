@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.kaching.R;
+import com.moneyapp.App;
+
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -28,6 +32,8 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
     // Table Names
     private static final String TABLE_ACCOUNTS = "Accounts";
     private static final String TABLE_TRANSACTIONS = "Transactions";
+    private static final String TABLE_IMAGES = "Images";
+    private static final String TABLE_CATEGORIES = "Categories";    
  
     // Common column names
     private static final String COLUMN_ID = "_id";
@@ -47,9 +53,20 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NOTE = "note";
     public static final String COLUMN_IDACCOUNT = "idAccount";
  
+    // IMAGES Table - column names
+    public static final String COLUMN_IMAGE = "image";
+    
+    // CATEGORIES Table - column names
+    public static final String COLUMN_IDIMAGE = "idImage";
+    public static final String COLUMN_IDCAT = "IdCat";   
+    public static final String COLUMN_CATDESC = "catDesc";   
+    public static final String COLUMN_IDSUBCAT = "idSubCat";      
+    public static final String COLUMN_SUBCATDESC = "subCatDesc";     
+    public static final String COLUMN_CATTYPE = "type";
+    
     // Table Create Statements
-    // Account table create statement
-    private static final String CREATE_TABLE_ACCOUNT = "create table " 
+    // Accounts table create statement
+    private static final String CREATE_TABLE_ACCOUNTS = "create table " 
     		+ TABLE_ACCOUNTS
 	        + "(" 
 	        + COLUMN_ID + " integer primary key autoincrement, " 
@@ -61,7 +78,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	        + COLUMN_INCLUDEINREPORTS + " boolean not null"
 	        + ");";
  
-    // Transaction table create statement
+    // Transactions table create statement
     private static final String CREATE_TABLE_TRANSACTIONS = "create table " 
     		+ TABLE_TRANSACTIONS
 	        + "(" 
@@ -69,9 +86,30 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	        + COLUMN_TRANSDATE + " integer not null," 
 	        + COLUMN_IDCATEGORY + " integer not null,"
 	        + COLUMN_AMOUNT + " real not null," 
-	        + COLUMN_NOTE + " text not null,"
+	        + COLUMN_NOTE + " text,"
 	        + COLUMN_IDACCOUNT + " integer not null"
 	        + ");";
+    
+    // Images table create statement
+    private static final String CREATE_TABLE_IMAGES = "create table "
+    		+ TABLE_IMAGES
+	        + "(" 
+	        + COLUMN_ID + " integer primary key autoincrement, " 
+	        + COLUMN_IMAGE + " integer not null" 
+	        + ");";   
+ 
+    // Categories table create statement
+    private static final String CREATE_TABLE_CATEGORIES = "create table "
+    		+ TABLE_CATEGORIES
+	        + "(" 
+	        + COLUMN_ID + " integer primary key autoincrement, " 
+	        + COLUMN_IDIMAGE + " integer not null, " 
+	        + COLUMN_IDCAT + " integer not null, "
+	        + COLUMN_CATDESC + " text not null, "
+	        + COLUMN_IDSUBCAT + " integer, "
+	        + COLUMN_SUBCATDESC + " text, "
+	        + COLUMN_CATTYPE + " integer not null"
+	        + ");";  
     
     public static MoneyAppDatabaseHelper getInstance(Context context) {
         
@@ -97,16 +135,22 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
     	
         // creating required tables
-        db.execSQL(CREATE_TABLE_ACCOUNT);
+        db.execSQL(CREATE_TABLE_ACCOUNTS);
         db.execSQL(CREATE_TABLE_TRANSACTIONS);
+        db.execSQL(CREATE_TABLE_IMAGES);
+        db.execSQL(CREATE_TABLE_CATEGORIES);
+        
+        insertAllImages(db);
+        insertAllCategories(db);
     }
- 
+
 	// Method is called during an upgrade of the database,
 	// e.g. if you increase the database version
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Place code for upgrading tables here eg. new columns or droping tables 
     	//on upgrade drop older tables
+    	
     	if (db == null) {
     		db = this.getWritableDatabase();
     	}
@@ -115,6 +159,8 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
                 + ", which will destroy all old data");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACCOUNTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRANSACTIONS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORIES);
         
         // create new tables
         onCreate(db);
@@ -148,16 +194,21 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	            COLUMN_DESCRIPTION, COLUMN_TYPE, COLUMN_BOOKID, COLUMN_STARTINGBALANCE,
 	            COLUMN_INCLUDEINBALANCE, COLUMN_INCLUDEINREPORTS}, COLUMN_ID + "=?",
 	            new String[] { String.valueOf(id) }, null, null, null, null);
-	    if (cursor != null)
-	        cursor.moveToFirst();
-	 
-	    Account account = new Account(Integer.parseInt(cursor.getString(0)),
-	            cursor.getString(1), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)),
-	            Float.parseFloat(cursor.getString(4)), Integer.parseInt(cursor.getString(5)),
-	            Integer.parseInt(cursor.getString(6)));
 	    
-	    // return account
-	    return account;
+	    if (cursor != null) {
+	    	cursor.moveToFirst();
+	    	
+		    Account account = new Account(Integer.parseInt(cursor.getString(0)),
+		            cursor.getString(1), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)),
+		            Float.parseFloat(cursor.getString(4)), Integer.parseInt(cursor.getString(5)),
+		            Integer.parseInt(cursor.getString(6)));
+		    
+		    // return account
+		    return account;
+	    }
+	    else {
+	    	return null;
+	    }
 	}
 	
     // Getting all accounts
@@ -334,6 +385,294 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	            new String[] { String.valueOf(transaction.getId()) });
 	    db.close();
 	}	
+	
+	// Images table methods
+	// Creating an image
+	public long createImage(Image image) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+	    ContentValues values = new ContentValues();
+	    
+	    values.put(COLUMN_IMAGE, image.getImage());	    
+	 
+	    // insert row
+	    long transaction_id = db.insert(TABLE_IMAGES, null, values);
+	    db.close(); // Closing database connection
+	    
+	    return transaction_id;
+	}	
+	
+	// Getting a single image based on id
+	public Image getImage(int id) {
+		SQLiteDatabase db = this.getReadableDatabase();
+	 
+	    Cursor cursor = db.query(TABLE_IMAGES, new String[] { COLUMN_ID,
+	    		COLUMN_IMAGE}, COLUMN_ID + "=?",
+	            new String[] { String.valueOf(id) }, null, null, null, null);
+	    if (cursor != null)
+	        cursor.moveToFirst();
+	 
+	    Image image = new Image(cursor.getInt(0),cursor.getInt(1));
+	    
+	    // return image
+	    return image;
+	}
+
+	// Getting all images
+	public List<Image> getAllImages() {
+	    List<Image> imageList = new ArrayList<Image>();
+	    // Select All Query
+	    String selectQuery = "SELECT  * FROM " + TABLE_IMAGES;
+	 
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	 
+	    // looping through all rows and adding to list
+	    if (cursor.moveToFirst()) {
+	        do {
+	        	Image image = new Image();
+	        	image.setId(cursor.getInt(0));
+	        	image.setImage(cursor.getInt(1));
+	            
+	            // Adding image to list
+	        	imageList.add(image);
+	        } while (cursor.moveToNext());
+	    }
+	 
+	    // return image list
+	    return imageList;
+	}
+
+	// Getting images count
+    public int getImagesCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_IMAGES;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        // return count
+        return count;
+    }		
+
+    // Updating single image
+	public int updateImage(Image image) {
+	    SQLiteDatabase db = this.getWritableDatabase();
+		
+	    ContentValues values = new ContentValues();
+	    values.put(COLUMN_IMAGE, image.getImage());	   
+	 
+	    // updating row
+	    return db.update(TABLE_IMAGES, values, COLUMN_ID + " = ?",
+	            new String[] { String.valueOf( image.getId()) });
+	}
+    
+	// Deleting a single image
+	public void deleteImage(Image image) {
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    
+	    db.delete(TABLE_IMAGES, COLUMN_ID + " = ?",
+	            new String[] { String.valueOf(image.getId()) });
+	    db.close();
+	}	
+	
+	// Method used for inserting all images into the table
+	public void insertAllImages(SQLiteDatabase db){
+	    ContentValues values = new ContentValues();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.bank);	    
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.put(COLUMN_IMAGE, R.drawable.cash);
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.put(COLUMN_IMAGE, R.drawable.credit_card);
+	    db.insert(TABLE_IMAGES, null, values);
+	}
+	
+	// Categories table methods
+	// Creating a category
+	public long createCategory(Category category) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+	    ContentValues values = new ContentValues();
+	    
+	    values.put(COLUMN_IDIMAGE, category.getIdImage());	    
+	    values.put(COLUMN_IDCAT, category.getIdCat());
+	    values.put(COLUMN_CATDESC, category.getCatDesc());
+	    values.put(COLUMN_IDSUBCAT, category.getIdSubCat());
+	    values.put(COLUMN_SUBCATDESC, category.getSubCatDesc());
+	    values.put(COLUMN_CATTYPE, category.getType());
+	    
+	    // insert row
+	    long transaction_id = db.insert(TABLE_CATEGORIES, null, values);
+	    db.close(); // Closing database connection
+	    
+	    return transaction_id;
+	}	
+	
+	// Getting a single category based on id
+	public Category getCategory(int id) {
+		SQLiteDatabase db = this.getReadableDatabase();
+	 
+	    Cursor cursor = db.query(TABLE_CATEGORIES, new String[] { COLUMN_ID,
+	    		COLUMN_IDIMAGE,COLUMN_IDCAT,COLUMN_CATDESC,COLUMN_IDSUBCAT,
+	    		COLUMN_SUBCATDESC,COLUMN_CATTYPE}, COLUMN_ID + "=?",
+	            new String[] { String.valueOf(id) }, null, null, null, null);
+	    if (cursor != null)
+	        cursor.moveToFirst();
+	 
+	    Category category = new Category(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2),
+	    								cursor.getString(3),cursor.getInt(4),cursor.getString(5),
+	    								cursor.getInt(6));
+	    
+	    // return category
+	    return category;
+	}
+
+	// Getting all categories
+	public List<Category> getAllCategories() {
+	    List<Category> categoryList = new ArrayList<Category>();
+	    // Select All Query
+	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES;
+	 
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	 
+	    // looping through all rows and adding to list
+	    if (cursor.moveToFirst()) {
+	        do {
+	        	Category category = new Category();
+	        	category.setId(cursor.getInt(0));
+	        	category.setIdImage(cursor.getInt(1));
+	            category.setIdCat(cursor.getInt(2));
+	            category.setCatDesc(cursor.getString(3));
+	            category.setIdSubCat(cursor.getInt(4));
+	            category.setSubCatDesc(cursor.getString(5));
+	            category.setType(cursor.getInt(6));
+	            
+	            // Adding category to list
+	        	categoryList.add(category);
+	        } while (cursor.moveToNext());
+	    }
+	 
+	    // return image list
+	    return categoryList;
+	}
+	
+	// Getting categories count
+    public int getCategoriesCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_CATEGORIES;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        // return count
+        return count;
+    }	
+
+    // Updating single category
+	public int updateCategory(Category category) {
+	    SQLiteDatabase db = this.getWritableDatabase();
+		
+	    ContentValues values = new ContentValues();
+	    
+	    values.put(COLUMN_IDIMAGE, category.getIdImage());	    
+	    values.put(COLUMN_IDCAT, category.getIdCat());
+	    values.put(COLUMN_CATDESC, category.getCatDesc());
+	    values.put(COLUMN_IDSUBCAT, category.getIdSubCat());
+	    values.put(COLUMN_SUBCATDESC, category.getSubCatDesc());
+	    values.put(COLUMN_CATTYPE, category.getType());
+	    
+	    // updating row
+	    return db.update(TABLE_CATEGORIES, values, COLUMN_ID + " = ?",
+	            new String[] { String.valueOf( category.getId()) });
+	}
+    
+	// Deleting a single category
+	public void deleteCategory(Category category) {
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    
+	    db.delete(TABLE_CATEGORIES, COLUMN_ID + " = ?",
+	            new String[] { String.valueOf(category.getId()) });
+	    db.close();
+	}	
+	
+	// Method used for inserting all categories into the table
+	private void insertAllCategories(SQLiteDatabase db) {
+	    ContentValues values = new ContentValues();
+	    
+	    values.put(COLUMN_IDIMAGE, 1);	    
+	    values.put(COLUMN_IDCAT, 1);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category1));
+	    values.put(COLUMN_CATTYPE, 1);
+	    db.insert(TABLE_CATEGORIES, null, values);
+	    
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 1);	    
+	    values.put(COLUMN_IDCAT, 1);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category1));
+	    values.put(COLUMN_IDSUBCAT, 1);
+	    values.put(COLUMN_SUBCATDESC,App.context.getResources().getString(R.string.subCategory1));
+	    values.put(COLUMN_CATTYPE, 1);
+	    db.insert(TABLE_CATEGORIES, null, values);
+	    
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 1);	    
+	    values.put(COLUMN_IDCAT, 1);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category1));
+	    values.put(COLUMN_IDSUBCAT, 2);
+	    values.put(COLUMN_SUBCATDESC,App.context.getResources().getString(R.string.subCategory2));
+	    values.put(COLUMN_CATTYPE, 1);
+	    db.insert(TABLE_CATEGORIES, null, values);
+	    
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 1);	    
+	    values.put(COLUMN_IDCAT, 1);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category1));
+	    values.put(COLUMN_IDSUBCAT, 3);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategory3));
+	    values.put(COLUMN_CATTYPE, 1);
+	    db.insert(TABLE_CATEGORIES, null, values);
+        
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 2);	    
+	    values.put(COLUMN_IDCAT, 2);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category2));
+	    values.put(COLUMN_CATTYPE, 1);
+	    db.insert(TABLE_CATEGORIES, null, values);
+	    
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 2);	    
+	    values.put(COLUMN_IDCAT, 2);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category2));
+	    values.put(COLUMN_IDSUBCAT, 4);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategory4));
+	    values.put(COLUMN_CATTYPE, 1);
+	    db.insert(TABLE_CATEGORIES, null, values);
+	    
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 2);	    
+	    values.put(COLUMN_IDCAT, 2);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category2));
+	    values.put(COLUMN_IDSUBCAT, 5);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategory5));
+	    values.put(COLUMN_CATTYPE, 1);
+	    db.insert(TABLE_CATEGORIES, null, values);
+	    
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 2);	    
+	    values.put(COLUMN_IDCAT, 2);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category2));
+	    values.put(COLUMN_IDSUBCAT, 6);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategory6));
+	    values.put(COLUMN_CATTYPE, 1);
+	    db.insert(TABLE_CATEGORIES, null, values);
+	    
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 3);	    
+	    values.put(COLUMN_IDCAT, 3);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category3));
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);
+	}
 	
 	// Help methods
 	// Convert time to timestamp

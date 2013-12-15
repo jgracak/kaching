@@ -74,6 +74,21 @@
         <item>@drawable/ic_whats_hot</item>            
     </array>
      
+    <!-- Category names -->
+    <string name="category1">Food</string>
+    <string name="category2">Home</string>
+    <string name="category3">Payroll</string>
+
+    <!-- Subcategory names -->
+    <!-- Food -->
+    <string name="subCategory1">Home</string>
+    <string name="subCategory2">Work</string>
+    <string name="subCategory3">Out</string>
+    <!-- Home -->
+    <string name="subCategory4">Repairs</string>
+    <string name="subCategory5">Car</string>
+    <string name="subCategory6">Cleaning</string>    
+    
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
 </resources>

@@ -46,7 +46,7 @@ public class TabAccountListFragment extends ListFragment{
         public Float getBalance() {
             return accountBalance;
         }
-
+        
         public void setBalance(Float balance) {
             accountBalance = balance;
         }
