@@ -6,14 +6,12 @@ import java.util.List;
 import com.kaching.R;
 import com.moneyapp.database.*;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.text.format.Time;
 import android.util.Log;
@@ -22,9 +20,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
+	private static final String TAB_1_TAG = "tab_1";
+	private static final String TAB_2_TAG = "tab_2";
+	
+	private FragmentTabHost mTabHost;
+	
 	private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -131,8 +136,24 @@ public class MainActivity extends Activity {
             // on first time display view for first nav item
             displayView(0);
         }
+        
+        //initView();
 	}
-		 
+	
+	@Override
+	public void onBackPressed() {
+		boolean isPopFragment = false;
+		String currentTabTag = mTabHost.getCurrentTabTag();
+		if (currentTabTag.equals(TAB_1_TAG)) {
+			isPopFragment = ((BaseContainerFragment)getSupportFragmentManager().findFragmentByTag(TAB_1_TAG)).popFragment();
+		} else if (currentTabTag.equals(TAB_2_TAG)) {
+			isPopFragment = ((BaseContainerFragment)getSupportFragmentManager().findFragmentByTag(TAB_2_TAG)).popFragment();
+		}
+		if (!isPopFragment) {
+			finish();
+		}
+	}
+	 
     /**
      * Slide menu item click listener
      * */
@@ -152,6 +173,7 @@ public class MainActivity extends Activity {
     private void displayView(int position) {
         // update the main content by replacing fragments
         Fragment fragment = null;
+        int cat = 0;
         switch (position) {
         case 0:
         	fragment = new TransactionsFragment();
@@ -181,6 +203,7 @@ public class MainActivity extends Activity {
             break;
         case 9:
         	fragment = new CategoriesFragment();
+        	cat = 1;
             break;
         case 10:
             
@@ -193,7 +216,7 @@ public class MainActivity extends Activity {
         }
  
         if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
+            FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment).commit();
  
@@ -205,6 +228,10 @@ public class MainActivity extends Activity {
         } else {
             // error in creating fragment
             Log.e("MainActivity", "Error in creating fragment");
+        }
+        
+        if (cat == 1) {
+        	//initView();
         }
     }
 
@@ -290,7 +317,8 @@ public class MainActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_main, menu);
-		return true;
+		//return true;
+	    return super.onCreateOptionsMenu(menu);
 	}
  
     @Override

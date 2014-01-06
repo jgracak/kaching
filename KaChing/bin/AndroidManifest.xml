@@ -13,7 +13,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" 
-        android:uiOptions="splitActionBarWhenNarrow"
         android:name="com.moneyapp.App">
         <activity
             android:name="com.moneyapp.MainActivity"
@@ -32,6 +31,12 @@
         <activity            
             android:label="Edit Account"
             android:name="com.moneyapp.AccountEditActivity" 
+            android:theme="@android:style/Theme.Dialog"
+            android:excludeFromRecents="true">
+        </activity>
+        <activity            
+            android:label="Add Category"
+            android:name="com.moneyapp.CategoryAddActivity" 
             android:theme="@android:style/Theme.Dialog"
             android:excludeFromRecents="true">
         </activity>

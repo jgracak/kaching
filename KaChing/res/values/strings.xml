@@ -30,6 +30,8 @@
   	<string name="account_type_prompt">Choose a type</string>
   	<string name="account_name_blank">Please enter a name for the account.</string>
   	<string name="account_delete">Delete</string>
+  	<string name="action_add"></string>
+  	<string name="categoryImage">Image</string>
   	
   	<string-array name="account_types">
         <item>Cash</item>
@@ -78,8 +80,8 @@
     <string name="category1">Food</string>
     <string name="category2">Home</string>
     <string name="category3">Payroll</string>
-
-    <!-- Subcategory names -->
+    
+    <!-- Subcategory names expenses -->
     <!-- Food -->
     <string name="subCategory1">Home</string>
     <string name="subCategory2">Work</string>
@@ -88,7 +90,13 @@
     <string name="subCategory4">Repairs</string>
     <string name="subCategory5">Car</string>
     <string name="subCategory6">Cleaning</string>    
-    
+ 
+        
+    <!-- Subcategory names expenses -->
+    <!-- Payroll -->
+    <string name="subCategory7">Paycheck</string>
+    <string name="subCategory8">Bonus</string>     
+        
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
 </resources>

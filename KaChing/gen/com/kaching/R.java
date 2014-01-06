@@ -172,32 +172,54 @@ public final class R {
         public static final int accounts=0x7f020000;
         public static final int accounts_light=0x7f020001;
         public static final int bank=0x7f020002;
-        public static final int budgets=0x7f020003;
-        public static final int budgets_light=0x7f020004;
-        public static final int cash=0x7f020005;
-        public static final int counter_bg=0x7f020006;
-        public static final int credit_card=0x7f020007;
-        public static final int ic_accounts=0x7f020008;
-        public static final int ic_budgets=0x7f020009;
-        public static final int ic_communities=0x7f02000a;
-        public static final int ic_drawer=0x7f02000b;
-        public static final int ic_home=0x7f02000c;
-        public static final int ic_launcher=0x7f02000d;
-        public static final int ic_more=0x7f02000e;
-        public static final int ic_pages=0x7f02000f;
-        public static final int ic_people=0x7f020010;
-        public static final int ic_photos=0x7f020011;
-        public static final int ic_transactions=0x7f020012;
-        public static final int ic_whats_hot=0x7f020013;
-        public static final int list_item_bg_normal=0x7f020014;
-        public static final int list_item_bg_pressed=0x7f020015;
-        public static final int list_selector=0x7f020016;
-        public static final int more=0x7f020017;
-        public static final int more_light=0x7f020018;
-        public static final int plus=0x7f020019;
-        public static final int reminder=0x7f02001a;
-        public static final int transactions=0x7f02001b;
-        public static final int transactions_light=0x7f02001c;
+        public static final int bench=0x7f020003;
+        public static final int bicycle=0x7f020004;
+        public static final int budgets=0x7f020005;
+        public static final int budgets_light=0x7f020006;
+        public static final int camera=0x7f020007;
+        public static final int car=0x7f020008;
+        public static final int card_file=0x7f020009;
+        public static final int cart_empty=0x7f02000a;
+        public static final int cart_full=0x7f02000b;
+        public static final int cash=0x7f02000c;
+        public static final int coffe=0x7f02000d;
+        public static final int company=0x7f02000e;
+        public static final int counter_bg=0x7f02000f;
+        public static final int credit_card=0x7f020010;
+        public static final int delivery=0x7f020011;
+        public static final int dice=0x7f020012;
+        public static final int headphones=0x7f020013;
+        public static final int home=0x7f020014;
+        public static final int house=0x7f020015;
+        public static final int ic_accounts=0x7f020016;
+        public static final int ic_budgets=0x7f020017;
+        public static final int ic_communities=0x7f020018;
+        public static final int ic_drawer=0x7f020019;
+        public static final int ic_home=0x7f02001a;
+        public static final int ic_launcher=0x7f02001b;
+        public static final int ic_more=0x7f02001c;
+        public static final int ic_pages=0x7f02001d;
+        public static final int ic_people=0x7f02001e;
+        public static final int ic_photos=0x7f02001f;
+        public static final int ic_transactions=0x7f020020;
+        public static final int ic_whats_hot=0x7f020021;
+        public static final int list_item_bg_normal=0x7f020022;
+        public static final int list_item_bg_pressed=0x7f020023;
+        public static final int list_selector=0x7f020024;
+        public static final int lock=0x7f020025;
+        public static final int more=0x7f020026;
+        public static final int more_light=0x7f020027;
+        public static final int muffin=0x7f020028;
+        public static final int plus=0x7f020029;
+        public static final int reminder=0x7f02002a;
+        public static final int spray=0x7f02002b;
+        public static final int telephone=0x7f02002c;
+        public static final int time=0x7f02002d;
+        public static final int transactions=0x7f02002e;
+        public static final int transactions_light=0x7f02002f;
+        public static final int violin=0x7f020030;
+        public static final int wallet=0x7f020031;
+        public static final int world=0x7f020032;
     }
     public static final class id {
         public static final int accountBalance=0x7f090004;
@@ -223,22 +245,33 @@ public final class R {
         public static final int account_balance=0x7f090019;
         public static final int account_description=0x7f090018;
         public static final int account_image=0x7f090017;
+        public static final int action_add=0x7f090030;
         public static final int buttonCancel=0x7f09000b;
+        public static final int buttonCatCancel=0x7f090024;
+        public static final int buttonCatSave=0x7f090023;
         public static final int buttonDelete=0x7f090016;
         public static final int buttonSave=0x7f09000a;
-        public static final int counter=0x7f09001f;
+        public static final int categoryGridView=0x7f090022;
+        public static final int categoryItemImage=0x7f090020;
+        public static final int categoryNameNew=0x7f090021;
+        public static final int container_framelayout=0x7f090025;
+        public static final int counter=0x7f090028;
         public static final int drawer_layout=0x7f09001a;
         public static final int frame_container=0x7f09001b;
-        public static final int icon=0x7f09001d;
+        public static final int gridView1=0x7f09002a;
+        public static final int grid_item_image=0x7f09001d;
+        public static final int grid_item_label=0x7f09001e;
+        public static final int icon=0x7f090026;
+        public static final int label=0x7f09001f;
         public static final int list_slidermenu=0x7f09001c;
-        public static final int menu_settings=0x7f090026;
-        public static final int title=0x7f09001e;
-        public static final int transaction_accTxt=0x7f090025;
-        public static final int transaction_amount=0x7f090023;
-        public static final int transaction_catImg=0x7f090021;
-        public static final int transaction_catTxt=0x7f090022;
-        public static final int transaction_subCatTxt=0x7f090024;
-        public static final int txtLabel=0x7f090020;
+        public static final int menu_settings=0x7f090031;
+        public static final int realtabcontent=0x7f090029;
+        public static final int title=0x7f090027;
+        public static final int transaction_accTxt=0x7f09002f;
+        public static final int transaction_amount=0x7f09002d;
+        public static final int transaction_catImg=0x7f09002b;
+        public static final int transaction_catTxt=0x7f09002c;
+        public static final int transaction_subCatTxt=0x7f09002e;
     }
     public static final class layout {
         public static final int account_add=0x7f030000;
@@ -246,13 +279,19 @@ public final class R {
         public static final int account_fragment=0x7f030002;
         public static final int account_list_item=0x7f030003;
         public static final int activity_main=0x7f030004;
-        public static final int drawer_list_item=0x7f030005;
-        public static final int fragment_categories=0x7f030006;
-        public static final int fragment_transaction=0x7f030007;
-        public static final int transaction_list_item=0x7f030008;
+        public static final int cat_grid=0x7f030005;
+        public static final int category_add=0x7f030006;
+        public static final int container_fragment=0x7f030007;
+        public static final int drawer_list_item=0x7f030008;
+        public static final int fragment_categories=0x7f030009;
+        public static final int fragment_transaction=0x7f03000a;
+        public static final int image_grid=0x7f03000b;
+        public static final int tab_fragment=0x7f03000c;
+        public static final int transaction_list_item=0x7f03000d;
     }
     public static final class menu {
-        public static final int activity_main=0x7f080000;
+        public static final int activity_category=0x7f080000;
+        public static final int activity_main=0x7f080001;
     }
     public static final class string {
         public static final int account_add=0x7f050013;
@@ -273,34 +312,41 @@ public final class R {
         public static final int account_summary=0x7f05000c;
         public static final int account_type=0x7f05001a;
         public static final int account_type_prompt=0x7f05001b;
-        public static final int action_settings=0x7f05001e;
+        public static final int action_add=0x7f05001e;
+        public static final int action_settings=0x7f050020;
         public static final int app_name=0x7f050000;
         /**  Category names 
          */
-        public static final int category1=0x7f050021;
-        public static final int category2=0x7f050022;
-        public static final int category3=0x7f050023;
+        public static final int category1=0x7f050023;
+        public static final int category2=0x7f050024;
+        public static final int category3=0x7f050025;
+        public static final int categoryImage=0x7f05001f;
         /**  Content Description 
          */
-        public static final int desc_list_item_icon=0x7f05002a;
-        public static final int drawer_close=0x7f050020;
-        public static final int drawer_open=0x7f05001f;
+        public static final int desc_list_item_icon=0x7f05002e;
+        public static final int drawer_close=0x7f050022;
+        public static final int drawer_open=0x7f050021;
         public static final int hello_world=0x7f050005;
         public static final int menu_delete=0x7f05000b;
         public static final int menu_insert=0x7f05000a;
         public static final int menu_settings=0x7f050006;
         public static final int no_accounts=0x7f050001;
-        /**  Subcategory names 
+        /**  Subcategory names expenses 
  Food 
          */
-        public static final int subCategory1=0x7f050024;
-        public static final int subCategory2=0x7f050025;
-        public static final int subCategory3=0x7f050026;
+        public static final int subCategory1=0x7f050026;
+        public static final int subCategory2=0x7f050027;
+        public static final int subCategory3=0x7f050028;
         /**  Home 
          */
-        public static final int subCategory4=0x7f050027;
-        public static final int subCategory5=0x7f050028;
-        public static final int subCategory6=0x7f050029;
+        public static final int subCategory4=0x7f050029;
+        public static final int subCategory5=0x7f05002a;
+        public static final int subCategory6=0x7f05002b;
+        /**  Subcategory names expenses 
+ Payroll 
+         */
+        public static final int subCategory7=0x7f05002c;
+        public static final int subCategory8=0x7f05002d;
         public static final int title_activity_accounts=0x7f050008;
         public static final int title_activity_transaction=0x7f050007;
         public static final int title_section1=0x7f050004;

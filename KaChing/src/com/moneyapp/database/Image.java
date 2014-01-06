@@ -3,19 +3,22 @@ package com.moneyapp.database;
 public class Image {
 	int id;
 	int image;
+	int type;
 	
 	// constructors
 	public Image(){
 		
 	}
 	
-	public Image(int image){
+	public Image(int image, int type){
 		this.image = image;
+		this.type = type;
 	}
 	
-	public Image(int id, int image){
+	public Image(int id, int image, int type){
 		this.id = id;
 		this.image = image;
+		this.type = type;
 	}
 	
 	// setters
@@ -27,6 +30,10 @@ public class Image {
 		this.image = image;
 	}
 	
+	public void setType(int type){
+		this.type = type;
+	}
+	
 	// getters
 	public int getId(){
 		return id;
@@ -34,5 +41,9 @@ public class Image {
 	
 	public int getImage(){
 		return image;
+	}
+	
+	public int getType(){
+		return type;
 	}
 }

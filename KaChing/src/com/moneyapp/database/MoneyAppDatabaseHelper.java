@@ -9,7 +9,6 @@ import com.moneyapp.App;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -55,6 +54,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
  
     // IMAGES Table - column names
     public static final String COLUMN_IMAGE = "image";
+    public static final String COLUMN_IMAGE_TYPE = "type";
     
     // CATEGORIES Table - column names
     public static final String COLUMN_IDIMAGE = "idImage";
@@ -95,7 +95,8 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
     		+ TABLE_IMAGES
 	        + "(" 
 	        + COLUMN_ID + " integer primary key autoincrement, " 
-	        + COLUMN_IMAGE + " integer not null" 
+	        + COLUMN_IMAGE + " integer not null, "
+	        + COLUMN_IMAGE_TYPE + " integer not null"
 	        + ");";   
  
     // Categories table create statement
@@ -388,12 +389,13 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	
 	// Images table methods
 	// Creating an image
-	public long createImage(Image image) {
+	public long createImage(Image image, int type) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 	    ContentValues values = new ContentValues();
 	    
 	    values.put(COLUMN_IMAGE, image.getImage());	    
+	    values.put(COLUMN_IMAGE_TYPE,type);
 	 
 	    // insert row
 	    long transaction_id = db.insert(TABLE_IMAGES, null, values);
@@ -407,12 +409,12 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 	 
 	    Cursor cursor = db.query(TABLE_IMAGES, new String[] { COLUMN_ID,
-	    		COLUMN_IMAGE}, COLUMN_ID + "=?",
+	    		COLUMN_IMAGE,COLUMN_IMAGE_TYPE}, COLUMN_ID + "=?",
 	            new String[] { String.valueOf(id) }, null, null, null, null);
 	    if (cursor != null)
 	        cursor.moveToFirst();
 	 
-	    Image image = new Image(cursor.getInt(0),cursor.getInt(1));
+	    Image image = new Image(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2));
 	    
 	    // return image
 	    return image;
@@ -433,6 +435,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	        	Image image = new Image();
 	        	image.setId(cursor.getInt(0));
 	        	image.setImage(cursor.getInt(1));
+	        	image.setType(cursor.getInt(2));
 	            
 	            // Adding image to list
 	        	imageList.add(image);
@@ -442,6 +445,33 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    // return image list
 	    return imageList;
 	}
+	
+	public List<Image> getAllImagesType(int type) {
+	    List<Image> imageList = new ArrayList<Image>();
+	    // Select All Query
+	    String selectQuery = "SELECT  * FROM " + TABLE_IMAGES + " WHERE type = " + type;
+	 
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	 
+	    // looping through all rows and adding to list
+	    if (cursor.moveToFirst()) {
+	        do {
+	        	Image image = new Image();
+	        	image.setId(cursor.getInt(0));
+	        	image.setImage(cursor.getInt(1));
+	        	image.setType(cursor.getInt(2));
+	            
+	            // Adding image to list
+	        	imageList.add(image);
+	        } while (cursor.moveToNext());
+	    }
+	 
+	    // return image list
+	    return imageList;
+	}
+	
+	
 
 	// Getting images count
     public int getImagesCount() {
@@ -452,7 +482,17 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         // return count
         return count;
-    }		
+    }	
+    
+    public int getImagesCountType(int type) {
+		String countQuery = "SELECT  * FROM " + TABLE_IMAGES + " WHERE type = " + type;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(countQuery, null);
+		int count = cursor.getCount();
+		cursor.close();
+		// return count
+		return count;
+    }
 
     // Updating single image
 	public int updateImage(Image image) {
@@ -480,11 +520,129 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    ContentValues values = new ContentValues();
 	    
 	    values.put(COLUMN_IMAGE, R.drawable.bank);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
 	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+
 	    values.put(COLUMN_IMAGE, R.drawable.cash);
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
 	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
 	    values.put(COLUMN_IMAGE, R.drawable.credit_card);
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
 	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.bench);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.bicycle);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.camera);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.car);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.card_file);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.cart_empty);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.cart_full);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.coffe);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.company);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.delivery);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.dice);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.headphones);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.home);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.house);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.lock);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.muffin);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.spray);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.telephone);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.time);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.violin);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.wallet);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
+	    
+	    values.put(COLUMN_IMAGE, R.drawable.world);	    
+	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
+	    db.insert(TABLE_IMAGES, null, values);
+	    values.clear();
 	}
 	
 	// Categories table methods
@@ -556,6 +714,66 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    // return image list
 	    return categoryList;
 	}
+	
+	// Getting all income categories
+	public List<Category> getAllIncomeCategories() {
+	    List<Category> categoryList = new ArrayList<Category>();
+	    // Select All Query
+	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (type = 0) AND (idSubCat is null)";
+	 
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	 
+	    // looping through all rows and adding to list
+	    if (cursor.moveToFirst()) {
+	        do {
+	        	Category category = new Category();
+	        	category.setId(cursor.getInt(0));
+	        	category.setIdImage(cursor.getInt(1));
+	            category.setIdCat(cursor.getInt(2));
+	            category.setCatDesc(cursor.getString(3));
+	            category.setIdSubCat(cursor.getInt(4));
+	            category.setSubCatDesc(cursor.getString(5));
+	            category.setType(cursor.getInt(6));
+	            
+	            // Adding category to list
+	        	categoryList.add(category);
+	        } while (cursor.moveToNext());
+	    }
+	 
+	    // return image list
+	    return categoryList;
+	}	
+	
+	// Getting all expense categories
+	public List<Category> getAllExpenseCategories() {
+	    List<Category> categoryList = new ArrayList<Category>();
+	    // Select All Query
+	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (type = 1) AND (idSubCat is null)";
+	 
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	 
+	    // looping through all rows and adding to list
+	    if (cursor.moveToFirst()) {
+	        do {
+	        	Category category = new Category();
+	        	category.setId(cursor.getInt(0));
+	        	category.setIdImage(cursor.getInt(1));
+	            category.setIdCat(cursor.getInt(2));
+	            category.setCatDesc(cursor.getString(3));
+	            category.setIdSubCat(cursor.getInt(4));
+	            category.setSubCatDesc(cursor.getString(5));
+	            category.setType(cursor.getInt(6));
+	            
+	            // Adding category to list
+	        	categoryList.add(category);
+	        } while (cursor.moveToNext());
+	    }
+	 
+	    // return image list
+	    return categoryList;
+	}	
 	
 	// Getting categories count
     public int getCategoriesCount() {
@@ -643,7 +861,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    values.put(COLUMN_IDIMAGE, 2);	    
 	    values.put(COLUMN_IDCAT, 2);
 	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category2));
-	    values.put(COLUMN_IDSUBCAT, 4);
+	    values.put(COLUMN_IDSUBCAT, 1);
 	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategory4));
 	    values.put(COLUMN_CATTYPE, 1);
 	    db.insert(TABLE_CATEGORIES, null, values);
@@ -652,7 +870,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    values.put(COLUMN_IDIMAGE, 2);	    
 	    values.put(COLUMN_IDCAT, 2);
 	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category2));
-	    values.put(COLUMN_IDSUBCAT, 5);
+	    values.put(COLUMN_IDSUBCAT, 2);
 	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategory5));
 	    values.put(COLUMN_CATTYPE, 1);
 	    db.insert(TABLE_CATEGORIES, null, values);
@@ -661,7 +879,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    values.put(COLUMN_IDIMAGE, 2);	    
 	    values.put(COLUMN_IDCAT, 2);
 	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category2));
-	    values.put(COLUMN_IDSUBCAT, 6);
+	    values.put(COLUMN_IDSUBCAT, 3);
 	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategory6));
 	    values.put(COLUMN_CATTYPE, 1);
 	    db.insert(TABLE_CATEGORIES, null, values);
@@ -670,6 +888,24 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    values.put(COLUMN_IDIMAGE, 3);	    
 	    values.put(COLUMN_IDCAT, 3);
 	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category3));
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);
+	    
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 3);	    
+	    values.put(COLUMN_IDCAT, 3);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category3));
+	    values.put(COLUMN_IDSUBCAT, 1);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategory7));
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);
+	    
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 3);	    
+	    values.put(COLUMN_IDCAT, 3);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category3));
+	    values.put(COLUMN_IDSUBCAT, 2);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategory8));
 	    values.put(COLUMN_CATTYPE, 0);
 	    db.insert(TABLE_CATEGORIES, null, values);
 	}
