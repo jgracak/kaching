@@ -14,8 +14,26 @@
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:windowBackground">@color/pozadina</item>
+        <item name="android:actionBarStyle">@style/AppTheme.MyActionBar</item>
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+    <style name="AppTheme.MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#4c66a4</item>
+        <item name="android:titleTextStyle">@style/AppTheme.ActionBar.TitleTextStyle</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    
+    <style name="AppTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/White</item>
+    </style>
+    
+    <style name="Divider">
+    	<item name="android:layout_width">match_parent</item>
+    	<item name="android:layout_height">1dp</item>
+    	<item name="android:background">?android:attr/listDivider</item>
+	</style>
     
     <style name="MyAppCompatDialogTheme" parent="AppTheme">
 	    <item name="android:windowIsFloating">false</item>

@@ -146,4 +146,8 @@
 	<color name="list_divider">#272727</color>
 	<color name="counter_text_bg">#626262</color>
 	<color name="counter_text_color">#c5c4c4</color> 
+	<color name="pozadina">#d3d3d3</color>
+	<color name="list_pressed2">#4c66a4</color>
+	<!-- D44942 je ok 
+			B0C4DE-->
 </resources>

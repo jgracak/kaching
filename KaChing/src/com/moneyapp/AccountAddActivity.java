@@ -21,12 +21,12 @@ public class AccountAddActivity extends Activity {
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.account_add);
-			
-		addListenerOnButtonCancel();
+		
+	//	addListenerOnButtonCancel();
 		addListenerOnButtonSave();		
 	}
 	
-	public void addListenerOnButtonCancel() {
+/*	public void addListenerOnButtonCancel() {
 		 
 		buttonCancel = (Button) findViewById(R.id.buttonCancel);
  
@@ -37,7 +37,7 @@ public class AccountAddActivity extends Activity {
 				finish();
 			}
 		});
-	}
+	}*/
 	
 	public void addListenerOnButtonSave() {
 		 

@@ -19,15 +19,16 @@ public class CategoriesFragment extends Fragment {
 	private static final String TAB_2_TAG = "tab_2";
 	
 	private FragmentTabHost mTabHost;
+	View rootView;
 	
 	public CategoriesFragment(){}
     
-	//@Override
+	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
   
-        View rootView = inflater.inflate(R.layout.fragment_categories, container, false);
-        
+        rootView = inflater.inflate(R.layout.fragment_categories, container, false);
+
         mTabHost = (FragmentTabHost)rootView.findViewById(android.R.id.tabhost);
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
 
@@ -44,6 +45,32 @@ public class CategoriesFragment extends Fragment {
           Menu menu, MenuInflater inflater) {
        inflater.inflate(R.menu.activity_category, menu);
     }
+    
+	@Override	
+	public void onResume()
+	{
+	   super.onResume();
+	   
+	   // a very lazy refresh
+	   if (mTabHost.getCurrentTab() == 0) {
+		   mTabHost.setCurrentTab(1);
+		   mTabHost.setCurrentTab(0);
+	   } else {
+		   mTabHost.setCurrentTab(0);
+		   mTabHost.setCurrentTab(1);
+	   }
+	}
+	
+	public void SetCategoryView() {
+
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {		
+		super.onCreate(savedInstanceState);
+
+		SetCategoryView();	
+	}
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

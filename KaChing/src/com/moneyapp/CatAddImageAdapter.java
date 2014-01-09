@@ -40,6 +40,7 @@ public class CatAddImageAdapter extends BaseAdapter {
 					.findViewById(R.id.grid_item_image);
 			
 			imageView.setImageResource(imageList.get(position).getImage());
+			imageView.setTag(imageList.get(position).getImage());
  
 		} else {
 			gridView = (View) convertView;

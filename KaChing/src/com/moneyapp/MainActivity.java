@@ -177,39 +177,42 @@ public class MainActivity extends FragmentActivity {
         switch (position) {
         case 0:
         	fragment = new TransactionsFragment();
+        	getActionBar().setIcon(R.drawable.ic_home);
             break;
         case 1:
         	fragment = new TabAccountListFragment();
+        	getActionBar().setIcon(R.drawable.ic_people);
             break;
         case 2:
+        	getActionBar().setIcon(R.drawable.ic_photos);
             break;
         case 3:
-            
+        	getActionBar().setIcon(R.drawable.ic_communities);
             break;
         case 4:
-            
+        	getActionBar().setIcon(R.drawable.ic_pages);
             break;
         case 5:
-            
+        	getActionBar().setIcon(R.drawable.ic_whats_hot);
             break;
         case 6:
-            
+        	getActionBar().setIcon(R.drawable.ic_home);
             break;
         case 7:
-            
+        	getActionBar().setIcon(R.drawable.ic_people);
             break;
         case 8:
-            
+        	getActionBar().setIcon(R.drawable.ic_photos);
             break;
         case 9:
         	fragment = new CategoriesFragment();
-        	cat = 1;
+        	getActionBar().setIcon(R.drawable.ic_communities);
             break;
         case 10:
-            
+        	getActionBar().setIcon(R.drawable.ic_pages);
             break;
         case 11:
-            
+        	getActionBar().setIcon(R.drawable.ic_whats_hot);
             break;            
         default:
             break;
@@ -228,10 +231,6 @@ public class MainActivity extends FragmentActivity {
         } else {
             // error in creating fragment
             Log.e("MainActivity", "Error in creating fragment");
-        }
-        
-        if (cat == 1) {
-        	//initView();
         }
     }
 

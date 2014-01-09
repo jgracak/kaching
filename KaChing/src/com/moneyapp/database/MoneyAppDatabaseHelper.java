@@ -419,6 +419,20 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    // return image
 	    return image;
 	}
+	
+	// Getting image ID by ref number
+	public int getImageIdByRef(int image) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		 
+	    Cursor cursor = db.query(TABLE_IMAGES, new String[] { COLUMN_ID,
+	    		COLUMN_IMAGE,COLUMN_IMAGE_TYPE}, COLUMN_IMAGE + "=?",
+	            new String[] { String.valueOf(image) }, null, null, null, null);
+	    if (cursor != null)
+	        cursor.moveToFirst();
+	    
+	    // return id
+	    return cursor.getInt(0);
+	}
 
 	// Getting all images
 	public List<Image> getAllImages() {
@@ -471,8 +485,6 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    return imageList;
 	}
 	
-	
-
 	// Getting images count
     public int getImagesCount() {
         String countQuery = "SELECT  * FROM " + TABLE_IMAGES;
@@ -719,7 +731,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	public List<Category> getAllIncomeCategories() {
 	    List<Category> categoryList = new ArrayList<Category>();
 	    // Select All Query
-	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (type = 0) AND (idSubCat is null)";
+	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (type = 0) AND (idSubCat = 0)";
 	 
 	    SQLiteDatabase db = this.getWritableDatabase();
 	    Cursor cursor = db.rawQuery(selectQuery, null);
@@ -749,7 +761,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	public List<Category> getAllExpenseCategories() {
 	    List<Category> categoryList = new ArrayList<Category>();
 	    // Select All Query
-	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (type = 1) AND (idSubCat is null)";
+	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (type = 1) AND (idSubCat = 0)";
 	 
 	    SQLiteDatabase db = this.getWritableDatabase();
 	    Cursor cursor = db.rawQuery(selectQuery, null);
@@ -786,6 +798,37 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
         return count;
     }	
 
+    // Get category by name
+    public boolean getCategoryName(String name) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		
+	    Cursor cursor = db.query(TABLE_CATEGORIES, new String[] { COLUMN_ID,
+	    		COLUMN_IDIMAGE,COLUMN_IDCAT,COLUMN_CATDESC,COLUMN_IDSUBCAT,
+	    		COLUMN_SUBCATDESC,COLUMN_CATTYPE}, COLUMN_CATDESC + "=?",
+	            new String[] { name }, null, null, null, null);
+		
+	    if (cursor.getCount() > 0) {
+	    	return true;
+	    } else {
+	    	return false;
+	    }
+    }
+    
+    // Get last category id by type
+    public int getCategoryIdByType(int type) {
+		SQLiteDatabase db = this.getReadableDatabase();
+	    Cursor cursor = db.query(TABLE_CATEGORIES, new String[] { COLUMN_ID,
+	    		COLUMN_IDIMAGE,COLUMN_IDCAT,COLUMN_CATDESC,COLUMN_IDSUBCAT,
+	    		COLUMN_SUBCATDESC,COLUMN_CATTYPE}, COLUMN_CATTYPE + "=?",
+	            new String[] { String.valueOf(type) }, null, null, null, null);
+	    if (cursor != null) {
+	    	cursor.moveToLast();
+	    	return cursor.getInt(2) + 1;
+	    } else {
+	    	return 0;
+	    }
+    }
+    
     // Updating single category
 	public int updateCategory(Category category) {
 	    SQLiteDatabase db = this.getWritableDatabase();
@@ -820,6 +863,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    values.put(COLUMN_IDIMAGE, 1);	    
 	    values.put(COLUMN_IDCAT, 1);
 	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category1));
+	    values.put(COLUMN_IDSUBCAT, 0);
 	    values.put(COLUMN_CATTYPE, 1);
 	    db.insert(TABLE_CATEGORIES, null, values);
 	    
@@ -854,6 +898,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    values.put(COLUMN_IDIMAGE, 2);	    
 	    values.put(COLUMN_IDCAT, 2);
 	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category2));
+	    values.put(COLUMN_IDSUBCAT, 0);
 	    values.put(COLUMN_CATTYPE, 1);
 	    db.insert(TABLE_CATEGORIES, null, values);
 	    
@@ -888,6 +933,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    values.put(COLUMN_IDIMAGE, 3);	    
 	    values.put(COLUMN_IDCAT, 3);
 	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category3));
+	    values.put(COLUMN_IDSUBCAT, 0);
 	    values.put(COLUMN_CATTYPE, 0);
 	    db.insert(TABLE_CATEGORIES, null, values);
 	    
