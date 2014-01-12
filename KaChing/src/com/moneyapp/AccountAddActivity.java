@@ -92,7 +92,6 @@ public class AccountAddActivity extends Activity {
 							Float.parseFloat(accountBalance.getText().toString()),accountBalanceCheckInt,accountReportCheckInt));
 					
 					db.close();
-					
 					finish();
 				}
 			}
