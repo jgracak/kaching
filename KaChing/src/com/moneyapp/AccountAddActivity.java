@@ -55,19 +55,6 @@ public class AccountAddActivity extends Activity {
 	    });
 	}
 	
-/*	public void addListenerOnButtonCancel() {
-		 
-		buttonCancel = (Button) findViewById(R.id.buttonCancel);
- 
-		buttonCancel.setOnClickListener(new View.OnClickListener() {
- 
-			@Override
-			public void onClick(View arg0) {
-				finish();
-			}
-		});
-	}*/
-	
 	public void addListenerOnButtonSave() {
 		 
 		buttonSave = (Button) findViewById(R.id.buttonSave);
