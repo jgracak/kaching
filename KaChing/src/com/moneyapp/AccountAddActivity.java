@@ -7,15 +7,18 @@ import com.moneyapp.database.MoneyAppDatabaseHelper;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 public class AccountAddActivity extends Activity {
 	Button buttonSave;
 	Button buttonCancel;
+	Spinner spinner;
 	
 	@Override
 	public void onCreate(Bundle bundle) {
@@ -23,7 +26,34 @@ public class AccountAddActivity extends Activity {
 		setContentView(R.layout.account_add);
 		
 	//	addListenerOnButtonCancel();
-		addListenerOnButtonSave();		
+		addListenerOnButtonSave();
+		
+		spinner = (Spinner) findViewById(R.id.accountTypeChoice);
+		
+		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() 
+	    {           
+	        @Override
+	            public void onItemSelected(AdapterView<?> parent, 
+	                View view, int position, long id) {
+
+	                if(position == 0) {
+	                	ImageView image = (ImageView) findViewById(R.id.add_icon3);
+	                	image.setImageResource(R.drawable.cash);
+	                } else if (position == 1) {
+	                	ImageView image = (ImageView) findViewById(R.id.add_icon3);
+	                	image.setImageResource(R.drawable.bank);	                	
+	                } else if (position == 2) {
+	                	ImageView image = (ImageView) findViewById(R.id.add_icon3);
+	                	image.setImageResource(R.drawable.credit_card);	                	
+	                }
+	                    
+	            }
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {				
+			}
+
+	    });
 	}
 	
 /*	public void addListenerOnButtonCancel() {
