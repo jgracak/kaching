@@ -25,7 +25,6 @@ public class AccountAddActivity extends Activity {
 		super.onCreate(bundle);
 		setContentView(R.layout.account_add);
 		
-	//	addListenerOnButtonCancel();
 		addListenerOnButtonSave();
 		
 		spinner = (Spinner) findViewById(R.id.accountTypeChoice);
