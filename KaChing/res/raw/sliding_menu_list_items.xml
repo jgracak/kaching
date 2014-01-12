@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items>
+    	<item id="1" name="Entries" icon="@drawable/ic_home" />
+		<item id="2" name="Accounts" icon="@drawable/ic_people" />
+		<item id="3" name="Loans" icon="@drawable/ic_photos" />
+		<item id="4" name="Recurring entries" icon="@drawable/ic_communities" />
+		<item id="5" name="Reports" icon="@drawable/ic_pages" />
+		<item id="6" name="Savings" icon="@drawable/ic_whats_hot" />
+		<item id="7" name="Budgets" icon="@drawable/ic_home" />
+		<item id="8" name="Projects" icon="@drawable/ic_people" />
+		<item id="9" name="Forecast" icon="@drawable/ic_photos" />
+		<item id="10" name="Categories" icon="@drawable/ic_communities" />
+		<item id="11" name="Database" icon="@drawable/ic_pages" />
+		<item id="12" name="Settings" icon="@drawable/ic_whats_hot" />
+		
+</items>

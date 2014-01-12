@@ -7,233 +7,49 @@ import com.kaching.R;
 import com.moneyapp.database.*;
 
 import android.os.Bundle;
-import android.content.res.Configuration;
-import android.content.res.TypedArray;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.DrawerLayout;
 import android.text.format.Time;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTabHost;
 
-public class MainActivity extends FragmentActivity {
+import com.moneyapp.slidingmenu.ActivityBase;
+import com.moneyapp.slidingmenu.SlidingMenuInitialiser;
+import com.moneyapp.slidingmenu.SlidingMenuListFragmentConcrete;
 
-	private static final String TAB_1_TAG = "tab_1";
-	private static final String TAB_2_TAG = "tab_2";
+public class MainActivity extends ActivityBase {
 	
-	private FragmentTabHost mTabHost;
-	
-	private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;
-    
-    // nav drawer title
-    private CharSequence mDrawerTitle;
- 
     // used to store app title
     private CharSequence mTitle;
- 
-    // slide menu items
-    private String[] navMenuTitles;
-    private TypedArray navMenuIcons;
- 
-    private ArrayList<NavDrawerItem> navDrawerItems;
-    private NavDrawerListAdapter adapter;
     
 	List<Fragment> fragList = new ArrayList<Fragment>();
-    private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
-
-	protected void onCreate(Bundle savedInstanceState) {
+    
+    @Override
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+        
+		// These two lines of code adds left side sliding out menu to your
+		// activity. First we create new SlidingMenuInitializer instance and
+		// pass our activity as a constructor parameter.
+		slidingMenuInitialiser = new SlidingMenuInitialiser(this);
+		// Secondly we call a method which creates sliding menu from our given
+		// XML file and a fragment to be used as content for our menu.
+		slidingMenuInitialiser.createSlidingMenu(
+				SlidingMenuListFragmentConcrete.class,
+				R.raw.sliding_menu_list_items);
+		
 		//TEST
 		// Method used for testing
         insertDummyData();
         
-        mTitle = mDrawerTitle = getTitle();
-        
-        // load slide menu items
-        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
- 
-        // nav drawer icons from resources
-        navMenuIcons = getResources()
-                .obtainTypedArray(R.array.nav_drawer_icons);
- 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
- 
-        navDrawerItems = new ArrayList<NavDrawerItem>();
- 
-        // adding nav drawer items to array
-        // Entries
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-        // Accounts
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-        // Loans
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-        // Recurring entries
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
-        // Reports
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
-        // Savings
-        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
-        // Budgets
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1)));
-        // Projects
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
-        // Forecast
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons.getResourceId(8, -1)));
-        // Categories        
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[9], navMenuIcons.getResourceId(9, -1)));
-        // Database        
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[10], navMenuIcons.getResourceId(10, -1)));
-        // Settings        
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[11], navMenuIcons.getResourceId(11, -1)));
-         
-        // Recycle the typed array
-        navMenuIcons.recycle();
- 
-        mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
-        
-        // setting the nav drawer list adapter
-        adapter = new NavDrawerListAdapter(getApplicationContext(),
-                navDrawerItems);
-        mDrawerList.setAdapter(adapter);
- 
-        // enabling action bar app icon and behaving it as toggle button
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
- 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_drawer, //nav menu toggle icon
-                R.string.app_name, // nav drawer open - description for accessibility
-                R.string.app_name // nav drawer close - description for accessibility
-        ){
-            public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
-                // calling onPrepareOptionsMenu() to show action bar icons
-                invalidateOptionsMenu();
-            }
- 
-            public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
-                // calling onPrepareOptionsMenu() to hide action bar icons
-                invalidateOptionsMenu();
-            }
-        };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
- 
-        if (savedInstanceState == null) {
-            // on first time display view for first nav item
-            displayView(0);
-        }
-        
-        //initView();
+        // Show the menu od startup
+        slidingMenuInitialiser.getSlidingMenu().toggle();
 	}
-	
-	@Override
-	public void onBackPressed() {
-		boolean isPopFragment = false;
-		String currentTabTag = mTabHost.getCurrentTabTag();
-		if (currentTabTag.equals(TAB_1_TAG)) {
-			isPopFragment = ((BaseContainerFragment)getSupportFragmentManager().findFragmentByTag(TAB_1_TAG)).popFragment();
-		} else if (currentTabTag.equals(TAB_2_TAG)) {
-			isPopFragment = ((BaseContainerFragment)getSupportFragmentManager().findFragmentByTag(TAB_2_TAG)).popFragment();
-		}
-		if (!isPopFragment) {
-			finish();
-		}
+    
+    @Override
+	public boolean enableHomeIconActionSlidingMenu() {
+		return true;
 	}
-	 
-    /**
-     * Slide menu item click listener
-     * */
-    private class SlideMenuClickListener implements
-            ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position,
-                long id) {
-            // display view for selected nav drawer item
-            displayView(position);
-        }
-    }
- 
-     /**
-     * Diplaying fragment view for selected nav drawer list item
-     * */
-    private void displayView(int position) {
-        // update the main content by replacing fragments
-        Fragment fragment = null;
-        int cat = 0;
-        switch (position) {
-        case 0:
-        	fragment = new TransactionsFragment();
-        	getActionBar().setIcon(R.drawable.ic_home);
-            break;
-        case 1:
-        	fragment = new TabAccountListFragment();
-        	getActionBar().setIcon(R.drawable.ic_people);
-            break;
-        case 2:
-        	getActionBar().setIcon(R.drawable.ic_photos);
-            break;
-        case 3:
-        	getActionBar().setIcon(R.drawable.ic_communities);
-            break;
-        case 4:
-        	getActionBar().setIcon(R.drawable.ic_pages);
-            break;
-        case 5:
-        	getActionBar().setIcon(R.drawable.ic_whats_hot);
-            break;
-        case 6:
-        	getActionBar().setIcon(R.drawable.ic_home);
-            break;
-        case 7:
-        	getActionBar().setIcon(R.drawable.ic_people);
-            break;
-        case 8:
-        	getActionBar().setIcon(R.drawable.ic_photos);
-            break;
-        case 9:
-        	fragment = new CategoriesFragment();
-        	getActionBar().setIcon(R.drawable.ic_communities);
-            break;
-        case 10:
-        	getActionBar().setIcon(R.drawable.ic_pages);
-            break;
-        case 11:
-        	getActionBar().setIcon(R.drawable.ic_whats_hot);
-            break;            
-        default:
-            break;
-        }
- 
-        if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.frame_container, fragment).commit();
- 
-            // update selected item and title, then close the drawer
-            mDrawerList.setItemChecked(position, true);
-            mDrawerList.setSelection(position);
-            setTitle(navMenuTitles[position]);
-            mDrawerLayout.closeDrawer(mDrawerList);
-        } else {
-            // error in creating fragment
-            Log.e("MainActivity", "Error in creating fragment");
-        }
-    }
-
+    
 	public void insertDummyData(){
 		MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(this);
 		
@@ -301,74 +117,8 @@ public class MainActivity extends FragmentActivity {
 	}
 	
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        if (savedInstanceState.containsKey(STATE_SELECTED_NAVIGATION_ITEM)) {
-            getActionBar().setSelectedNavigationItem(savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM));
-        }
-    }
-    
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar().getSelectedNavigationIndex());
-    }
-    
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_main, menu);
-		//return true;
-	    return super.onCreateOptionsMenu(menu);
-	}
- 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // toggle nav drawer on selecting action bar app icon/title
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-        case R.id.menu_settings:
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
-        }
-    }
-    
-    /***
-     * Called when invalidateOptionsMenu() is triggered
-     */
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // if nav drawer is opened, hide the action items
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.menu_settings).setVisible(!drawerOpen);
-        return super.onPrepareOptionsMenu(menu);
-    }
- 
-    @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
         getActionBar().setTitle(mTitle);
-    }
- 
-    /**
-     * When using the ActionBarDrawerToggle, you must call it during
-     * onPostCreate() and onConfigurationChanged()...
-     */
- 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
-    }
- 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggls
-        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 }

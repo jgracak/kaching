@@ -102,4 +102,17 @@
         
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
+    
+    <string name="empty_string"></string>
+
+    <!-- TOASTS -->
+    <string name="toast_contact_no_email">"Sorry, we could not find any e-mail apps on your device. Please install first and try again."</string>
+    <string name="toast_unsupported_encoding">"Sorry, your device does not support UTF-8 encoding."</string>
+    <string name="toast_sliding_menu_toggle">"Sliding menu toggled!"</string>
+    <string name="toast_sliding_menu_custom_action">"This could call custom action!"</string>
+    <string name="toast_sliding_menu_no_action_default">"No action by default."</string>
+    
+    <!-- Context menu -->
+    <string name="cnt_menu_edit">Edit</string>
+    <string name="cnt_menu_delete">Delete</string>    
 </resources>
