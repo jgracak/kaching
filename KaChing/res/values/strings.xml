@@ -29,6 +29,7 @@
   	<string name="account_cancel">Cancel</string>
   	<string name="account_type">Type</string>
   	<string name="account_type_prompt">Choose a type</string>
+  	<string name="category_type_prompt">Choose a type</string>  	
   	<string name="account_name_blank">Please enter a name for the account.</string>
   	<string name="account_delete">Delete</string>
   	<string name="action_add"></string>
@@ -40,6 +41,11 @@
         <item>Cash</item>
         <item>Bank</item>
         <item>Credit Card</item>
+    </string-array>
+    
+  	  	<string-array name="category_types">
+        <item>Income</item>
+        <item>Expense</item>
     </string-array>
 
     <string name="action_settings">Settings</string>
@@ -115,4 +121,13 @@
     <!-- Context menu -->
     <string name="cnt_menu_edit">Edit</string>
     <string name="cnt_menu_delete">Delete</string>    
+    <string name="cnt_menu_subcategories">Subcategories</string>
+    
+    <!-- Subcategories -->
+    <string name="subcategory">SUBCATEGORIES</string>
+    <string name="subcat_category">Category</string>
+    <string name="subcat_add_button"></string>
+    <string name="subcat_name">Name</string>
+    <string name="subcat_name_hint">Type the name</string>
+    <string name="subcat_name_empty">Please enter a name for the subcategory.</string>
 </resources>

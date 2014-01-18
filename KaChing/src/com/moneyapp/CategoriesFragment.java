@@ -61,15 +61,10 @@ public class CategoriesFragment extends Fragment {
 	   }
 	}
 	
-	public void SetCategoryView() {
-
-	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);
-
-		SetCategoryView();	
 	}
     
     @Override
@@ -84,5 +79,9 @@ public class CategoriesFragment extends Fragment {
         default:
             return super.onOptionsItemSelected(item);
         }
+    }
+    
+    public FragmentTabHost getTabHost() {
+    	return mTabHost;
     }
 }

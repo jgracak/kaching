@@ -2,10 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
         android:id="@+id/cnt_menu_edit"
-        android:title="@string/cnt_menu_edit"
-        />
+        android:title="@string/cnt_menu_edit"/>
     <item
         android:id="@+id/cnt_menu_delete"
-        android:title="@string/cnt_menu_delete"
-    />
+        android:title="@string/cnt_menu_delete"/>
+    <item
+        android:id="@+id/cnt_menu_subcategories"
+        android:title="@string/cnt_menu_subcategories"/>    
 </menu>

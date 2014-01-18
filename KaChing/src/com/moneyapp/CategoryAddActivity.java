@@ -1,8 +1,11 @@
 package com.moneyapp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.kaching.R;
+import com.moneyapp.TabAccountListFragment.AccountAdapter;
+import com.moneyapp.TabAccountListFragment.Accounts;
 import com.moneyapp.database.Account;
 import com.moneyapp.database.Category;
 import com.moneyapp.database.Image;
@@ -13,11 +16,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.ArrayAdapter;
-import android.view.LayoutInflater;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListAdapter;
+import android.widget.Spinner;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -28,26 +30,27 @@ public class CategoryAddActivity extends Activity {
 	ImageView imageView;
 	Button buttonSave;
 	Button buttonCancel;	
-	
-	static final String[] numbers = new String[] { 
-		"A", "B", "C", "D", "E",
-		"F", "G", "H", "I", "J",
-		"K", "L", "M", "N", "O",
-		"P", "Q", "R", "S", "T",
-		"U", "V", "W", "X", "Y", "Z"};
-	
-	static final Integer[] images = new Integer[] {
-		R.drawable.accounts
-	};
+	Spinner spinner;	
 	
 	@Override
 	public void onCreate(Bundle bundle) {
 		
 		super.onCreate(bundle);
 		setContentView(R.layout.category_add);
+
+		id = 0;
+		
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+		    id = extras.getInt("current_tab");
+		}
 		
 		gridView = (GridView) findViewById(R.id.categoryGridView);
 		imageView = (ImageView) findViewById(R.id.categoryItemImage);
+		spinner = (Spinner) findViewById(R.id.categoryTypeChoiceEdit);	
+		
+		spinner.setSelection(id);
+		spinner.setTag(id);
 		
         MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(this);
         
@@ -73,13 +76,6 @@ public class CategoryAddActivity extends Activity {
 	
 	
 	private void addListenerOnButtonSave() {
-		id = 0;
-		
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-		    id = extras.getInt("current_tab");
-		}
-		
 		buttonSave = (Button) findViewById(R.id.buttonCatSave);
 		
 		buttonSave.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +84,7 @@ public class CategoryAddActivity extends Activity {
 				
 				EditText categoryName = (EditText) findViewById(R.id.categoryNameNew);
 				ImageView categoryImage = (ImageView) findViewById(R.id.categoryItemImage);
+				Spinner categoryType = (Spinner) findViewById(R.id.categoryTypeChoiceEdit);					
 				
 				if (categoryName.getText().toString().trim().equals("")) {
 					Toast.makeText(getApplicationContext(), R.string.category_name_blank, Toast.LENGTH_LONG).show();
@@ -99,9 +96,10 @@ public class CategoryAddActivity extends Activity {
 						Toast.makeText(getApplicationContext(), R.string.category_name_exists, Toast.LENGTH_LONG).show();	
 					} else {
 						// find the last category id for income/expense
-						int catId = db.getCategoryIdByType(id);
+						int catId = db.getLastCategoryId();
 						
-						db.createCategory(new Category(db.getImageIdByRef((Integer) categoryImage.getTag()),catId,categoryName.getText().toString(),0,null,id));
+						db.createCategory(new Category(db.getImageIdByRef((Integer) categoryImage.getTag()),
+								catId + 1,categoryName.getText().toString(),0,null,categoryType.getSelectedItemPosition()));
 					}
 					
 					db.close();

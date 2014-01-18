@@ -10,13 +10,14 @@ package com.kaching;
 public final class R {
     public static final class array {
         public static final int account_types=0x7f0a0000;
+        public static final int category_types=0x7f0a0001;
         /**  Nav Drawer List Item Icons 
  Keep them in order as the titles are in 
          */
-        public static final int nav_drawer_icons=0x7f0a0002;
+        public static final int nav_drawer_icons=0x7f0a0003;
         /**  Nav Drawer Menu Items 
          */
-        public static final int nav_drawer_items=0x7f0a0001;
+        public static final int nav_drawer_items=0x7f0a0002;
     }
     public static final class attr {
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
@@ -407,45 +408,54 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int account_balance=0x7f050022;
         public static final int account_description=0x7f050021;
         public static final int account_image=0x7f050020;
-        public static final int action_add=0x7f05003d;
+        public static final int action_add=0x7f050046;
         public static final int add_icon1=0x7f050007;
         public static final int add_icon2=0x7f050009;
         public static final int add_icon3=0x7f05000b;
+        public static final int buttonAdd=0x7f050039;
         public static final int buttonCancel=0x7f05001f;
-        public static final int buttonCatCancel=0x7f05002b;
-        public static final int buttonCatSave=0x7f05002a;
+        public static final int buttonCatCancel=0x7f05002c;
+        public static final int buttonCatSave=0x7f05002b;
         public static final int buttonDelete=0x7f05001e;
         public static final int buttonSave=0x7f050012;
-        public static final int categoryGridView=0x7f050029;
+        public static final int categoryGridView=0x7f05002a;
         public static final int categoryItemImage=0x7f050027;
         public static final int categoryNameNew=0x7f050028;
-        public static final int cnt_menu_delete=0x7f05003c;
-        public static final int cnt_menu_edit=0x7f05003b;
-        public static final int container_framelayout=0x7f05002c;
-        public static final int counter=0x7f05002f;
+        public static final int categoryTypeChoiceEdit=0x7f050029;
+        public static final int cnt_menu_delete=0x7f050044;
+        public static final int cnt_menu_edit=0x7f050043;
+        public static final int cnt_menu_subcategories=0x7f050045;
+        public static final int container_framelayout=0x7f05002d;
+        public static final int counter=0x7f050030;
         public static final int frame_container=0x7f050023;
         public static final int fullscreen=0x7f050003;
-        public static final int gridView1=0x7f050035;
+        public static final int gridView1=0x7f05003d;
         public static final int grid_item_image=0x7f050024;
         public static final int grid_item_label=0x7f050025;
-        public static final int icon=0x7f05002d;
+        public static final int icon=0x7f05002e;
         public static final int label=0x7f050026;
         public static final int left=0x7f050000;
         public static final int margin=0x7f050002;
-        public static final int menu_settings=0x7f05003e;
-        public static final int realtabcontent=0x7f050030;
+        public static final int menu_settings=0x7f050047;
+        public static final int realtabcontent=0x7f050031;
         public static final int right=0x7f050001;
-        public static final int row_icon=0x7f050032;
-        public static final int row_title=0x7f050033;
+        public static final int row_icon=0x7f050033;
+        public static final int row_title=0x7f050034;
         public static final int selected_view=0x7f050004;
-        public static final int sliding_menu_frame=0x7f050031;
-        public static final int slidingmenumain=0x7f050034;
-        public static final int title=0x7f05002e;
-        public static final int transaction_accTxt=0x7f05003a;
-        public static final int transaction_amount=0x7f050038;
-        public static final int transaction_catImg=0x7f050036;
-        public static final int transaction_catTxt=0x7f050037;
-        public static final int transaction_subCatTxt=0x7f050039;
+        public static final int sliding_menu_frame=0x7f050032;
+        public static final int slidingmenumain=0x7f050035;
+        public static final int subCatNameText=0x7f050036;
+        public static final int subcatName=0x7f050037;
+        public static final int subcat_cat=0x7f05003a;
+        public static final int subcat_description=0x7f05003c;
+        public static final int subcat_image=0x7f05003b;
+        public static final int subcategory=0x7f050038;
+        public static final int title=0x7f05002f;
+        public static final int transaction_accTxt=0x7f050042;
+        public static final int transaction_amount=0x7f050040;
+        public static final int transaction_catImg=0x7f05003e;
+        public static final int transaction_catTxt=0x7f05003f;
+        public static final int transaction_subCatTxt=0x7f050041;
     }
     public static final class layout {
         public static final int account_add=0x7f030000;
@@ -455,24 +465,30 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_main=0x7f030004;
         public static final int cat_grid=0x7f030005;
         public static final int category_add=0x7f030006;
-        public static final int container_fragment=0x7f030007;
-        public static final int drawer_list_item=0x7f030008;
-        public static final int fragment_categories=0x7f030009;
-        public static final int fragment_transaction=0x7f03000a;
-        public static final int image_grid=0x7f03000b;
-        public static final int sliding_menu_frame=0x7f03000c;
-        public static final int sliding_menu_holo_dark_list=0x7f03000d;
-        public static final int sliding_menu_holo_dark_list_row=0x7f03000e;
-        public static final int sliding_menu_holo_light_list=0x7f03000f;
-        public static final int sliding_menu_holo_light_list_row=0x7f030010;
-        public static final int slidingmenumain=0x7f030011;
-        public static final int tab_fragment=0x7f030012;
-        public static final int transaction_list_item=0x7f030013;
+        public static final int category_edit=0x7f030007;
+        public static final int container_fragment=0x7f030008;
+        public static final int drawer_list_item=0x7f030009;
+        public static final int fragment_categories=0x7f03000a;
+        public static final int fragment_transaction=0x7f03000b;
+        public static final int image_grid=0x7f03000c;
+        public static final int sliding_menu_frame=0x7f03000d;
+        public static final int sliding_menu_holo_dark_list=0x7f03000e;
+        public static final int sliding_menu_holo_dark_list_row=0x7f03000f;
+        public static final int sliding_menu_holo_light_list=0x7f030010;
+        public static final int sliding_menu_holo_light_list_row=0x7f030011;
+        public static final int slidingmenumain=0x7f030012;
+        public static final int subcatadd_activity=0x7f030013;
+        public static final int subcatedit_activity=0x7f030014;
+        public static final int subcategory_add=0x7f030015;
+        public static final int subcategory_list_item=0x7f030016;
+        public static final int tab_fragment=0x7f030017;
+        public static final int transaction_list_item=0x7f030018;
     }
     public static final class menu {
         public static final int actions=0x7f0c0000;
         public static final int activity_category=0x7f0c0001;
         public static final int activity_main=0x7f0c0002;
+        public static final int menu_subcat=0x7f0c0003;
     }
     public static final class raw {
         public static final int sliding_menu_list_items=0x7f040000;
@@ -519,7 +535,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int account_add=0x7f090013;
         public static final int account_balance=0x7f090016;
         public static final int account_cancel=0x7f09001a;
-        public static final int account_delete=0x7f09001e;
+        public static final int account_delete=0x7f09001f;
         public static final int account_description=0x7f09000d;
         public static final int account_edit=0x7f090014;
         public static final int account_edit_confirm=0x7f090010;
@@ -529,33 +545,35 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int account_include_balance=0x7f090017;
         public static final int account_include_reports=0x7f090018;
         public static final int account_name=0x7f090015;
-        public static final int account_name_blank=0x7f09001d;
+        public static final int account_name_blank=0x7f09001e;
         public static final int account_row=0x7f090011;
         public static final int account_save=0x7f090019;
         public static final int account_summary=0x7f09000c;
         public static final int account_type=0x7f09001b;
         public static final int account_type_prompt=0x7f09001c;
-        public static final int action_add=0x7f09001f;
-        public static final int action_settings=0x7f090023;
+        public static final int action_add=0x7f090020;
+        public static final int action_settings=0x7f090024;
         public static final int app_name=0x7f090000;
         /**  Category names 
          */
-        public static final int category1=0x7f090026;
-        public static final int category2=0x7f090027;
-        public static final int category3=0x7f090028;
-        public static final int categoryImage=0x7f090020;
-        public static final int category_name_blank=0x7f090021;
-        public static final int category_name_exists=0x7f090022;
-        public static final int cnt_menu_delete=0x7f090039;
+        public static final int category1=0x7f090027;
+        public static final int category2=0x7f090028;
+        public static final int category3=0x7f090029;
+        public static final int categoryImage=0x7f090021;
+        public static final int category_name_blank=0x7f090022;
+        public static final int category_name_exists=0x7f090023;
+        public static final int category_type_prompt=0x7f09001d;
+        public static final int cnt_menu_delete=0x7f09003a;
         /**  Context menu 
          */
-        public static final int cnt_menu_edit=0x7f090038;
+        public static final int cnt_menu_edit=0x7f090039;
+        public static final int cnt_menu_subcategories=0x7f09003b;
         /**  Content Description 
          */
-        public static final int desc_list_item_icon=0x7f090031;
-        public static final int drawer_close=0x7f090025;
-        public static final int drawer_open=0x7f090024;
-        public static final int empty_string=0x7f090032;
+        public static final int desc_list_item_icon=0x7f090032;
+        public static final int drawer_close=0x7f090026;
+        public static final int drawer_open=0x7f090025;
+        public static final int empty_string=0x7f090033;
         public static final int hello_world=0x7f090005;
         public static final int menu_delete=0x7f09000b;
         public static final int menu_insert=0x7f09000a;
@@ -564,19 +582,27 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         /**  Subcategory names expenses 
  Food 
          */
-        public static final int subCategory1=0x7f090029;
-        public static final int subCategory2=0x7f09002a;
-        public static final int subCategory3=0x7f09002b;
+        public static final int subCategory1=0x7f09002a;
+        public static final int subCategory2=0x7f09002b;
+        public static final int subCategory3=0x7f09002c;
         /**  Home 
          */
-        public static final int subCategory4=0x7f09002c;
-        public static final int subCategory5=0x7f09002d;
-        public static final int subCategory6=0x7f09002e;
+        public static final int subCategory4=0x7f09002d;
+        public static final int subCategory5=0x7f09002e;
+        public static final int subCategory6=0x7f09002f;
         /**  Subcategory names expenses 
  Payroll 
          */
-        public static final int subCategory7=0x7f09002f;
-        public static final int subCategory8=0x7f090030;
+        public static final int subCategory7=0x7f090030;
+        public static final int subCategory8=0x7f090031;
+        public static final int subcat_add_button=0x7f09003e;
+        public static final int subcat_category=0x7f09003d;
+        public static final int subcat_name=0x7f09003f;
+        public static final int subcat_name_empty=0x7f090041;
+        public static final int subcat_name_hint=0x7f090040;
+        /**  Subcategories 
+         */
+        public static final int subcategory=0x7f09003c;
         public static final int title_activity_accounts=0x7f090008;
         public static final int title_activity_transaction=0x7f090007;
         public static final int title_section1=0x7f090004;
@@ -585,11 +611,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int title_section4=0x7f090009;
         /**  TOASTS 
          */
-        public static final int toast_contact_no_email=0x7f090033;
-        public static final int toast_sliding_menu_custom_action=0x7f090036;
-        public static final int toast_sliding_menu_no_action_default=0x7f090037;
-        public static final int toast_sliding_menu_toggle=0x7f090035;
-        public static final int toast_unsupported_encoding=0x7f090034;
+        public static final int toast_contact_no_email=0x7f090034;
+        public static final int toast_sliding_menu_custom_action=0x7f090037;
+        public static final int toast_sliding_menu_no_action_default=0x7f090038;
+        public static final int toast_sliding_menu_toggle=0x7f090036;
+        public static final int toast_unsupported_encoding=0x7f090035;
     }
     public static final class style {
         /** 
@@ -680,7 +706,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.kaching:behindOffset
+          @attr name android:behindOffset
         */
         public static final int SlidingMenu_behindOffset = 3;
         /**
@@ -694,7 +720,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.kaching:behindScrollScale
+          @attr name android:behindScrollScale
         */
         public static final int SlidingMenu_behindScrollScale = 5;
         /**
@@ -710,7 +736,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.kaching:behindWidth
+          @attr name android:behindWidth
         */
         public static final int SlidingMenu_behindWidth = 4;
         /**
@@ -724,7 +750,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.kaching:fadeDegree
+          @attr name android:fadeDegree
         */
         public static final int SlidingMenu_fadeDegree = 11;
         /**
@@ -738,7 +764,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.kaching:fadeEnabled
+          @attr name android:fadeEnabled
         */
         public static final int SlidingMenu_fadeEnabled = 10;
         /**
@@ -755,7 +781,7 @@ containing a value of this type.
 <tr><td><code>left</code></td><td>0</td><td></td></tr>
 <tr><td><code>right</code></td><td>1</td><td></td></tr>
 </table>
-          @attr name com.kaching:mode
+          @attr name android:mode
         */
         public static final int SlidingMenu_mode = 0;
         /**
@@ -765,7 +791,7 @@ containing a value of this type.
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.kaching:selectorDrawable
+          @attr name android:selectorDrawable
         */
         public static final int SlidingMenu_selectorDrawable = 13;
         /**
@@ -779,7 +805,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.kaching:selectorEnabled
+          @attr name android:selectorEnabled
         */
         public static final int SlidingMenu_selectorEnabled = 12;
         /**
@@ -789,7 +815,7 @@ containing a value of this type.
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.kaching:shadowDrawable
+          @attr name android:shadowDrawable
         */
         public static final int SlidingMenu_shadowDrawable = 8;
         /**
@@ -805,7 +831,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.kaching:shadowWidth
+          @attr name android:shadowWidth
         */
         public static final int SlidingMenu_shadowWidth = 9;
         /**
@@ -822,7 +848,7 @@ containing a value of this type.
 <tr><td><code>margin</code></td><td>0</td><td></td></tr>
 <tr><td><code>fullscreen</code></td><td>1</td><td></td></tr>
 </table>
-          @attr name com.kaching:touchModeAbove
+          @attr name android:touchModeAbove
         */
         public static final int SlidingMenu_touchModeAbove = 6;
         /**
@@ -839,7 +865,7 @@ containing a value of this type.
 <tr><td><code>margin</code></td><td>0</td><td></td></tr>
 <tr><td><code>fullscreen</code></td><td>1</td><td></td></tr>
 </table>
-          @attr name com.kaching:touchModeBehind
+          @attr name android:touchModeBehind
         */
         public static final int SlidingMenu_touchModeBehind = 7;
         /**
@@ -849,7 +875,7 @@ containing a value of this type.
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.kaching:viewAbove
+          @attr name android:viewAbove
         */
         public static final int SlidingMenu_viewAbove = 1;
         /**
@@ -859,7 +885,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.kaching:viewBehind
+          @attr name android:viewBehind
         */
         public static final int SlidingMenu_viewBehind = 2;
     };

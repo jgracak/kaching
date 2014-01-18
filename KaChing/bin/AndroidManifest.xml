@@ -40,8 +40,32 @@
         <activity            
             android:label="Add Category"
             android:name="com.moneyapp.CategoryAddActivity" 
-            android:theme="@android:style/Theme.Dialog"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:excludeFromRecents="true">
         </activity>
+        <activity            
+            android:label="Edit Category"
+            android:name="com.moneyapp.CategoryEditActivity" 
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:excludeFromRecents="true">
+        </activity>       
+        <activity            
+            android:label="Subcategories"
+            android:name="com.moneyapp.SubCatActivity" 
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:excludeFromRecents="true">
+        </activity>   
+        <activity            
+            android:label="Subcategory add"
+            android:name="com.moneyapp.SubCatAddActivity" 
+            android:theme="@android:style/Theme.Dialog"
+            android:excludeFromRecents="true">
+        </activity>         
+        <activity            
+            android:label="Subcategory edit"
+            android:name="com.moneyapp.SubCatEditActivity" 
+            android:theme="@android:style/Theme.Dialog"
+            android:excludeFromRecents="true">
+        </activity>             
     </application>
 </manifest>

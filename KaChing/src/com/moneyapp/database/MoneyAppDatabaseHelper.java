@@ -696,6 +696,50 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    // return category
 	    return category;
 	}
+	
+	// Get subcategory based on category id and subcategory id
+	public Category getSubCategory(int idCat,int idSubcat) {
+		Category cat = new Category();
+	    // Select All Query
+	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE IdCat = " + idCat + " AND idSubCat = " + idSubcat;
+	 
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	 
+	    // looping through all rows and adding to list
+	    if (cursor.moveToFirst()) {
+	        	cat.setId(cursor.getInt(0));
+	        	cat.setIdImage(cursor.getInt(1));
+	        	cat.setIdCat(cursor.getInt(2));
+	        	cat.setCatDesc(cursor.getString(3));
+	        	cat.setIdSubCat(cursor.getInt(4));
+	        	cat.setSubCatDesc(cursor.getString(5));
+	        	cat.setType(cursor.getInt(6));
+	    }
+	 
+	    // return image list
+	    return cat;
+	}
+	
+	// Get last subcategory in a category
+	public Category getLastSubCategory(int catId) {
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    
+	    Cursor cursor = db.query(TABLE_CATEGORIES, new String[] { COLUMN_ID,
+	    		COLUMN_IDIMAGE,COLUMN_IDCAT,COLUMN_CATDESC,COLUMN_IDSUBCAT,
+	    		COLUMN_SUBCATDESC,COLUMN_CATTYPE}, COLUMN_IDCAT + "=?",
+	            new String[] { String.valueOf(catId) }, null, null, null, null);
+
+	    if (cursor != null)
+	        cursor.moveToLast();
+	 
+	    Category category = new Category(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2),
+	    								cursor.getString(3),cursor.getInt(4),cursor.getString(5),
+	    								cursor.getInt(6));
+	    
+	    // return category
+	    return category;
+	}
 
 	// Getting all categories
 	public List<Category> getAllCategories() {
@@ -786,6 +830,37 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    // return image list
 	    return categoryList;
 	}	
+
+	// Getting all subcategories
+	public List<Category> getAllSubCategories(Category cat) {
+	    List<Category> categoryList = new ArrayList<Category>();
+	    // Select All subcategories query
+	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (idCat = " + cat.getIdCat() + ")"
+	    						+ "AND (idSubCat > 0)";
+	 
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	 
+	    // looping through all rows and adding to list
+	    if (cursor.moveToFirst()) {
+	        do {
+	        	Category category = new Category();
+	        	category.setId(cursor.getInt(0));
+	        	category.setIdImage(cursor.getInt(1));
+	            category.setIdCat(cursor.getInt(2));
+	            category.setCatDesc(cursor.getString(3));
+	            category.setIdSubCat(cursor.getInt(4));
+	            category.setSubCatDesc(cursor.getString(5));
+	            category.setType(cursor.getInt(6));
+	            
+	            // Adding category to list
+	        	categoryList.add(category);
+	        } while (cursor.moveToNext());
+	    }
+	 
+	    // return image list
+	    return categoryList;
+	}	
 	
 	// Getting categories count
     public int getCategoriesCount() {
@@ -829,22 +904,47 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    }
     }
     
+    // Get last category id 
+	public int getLastCategoryId() {
+	    // Select All Query
+	    String selectQuery = "SELECT MAX(IdCat) FROM " + TABLE_CATEGORIES;
+	 
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	 
+	    if (cursor.moveToFirst()) {
+	    	return cursor.getInt(0);
+	    } else {
+	    	return 0;
+	    }  
+	}
+    
     // Updating single category
 	public int updateCategory(Category category) {
 	    SQLiteDatabase db = this.getWritableDatabase();
-		
+	    
 	    ContentValues values = new ContentValues();
 	    
 	    values.put(COLUMN_IDIMAGE, category.getIdImage());	    
-	    values.put(COLUMN_IDCAT, category.getIdCat());
 	    values.put(COLUMN_CATDESC, category.getCatDesc());
-	    values.put(COLUMN_IDSUBCAT, category.getIdSubCat());
-	    values.put(COLUMN_SUBCATDESC, category.getSubCatDesc());
 	    values.put(COLUMN_CATTYPE, category.getType());
 	    
 	    // updating row
+	    return db.update(TABLE_CATEGORIES, values, COLUMN_IDCAT + " = ?",
+	            new String[] { String.valueOf(category.getIdCat()) });
+	}
+	
+    // Updating single subcategory
+	public int updateSubCategoryName(Category category) {
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    
+	    ContentValues values = new ContentValues();
+	    
+	    values.put(COLUMN_SUBCATDESC, category.getSubCatDesc());
+	    
+	    // updating row
 	    return db.update(TABLE_CATEGORIES, values, COLUMN_ID + " = ?",
-	            new String[] { String.valueOf( category.getId()) });
+	            new String[] { String.valueOf(category.getId()) });
 	}
     
 	// Deleting a single category

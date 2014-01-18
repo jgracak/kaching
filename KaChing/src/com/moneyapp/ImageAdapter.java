@@ -44,6 +44,7 @@ public class ImageAdapter extends BaseAdapter {
 			
 			//textView.setText(mobileValues[position]);
 			textView.setText(catList.get(position).getCatDesc());
+			textView.setTag(catList.get(position).getId());
 			
 			// set image based on selected text
 			ImageView imageView = (ImageView) gridView
@@ -53,20 +54,6 @@ public class ImageAdapter extends BaseAdapter {
 			
 			Image image = db.getImage(catList.get(position).getIdImage());
 			imageView.setImageResource(image.getImage());
-			
-			/*
-			String mobile = catList.get(position).getCatDesc();
- 
-			if (mobile.equals("Windows")) {
-				imageView.setImageResource(R.drawable.bank);
-			} else if (mobile.equals("iOS")) {
-				imageView.setImageResource(R.drawable.cash);
-			} else if (mobile.equals("Blackberry")) {
-				imageView.setImageResource(R.drawable.credit_card);
-			} else {
-				imageView.setImageResource(R.drawable.cash);
-			}
-			*/
  
 		} else {
 			gridView = (View) convertView;

@@ -24,6 +24,14 @@
         android:inputType="textCapWords" >
         <requestFocus />
     </EditText>
+    
+    <Spinner
+        android:id="@+id/categoryTypeChoiceEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+	    android:layout_below="@+id/categoryItemImage"        
+        android:entries="@array/category_types"
+        android:prompt="@string/category_type_prompt" />	     
 
    	<GridView
    	    android:id="@+id/categoryGridView"
@@ -31,7 +39,7 @@
    	    android:layout_height="wrap_content"
    	    android:layout_alignParentLeft="true"
    	    android:layout_above="@+id/buttonCatSave"
-   	    android:layout_below="@+id/categoryItemImage"
+   	    android:layout_below="@+id/categoryTypeChoiceEdit"
    	    android:columnWidth="80dp"
    	    android:numColumns="auto_fit"
    	    android:stretchMode="columnWidth" >
