@@ -2,18 +2,19 @@ package com.moneyapp;
 
 import com.kaching.R;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class CategoriesFragment extends Fragment {
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
+public class CategoriesFragment extends SherlockFragment {
 
 	private static final String TAB_1_TAG = "tab_1";
 	private static final String TAB_2_TAG = "tab_2";
@@ -39,11 +40,10 @@ public class CategoriesFragment extends Fragment {
         
         return rootView;
     }
-    
+	
     @Override
-    public void onCreateOptionsMenu(
-          Menu menu, MenuInflater inflater) {
-       inflater.inflate(R.menu.activity_category, menu);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    	getSherlockActivity().getSupportMenuInflater().inflate(R.menu.activity_category, menu);
     }
     
 	@Override	
@@ -66,8 +66,8 @@ public class CategoriesFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);
 	}
-    
-    @Override
+	
+    @Override    
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar actions click
         switch (item.getItemId()) {

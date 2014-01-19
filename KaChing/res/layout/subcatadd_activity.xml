@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/subCatNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/subcat_name"
+        android:layout_marginBottom="20dp"         	 
+     	android:textColor="#FFFFFF"
+     	android:textSize="20sp"> 
+    </TextView>
+         
+    <EditText
+        android:id="@+id/subcatName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_toRightOf="@+id/subCatNameText"
+        android:hint="@string/subcat_name_hint"
+        android:ems="10"
+        android:inputType="textCapWords" />
+    
+   <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/subCatNameText"
+            android:text="@string/account_save"
+            android:textSize="20sp"/>
+   <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/account_cancel"
+            android:layout_toRightOf="@+id/buttonSave"
+            android:layout_below="@+id/subCatNameText"            
+            android:textSize="20sp" />
+   
+</RelativeLayout>

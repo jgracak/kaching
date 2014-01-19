@@ -3,6 +3,7 @@ package com.moneyapp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.kaching.R;
 import com.moneyapp.database.Account;
 import com.moneyapp.database.Category;
@@ -10,7 +11,6 @@ import com.moneyapp.database.Image;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 import com.moneyapp.database.Transaction;
 
-import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.format.Time;
@@ -23,7 +23,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
  
-public class TransactionsFragment extends ListFragment {
+public class TransactionsFragment extends SherlockListFragment {
 
 	class Transactions {
 		private Integer transactionId;

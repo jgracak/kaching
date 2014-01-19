@@ -3,6 +3,9 @@ package com.moneyapp;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.kaching.R;
 import com.moneyapp.database.*;
 
@@ -11,43 +14,71 @@ import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.util.Log;
 
-import com.moneyapp.slidingmenu.ActivityBase;
-import com.moneyapp.slidingmenu.SlidingMenuInitialiser;
-import com.moneyapp.slidingmenu.SlidingMenuListFragmentConcrete;
+import com.moneyapp.slidingmenu.BaseActivity;
+import com.moneyapp.slidingmenu.SlidingMenuListFragment;
 
-public class MainActivity extends ActivityBase {
+public class MainActivity extends BaseActivity {
 	
-    // used to store app title
-    private CharSequence mTitle;
-    
+	private Fragment mContent;
+	
 	List<Fragment> fragList = new ArrayList<Fragment>();
     
+	public MainActivity() {
+		super(R.string.app_name);
+	}
+	
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-        
-		// These two lines of code adds left side sliding out menu to your
-		// activity. First we create new SlidingMenuInitializer instance and
-		// pass our activity as a constructor parameter.
-		slidingMenuInitialiser = new SlidingMenuInitialiser(this);
-		// Secondly we call a method which creates sliding menu from our given
-		// XML file and a fragment to be used as content for our menu.
-		slidingMenuInitialiser.createSlidingMenu(
-				SlidingMenuListFragmentConcrete.class,
-				R.raw.sliding_menu_list_items);
+		
+		// Set title and icon for the selected fragment
+		String[] listItems = getResources().getStringArray(R.array.nav_drawer_items);
+		String[] listItemsIcons = getResources().getStringArray(R.array.nav_drawer_icons);
+		int imageResource = getResources().getIdentifier(listItemsIcons[0].toString(), null, getPackageName());
+		getActionBar().setIcon(imageResource);
+		getActionBar().setTitle(listItems[0].toString());
+		
+		// Here we set the initial fragment
+		// set the Above View
+		if (savedInstanceState != null)
+			mContent = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
+		if (mContent == null)
+			mContent = new TransactionsFragment();
+		setContentView(R.layout.content_frame);
+		getSupportFragmentManager()
+		.beginTransaction()
+		.replace(R.id.content_frame, mContent)
+		.commit();
+		
+		//
+		// set the Behind View
+		setBehindContentView(R.layout.menu_frame);
+		getSupportFragmentManager()
+		.beginTransaction()
+		.replace(R.id.menu_frame, new SlidingMenuListFragment())
+		.commit();
+		
+		// customize the SlidingMenu
+		getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 		
 		//TEST
 		// Method used for testing
         insertDummyData();
-        
-        // Show the menu od startup
-        slidingMenuInitialiser.getSlidingMenu().toggle();
 	}
-    
+
     @Override
-	public boolean enableHomeIconActionSlidingMenu() {
-		return true;
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+	}
+	
+	public void switchContent(Fragment fragment) {
+		mContent = fragment;
+		getSupportFragmentManager()
+		.beginTransaction()
+		.replace(R.id.content_frame, fragment)
+		.commit();
+		getSlidingMenu().showContent();
 	}
     
 	public void insertDummyData(){
@@ -115,10 +146,4 @@ public class MainActivity extends ActivityBase {
             Log.d("Name: ", log);
         }
 	}
-	
-    @Override
-    public void setTitle(CharSequence title) {
-        mTitle = title;
-        getActionBar().setTitle(mTitle);
-    }
 }

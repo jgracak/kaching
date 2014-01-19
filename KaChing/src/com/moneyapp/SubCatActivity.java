@@ -3,13 +3,13 @@ package com.moneyapp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.actionbarsherlock.app.SherlockListActivity;
 import com.kaching.R;
 import com.moneyapp.database.Category;
 import com.moneyapp.database.Image;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,7 +29,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 
-public class SubCatActivity extends ListActivity  {
+public class SubCatActivity extends SherlockListActivity  {
 	int id;	
 	ImageView imageView;
 	TextView textView;

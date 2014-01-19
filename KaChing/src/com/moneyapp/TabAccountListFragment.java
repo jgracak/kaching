@@ -3,12 +3,12 @@ package com.moneyapp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.kaching.R;
 import com.moneyapp.database.Account;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,7 +23,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class TabAccountListFragment extends ListFragment{
+public class TabAccountListFragment extends SherlockListFragment{
 	
    class Accounts {
 	   private Integer accountId;

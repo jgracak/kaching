@@ -1,10 +1,10 @@
 package com.moneyapp;
 
+import com.actionbarsherlock.app.SherlockActivity;
 import com.kaching.R;
 import com.moneyapp.database.Account;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class AccountEditActivity extends Activity {
+public class AccountEditActivity extends SherlockActivity {
 	Button buttonSave;
 	Button buttonDelete;
 	Button buttonCancel;

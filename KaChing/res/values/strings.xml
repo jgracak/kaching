@@ -71,18 +71,18 @@
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
-        <item>@drawable/ic_home</item>
-        <item>@drawable/ic_people</item>
-        <item>@drawable/ic_photos</item>
-        <item>@drawable/ic_communities</item>
-        <item>@drawable/ic_pages</item>
-        <item>@drawable/ic_whats_hot</item>     
-        <item>@drawable/ic_home</item>
-        <item>@drawable/ic_people</item>
-        <item>@drawable/ic_photos</item>
-        <item>@drawable/ic_communities</item>
-        <item>@drawable/ic_pages</item>
-        <item>@drawable/ic_whats_hot</item>            
+        <item>drawable/ic_home</item>
+        <item>drawable/ic_people</item>
+        <item>drawable/ic_photos</item>
+        <item>drawable/ic_communities</item>
+        <item>drawable/ic_pages</item>
+        <item>drawable/ic_whats_hot</item>     
+        <item>drawable/ic_home</item>
+        <item>drawable/ic_people</item>
+        <item>drawable/ic_photos</item>
+        <item>drawable/ic_communities</item>
+        <item>drawable/ic_pages</item>
+        <item>drawable/ic_whats_hot</item>            
     </array>
      
     <!-- Category names -->
@@ -130,4 +130,15 @@
     <string name="subcat_name">Name</string>
     <string name="subcat_name_hint">Type the name</string>
     <string name="subcat_name_empty">Please enter a name for the subcategory.</string>
+    
+        <string name="github">GitHub</string>
+    <string name="github_label">SlidingMenu on GitHub</string>
+    
+        <string-array name="color_names">
+        <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>White</item>
+        <item>Black</item>
+    </string-array>
 </resources>
