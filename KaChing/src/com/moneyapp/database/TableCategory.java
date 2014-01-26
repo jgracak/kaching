@@ -1,6 +1,6 @@
 package com.moneyapp.database;
 
-public class Category {
+public class TableCategory {
     int id;
     int idImage;
     int idCat;
@@ -10,15 +10,15 @@ public class Category {
     int type;
     
  // constructors
-    public Category() {
+    public TableCategory() {
     	
     }
     
-    public Category(int id) {
+    public TableCategory(int id) {
     	this.id = id;
     }
 
-    public Category(int idImage, int idCat, String catDesc, int idSubCat, String subCatDesc, int type){
+    public TableCategory(int idImage, int idCat, String catDesc, int idSubCat, String subCatDesc, int type){
     	this.idImage = idImage;
     	this.idCat = idCat;
     	this.catDesc = catDesc;
@@ -27,7 +27,7 @@ public class Category {
     	this.type = type;
     }
     
-    public Category(int id, int idImage, int idCat, String catDesc, int idSubCat, String subCatDesc, int type){
+    public TableCategory(int id, int idImage, int idCat, String catDesc, int idSubCat, String subCatDesc, int type){
     	this.id = id;
     	this.idImage = idImage;
     	this.idCat = idCat;

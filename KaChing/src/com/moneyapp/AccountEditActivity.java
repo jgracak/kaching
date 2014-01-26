@@ -2,27 +2,58 @@ package com.moneyapp;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.kaching.R;
-import com.moneyapp.database.Account;
+import com.moneyapp.database.TableAccount;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.TextView;
 
 public class AccountEditActivity extends SherlockActivity {
 	Button buttonSave;
 	Button buttonDelete;
-	Button buttonCancel;
+	Spinner spinner;
 	Integer id;
 	
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.account_edit);
+		
+		spinner = (Spinner) findViewById(R.id.accountTypeChoiceEdit);
+		
+		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() 
+	    {           
+	        @Override
+	            public void onItemSelected(AdapterView<?> parent, 
+	                View view, int position, long id) {
+        			
+	        		((TextView) parent.getChildAt(0)).setTextSize(20);
+	        		
+	                if(position == 0) {
+	                	ImageView image = (ImageView) findViewById(R.id.edit_icon3);
+	                	image.setImageResource(R.drawable.cash);
+	                } else if (position == 1) {
+	                	ImageView image = (ImageView) findViewById(R.id.edit_icon3);
+	                	image.setImageResource(R.drawable.bank);	                	
+	                } else if (position == 2) {
+	                	ImageView image = (ImageView) findViewById(R.id.edit_icon3);
+	                	image.setImageResource(R.drawable.credit_card);	                	
+	                }
+	                    
+	            }
+	        @Override
+			public void onNothingSelected(AdapterView<?> arg0) {				
+			}
+
+	    });
 		
 		id = 0;
 		
@@ -33,7 +64,7 @@ public class AccountEditActivity extends SherlockActivity {
 		
 		MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
 		if (id != 0) {
-			Account account = db.getAccount(id);
+			TableAccount account = db.getAccount(id);
 			
 			EditText accountName = (EditText) findViewById(R.id.accountNameEditNew);
 			accountName.setText(account.getDescription());
@@ -56,20 +87,7 @@ public class AccountEditActivity extends SherlockActivity {
 		}
 		
 		addListenerOnButtonSave();
-		addListenerOnButtonDelete();
-		addListenerOnButtonCancel();			
-	}
-
-	private void addListenerOnButtonCancel() {
-		buttonCancel = (Button) findViewById(R.id.buttonCancel);
-		 
-		buttonCancel.setOnClickListener(new View.OnClickListener() {
- 
-			@Override
-			public void onClick(View arg0) {
-				finish();
-			}
-		});
+		addListenerOnButtonDelete();			
 	}
 
 	private void addListenerOnButtonDelete() {
@@ -81,7 +99,7 @@ public class AccountEditActivity extends SherlockActivity {
 			public void onClick(View arg0) {
 				MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
 				
-				Account account = new Account(id);
+				TableAccount account = new TableAccount(id);
 				
 				db.deleteAccount(account);
 				
@@ -125,7 +143,7 @@ public class AccountEditActivity extends SherlockActivity {
 					Toast.makeText(getApplicationContext(), R.string.account_name_blank, Toast.LENGTH_LONG).show();
 				} else {
 					MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
-					Account account = new Account(id,accountName.getText().toString(),accountType.getSelectedItemPosition()+1,
+					TableAccount account = new TableAccount(id,accountName.getText().toString(),accountType.getSelectedItemPosition()+1,
 							1,Float.parseFloat(accountBalance.getText().toString()),accountBalanceCheckInt,accountReportCheckInt);
 					
 					db.updateAccount(account);

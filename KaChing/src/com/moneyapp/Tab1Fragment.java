@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.kaching.R;
-import com.moneyapp.database.Category;
+import com.moneyapp.database.TableCategory;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 
 import android.app.AlertDialog;
@@ -36,13 +36,40 @@ public class Tab1Fragment extends SherlockFragment {
 		super.onActivityCreated(savedInstanceState);
 		initView();
 	}
+	
+	public void callDialog(TextView cat) {
+		final TextView catText = cat;
+		
+		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		        switch (which){
+		        case DialogInterface.BUTTON_POSITIVE:
+		        	MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(getActivity());
+		        	
+		        	db.deleteTransactionCat(db.getCategory((Integer)catText.getTag()));
+		        	db.deleteCategory(db.getCategory((Integer)catText.getTag()));
+					
+		        	db.close();
+		        	initView();
+		            break;
+		        case DialogInterface.BUTTON_NEGATIVE:
+		            //No button clicked
+		            break;
+		        }
+		    }
+		};
+		AlertDialog.Builder builder = new AlertDialog.Builder(getSherlockActivity());
+		builder.setMessage("Do you want to delete " + catText.getText() + " category? All transaction linked to this category will be deleted.")
+		    .setNegativeButton("No", dialogClickListener).setPositiveButton("Yes", dialogClickListener).show();
+	}
 
 	private void initView() {	
 		gridView = (GridView) getView().findViewById(R.id.gridView1);
         
         MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(getActivity().getBaseContext().getApplicationContext());
         
-        List<Category> catList = db.getAllIncomeCategories();
+        List<TableCategory> catList = db.getAllIncomeCategories();
         
 		gridView.setAdapter(new ImageAdapter(getActivity().getBaseContext().getApplicationContext(), 
 				catList));
@@ -68,28 +95,7 @@ public class Tab1Fragment extends SherlockFragment {
 						    		startActivity(i);
 						        	return true;
 								} else if (arg0.getTitle().equals(getResources().getString(R.string.cnt_menu_delete))) {
-									DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-									    @Override
-									    public void onClick(DialogInterface dialog, int which) {
-									        switch (which){
-									        case DialogInterface.BUTTON_POSITIVE:
-									        	MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(getActivity());
-									        	db.deleteCategory(db.getCategory((Integer)catText.getTag()));
-												//TODO
-												// Delete all transactions linked to category
-									        	db.close();
-									        	initView();
-									            break;
-									        case DialogInterface.BUTTON_NEGATIVE:
-									            //No button clicked
-									            break;
-									        }
-									    }
-									};
-									
-									AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-									builder.setMessage("Do you want to delete " + catText.getText() + " category? All transaction linked to this category will be deleted.").setPositiveButton("Yes", dialogClickListener)
-									    .setNegativeButton("No", dialogClickListener).show();
+									callDialog(catText);
 									return true;
 								} else if (arg0.getTitle().equals(getResources().getString(R.string.cnt_menu_subcategories))){
 						    		Intent i = new Intent(getActivity().getBaseContext().getApplicationContext(), SubCatActivity.class);

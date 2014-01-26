@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.kaching.R;
-import com.moneyapp.database.Account;
-import com.moneyapp.database.Category;
-import com.moneyapp.database.Image;
+import com.moneyapp.database.TableAccount;
+import com.moneyapp.database.TableCategory;
+import com.moneyapp.database.TableImage;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
-import com.moneyapp.database.Transaction;
+import com.moneyapp.database.TableTransaction;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.view.LayoutInflater;
@@ -120,51 +124,29 @@ public class TransactionsFragment extends SherlockListFragment {
            } else transactionHolder = (TransactionViewHolder)v.getTag(); 
            
            MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
-           Account account = db.getAccount(transaction.getAccountId());
-           Category category = db.getCategory(transaction.getCategoryId());
-           Image image = db.getImage(category.getIdImage());
+           TableAccount account = db.getAccount(transaction.getAccountId());
+           TableCategory category = db.getCategory(transaction.getCategoryId());
+           TableImage image = db.getImage(category.getIdImage());
            
            transactionHolder.catImg.setImageResource(image.getImage());
            transactionHolder.amount.setText(Float.toString(transaction.getAmount()));
            transactionHolder.catTxt.setText(category.getCatDesc());
-           if (category.getSubCatDesc() != null)
+           
+           if (category.getSubCatDesc() != null) {
         	   transactionHolder.subCatTxt.setText(category.getSubCatDesc());
-
+           } else {
+        	   transactionHolder.subCatTxt.setText("");
+           }
+        	   
            if (account != null) {
         	   transactionHolder.accTxt.setText(account.getDescription());
            }
            else {
-        	   // This should never happen
-        	   transactionHolder.accTxt.setText("No Acc");
+        	   transactionHolder.accTxt.setText("");
            }
            
            db.close();
-           
-           /*
-           if (account != null) {
-        	   if (account.getImage() == 0) {
-        		   accountHolder.description.setText(R.string.account_add);       		 
-        		   accountHolder.balance.setText(""); 
-        		   accountHolder.image.setImageResource(R.drawable.plus);
-        	   } else {
-            	   if (account.getBalance() < 0)
-            		   accountHolder.balance.setTextColor(Color.RED);
-            	   else
-            		   accountHolder.balance.setTextColor(getResources().getColor(R.color.DarkGreen));
-            		
-            	   accountHolder.balance.setText(Float.toString(account.getBalance()));
-            	   accountHolder.description.setText(account.getDescription());
-            	   
-            	   if (account.getImage() == 1) {
-            		   accountHolder.image.setImageResource(R.drawable.cash);
-            	   } else if (account.getImage() == 2){
-            		   accountHolder.image.setImageResource(R.drawable.bank);
-            	   } else if (account.getImage() == 3) {
-            		   accountHolder.image.setImageResource(R.drawable.credit_card);            		   
-            	   }
-        	   }
-           }
-		*/
+
            return v;
        }
    }
@@ -172,11 +154,9 @@ public class TransactionsFragment extends SherlockListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);
-
+		setHasOptionsMenu(true);
 		SetTransactionView();	
 	}
-	
-	
      
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -198,10 +178,10 @@ public class TransactionsFragment extends SherlockListFragment {
 	public void SetTransactionView() {
 	       // Reading all accounts
 	       MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
-	       List<Transaction> transactions = db.getAllTransactions();    
+	       List<TableTransaction> transactions = db.getAllTransactions();    
 	       ArrayList<Transactions> TransactionList = new ArrayList<Transactions>();
 	        
-	       for (Transaction transaction : transactions) {
+	       for (TableTransaction transaction : transactions) {
 	    	   TransactionList.add(new Transactions(transaction.getId(),transaction.getTransDate(),
 	    			   transaction.getIdCategory(),transaction.getAmount(),transaction.getIdAccount()));
 	       }
@@ -211,12 +191,34 @@ public class TransactionsFragment extends SherlockListFragment {
 			setListAdapter(listAdapter);
 	}
 	
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	    // Inflate the menu items for use in the action bar
+	    inflater.inflate(R.menu.transactions_menu, menu);
+	    super.onCreateOptionsMenu(menu, inflater);
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar actions click
+        switch (item.getItemId()) {
+        case R.id.transaction_add:
+    		Intent i = new Intent(getActivity().getBaseContext().getApplicationContext(), TransactionAddActivity.class);
+    		startActivity(i);
+        	return true;
+        case R.id.transaction_options:
+        	return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+	
 	@Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 		
 	    ListView v = new ListView(getActivity().getBaseContext().getApplicationContext());
 	    v = getListView();
 	    
+	    // TODO
+	    // ovdje ide popup menu s 3 opcije, edit, copy, delete
 	    /*
 	    v.setOnItemClickListener(new OnItemClickListener() {
             @Override

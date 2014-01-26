@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.kaching.R;
-import com.moneyapp.database.Category;
+import com.moneyapp.database.TableCategory;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 
 public class SubCatEditActivity extends Activity {
@@ -16,7 +16,7 @@ public class SubCatEditActivity extends Activity {
 	Button buttonCancel;
 	Integer catId;
 	Integer subcatId;
-	Category cat;
+	TableCategory cat;
 	EditText subcatText;
 	
 	@Override
@@ -72,12 +72,16 @@ public class SubCatEditActivity extends Activity {
 				} else {
 					MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
 					
-					cat.setSubCatDesc(subcatName.getText().toString().trim());
-					
-					db.updateSubCategoryName(cat);
+					if (db.getSubCategoryByName(subcatName.getText().toString().trim(), cat.getIdCat()) == true) {
+						Toast.makeText(getApplicationContext(), R.string.subcategory_name_exists, Toast.LENGTH_LONG).show();		
+					} else {
+						cat.setSubCatDesc(subcatName.getText().toString().trim());
+						
+						db.updateSubCategoryName(cat);
 
-					db.close();
-					finish();
+						db.close();
+						finish();
+					}
 				}
 			}
 		});

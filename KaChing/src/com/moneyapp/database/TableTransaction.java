@@ -3,7 +3,7 @@ package com.moneyapp.database;
 
 import android.text.format.Time;
 
-public class Transaction {
+public class TableTransaction {
 	int id;
 	Time transDate;
 	int idCategory;
@@ -12,11 +12,11 @@ public class Transaction {
 	int idAccount;
 	
 	//constructors
-	public Transaction() {
+	public TableTransaction() {
 		
 	}
 	
-	public Transaction (int id, Time transDate, int idCategory, float amount, String note, int idAccount){
+	public TableTransaction (int id, Time transDate, int idCategory, float amount, String note, int idAccount){
 		this.id = id;
 		this.transDate = transDate;
 		this.idCategory = idCategory;
@@ -25,7 +25,7 @@ public class Transaction {
 		this.idAccount = idAccount;
 	}
 
-	public Transaction (Time transDate, int idCategory, float amount, String note, int idAccount){
+	public TableTransaction (Time transDate, int idCategory, float amount, String note, int idAccount){
 		this.transDate = transDate;
 		this.idCategory = idCategory;
 		this.amount = amount;

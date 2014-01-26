@@ -1,21 +1,21 @@
 package com.moneyapp.database;
 
-public class Image {
+public class TableImage {
 	int id;
 	int image;
 	int type;
 	
 	// constructors
-	public Image(){
+	public TableImage(){
 		
 	}
 	
-	public Image(int image, int type){
+	public TableImage(int image, int type){
 		this.image = image;
 		this.type = type;
 	}
 	
-	public Image(int id, int image, int type){
+	public TableImage(int id, int image, int type){
 		this.id = id;
 		this.image = image;
 		this.type = type;

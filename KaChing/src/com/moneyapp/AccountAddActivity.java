@@ -2,11 +2,12 @@ package com.moneyapp;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.kaching.R;
-import com.moneyapp.database.Account;
+import com.moneyapp.database.TableAccount;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 
 import android.os.Bundle;
 import android.view.View;
+import android.util.TypedValue;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,10 +15,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.TextView;
 
 public class AccountAddActivity extends SherlockActivity {
 	Button buttonSave;
-	Button buttonCancel;
 	Spinner spinner;
 	
 	@Override
@@ -34,7 +35,7 @@ public class AccountAddActivity extends SherlockActivity {
 	        @Override
 	            public void onItemSelected(AdapterView<?> parent, 
 	                View view, int position, long id) {
-
+	        		((TextView) parent.getChildAt(0)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 	                if(position == 0) {
 	                	ImageView image = (ImageView) findViewById(R.id.add_icon3);
 	                	image.setImageResource(R.drawable.cash);
@@ -88,7 +89,7 @@ public class AccountAddActivity extends SherlockActivity {
 					Toast.makeText(getApplicationContext(), R.string.account_name_blank, Toast.LENGTH_LONG).show();
 				} else {
 					MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
-					db.createAccount(new Account(accountName.getText().toString(),accountType.getSelectedItemPosition() + 1,1,
+					db.createAccount(new TableAccount(accountName.getText().toString(),accountType.getSelectedItemPosition() + 1,1,
 							Float.parseFloat(accountBalance.getText().toString()),accountBalanceCheckInt,accountReportCheckInt));
 					
 					db.close();

@@ -1,6 +1,6 @@
 package com.moneyapp.database;
 
-public class Account {
+public class TableAccount {
     int id;
     String description;
     int type;
@@ -10,14 +10,14 @@ public class Account {
     int exclude_from_reports;
  
     // constructors
-    public Account() {
+    public TableAccount() {
     }
     
-    public Account(int id){
+    public TableAccount(int id){
     	this.id = id;
     }
  
-    public Account(String description,int type, int book_id,float starting_balance,
+    public TableAccount(String description,int type, int book_id,float starting_balance,
     		int exclude_from_balance, int exclude_from_reports) {
         this.description = description;
         this.type = type;
@@ -27,7 +27,7 @@ public class Account {
         this.exclude_from_reports = exclude_from_reports;
     }
  
-    public Account(int id, String description,int type, int book_id,float starting_balance,
+    public TableAccount(int id, String description,int type, int book_id,float starting_balance,
     		int exclude_from_balance, int exclude_from_reports) {
         this.id = id;
         this.description = description;

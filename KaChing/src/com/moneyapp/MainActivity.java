@@ -3,8 +3,6 @@ package com.moneyapp;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.kaching.R;
 import com.moneyapp.database.*;
@@ -34,7 +32,7 @@ public class MainActivity extends BaseActivity {
 		// Set title and icon for the selected fragment
 		String[] listItems = getResources().getStringArray(R.array.nav_drawer_items);
 		String[] listItemsIcons = getResources().getStringArray(R.array.nav_drawer_icons);
-		int imageResource = getResources().getIdentifier(listItemsIcons[0].toString(), null, getPackageName());
+		int imageResource = getResources().getIdentifier(listItemsIcons[1].toString(), null, getPackageName());
 		getActionBar().setIcon(imageResource);
 		getActionBar().setTitle(listItems[0].toString());
 		
@@ -64,12 +62,51 @@ public class MainActivity extends BaseActivity {
 		//TEST
 		// Method used for testing
         insertDummyData();
+        
+        getSlidingMenu().setOnOpenListener(new SlidingMenu.OnOpenListener() {
+
+            @Override
+            public void onOpen() {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            }
+
+        });
+        
+        getSlidingMenu().setOnCloseListener(new SlidingMenu.OnCloseListener() {
+			
+			@Override
+			public void onClose() {
+				getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+				
+			}
+		});
 	}
 
     @Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+	}
+    
+    @Override
+	public void toggle() {
+		if (getSlidingMenu().isShown() == true) {
+			getActionBar().setDisplayHomeAsUpEnabled(false);
+		} 
+		super.toggle();
+	}
+    
+    @Override    
+    public void showContent() {
+		if (getSlidingMenu().isShown() == false) {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+		} 
+		super.showContent();
+	}
+    
+    @Override      
+	public void showMenu() {
+    	super.showMenu();
 	}
 	
 	public void switchContent(Fragment fragment) {
@@ -79,6 +116,7 @@ public class MainActivity extends BaseActivity {
 		.replace(R.id.content_frame, fragment)
 		.commit();
 		getSlidingMenu().showContent();
+		
 	}
     
 	public void insertDummyData(){
@@ -88,16 +126,16 @@ public class MainActivity extends BaseActivity {
 		
 		// Inserting Accounts
 		Log.d("Insert: ", "Inserting .."); 
-        db.createAccount(new Account("Test",1,1,123,1,1));        
-        db.createAccount(new Account("Test2",2,1,155,1,1));   
-        db.createAccount(new Account("Test3",3,1,167,1,1));   
-        db.createAccount(new Account("Test4",1,1,-178,1,1));   
+        db.createAccount(new TableAccount("Account1",1,1,123,1,1));        
+        db.createAccount(new TableAccount("Account2",2,1,155,1,1));   
+        db.createAccount(new TableAccount("Account3",3,1,167,1,1));   
+        db.createAccount(new TableAccount("Account4",1,1,-178,1,1));   
 		
         // Reading all accounts
         Log.d("Reading: ", "Reading all accounts.."); 
-        List<Account> accounts = db.getAllAccounts();       
+        List<TableAccount> accounts = db.getAllAccounts();       
          
-        for (Account account : accounts) {
+        for (TableAccount account : accounts) {
             String log = "Id: "+account.getId()+"| Description: " + account.getDescription() + "| Type: " + account.getType() +
             		"| Book ID: " + account.getBookId() + "| Starting balance: " + account.getStartingBalance() +
             		"| Exclude from balance: " + account.getExcludeFromBalance() + "| Exclude from reports: " +
@@ -112,29 +150,39 @@ public class MainActivity extends BaseActivity {
 		Time time = new Time();
 		time.setToNow();
 		
-        db.createTransaction(new Transaction(time,1,-120,"test1",1));     
+        db.createTransaction(new TableTransaction(time,1,1,"test1",1));     
         time.month += 1;       
-        db.createTransaction(new Transaction(time,2,-50,"test2",2));  
+        db.createTransaction(new TableTransaction(time,1,2,"test2",1));  
         time.month -= 5;
-        db.createTransaction(new Transaction(time,3,-1,"test3",3));    
+        db.createTransaction(new TableTransaction(time,2,3,"test3",3));    
         time.monthDay += 2;
-        db.createTransaction(new Transaction(time,4,-2,"test4",4));             
+        db.createTransaction(new TableTransaction(time,3,-4,"test4",1));             
         time.monthDay += 5;
-        db.createTransaction(new Transaction(time,5,-155,null,1));  
+        db.createTransaction(new TableTransaction(time,4,5,null,1));  
         time.monthDay += 3;
-        db.createTransaction(new Transaction(time,6,-76,null,2));  
+        db.createTransaction(new TableTransaction(time,5,6,null,1));  
         time.monthDay += 1;
-        db.createTransaction(new Transaction(time,7,-23,null,3));  
+        db.createTransaction(new TableTransaction(time,6,-7,null,1));  
         time.monthDay += 3;
-        db.createTransaction(new Transaction(time,8,-76,null,2));  
+        db.createTransaction(new TableTransaction(time,6,8,null,2));  
         time.monthDay += 1;
-        db.createTransaction(new Transaction(time,9,2000,null,3));  
+        db.createTransaction(new TableTransaction(time,7,-9,null,3));  
+        time.monthDay += 1;
+        db.createTransaction(new TableTransaction(time,7,10,null,1));  
+        time.monthDay += 1;
+        db.createTransaction(new TableTransaction(time,8,-11,null,3));  
+        time.monthDay += 1;
+        db.createTransaction(new TableTransaction(time,9,12,null,1));  
+        time.monthDay += 1;
+        db.createTransaction(new TableTransaction(time,9,13,null,3));  
+        time.monthDay += 1;
+        db.createTransaction(new TableTransaction(time,9,-14,null,3));          
         
         // Reading all transaction
         Log.d("Reading: ", "Reading all transactions.."); 
-        List<Transaction> transactions = db.getAllTransactions();       
+        List<TableTransaction> transactions = db.getAllTransactions();       
          
-        for (Transaction transaction : transactions) {
+        for (TableTransaction transaction : transactions) {
             String log = "Id: " + transaction.getId()+
             		      "| transDate: " + transaction.getTransDate().toString() + 
             		      "| idCategory: " + transaction.getIdCategory() +

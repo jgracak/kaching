@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?><RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pozadina"
+    android:orientation="horizontal" >
+
+    <!-- upper part -->
+    <RelativeLayout
+        android:id="@+id/upperLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/list_pressed2" >
+
+        <TextView
+            android:id="@+id/accountChoseText"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/list_pressed2"
+            android:gravity="center"
+            android:text="@string/account_choose"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" >
+        </TextView>
+
+        <ImageButton
+            android:id="@+id/buttonAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+			android:src="@drawable/plus"       
+			android:background="@color/list_pressed2"			     
+            android:layout_alignParentRight="true"
+            android:layout_alignRight="@+id/accountChoseText"
+            android:contentDescription="@string/subcat_add_button"
+            android:gravity="center" />
+    </RelativeLayout>
+	
+    <ListView
+        android:id="@+id/accountList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:layout_below="@+id/upperLayout"             
+        android:drawSelectorOnTop="false" >
+    </ListView>
+    
+</RelativeLayout>

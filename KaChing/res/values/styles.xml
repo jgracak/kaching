@@ -51,5 +51,14 @@
 	    <item name="android:windowIsTranslucent">true</item>
 	</style>
 	
+	<style name="CustomStyleUpAsHome" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+        <item name="android:homeAsUpIndicator">@drawable/ic_action_sliding_menu</item>
+        <item name="homeAsUpIndicator">@drawable/ic_action_sliding_menu</item>
+    </style>
+    
+	<style name="CustomStyleUpAsHome" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+        <item name="android:homeAsUpIndicator">@drawable/ic_action_sliding_menu</item>
+        <item name="homeAsUpIndicator">@drawable/ic_action_sliding_menu</item>
+    </style>	
 	
 </resources>

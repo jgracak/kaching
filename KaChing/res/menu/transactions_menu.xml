@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/transaction_add"
+          android:icon="@drawable/plus"
+          android:title="@string/action_add"
+          android:showAsAction="always" />
+    <item android:id="@+id/transaction_options"
+          android:icon="@drawable/ic_action_overflow"
+          android:title="@string/transaction_options"
+          android:showAsAction="always" />    
+</menu>

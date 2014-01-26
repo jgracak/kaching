@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.kaching.R;
-import com.moneyapp.database.Category;
-import com.moneyapp.database.Image;
+import com.moneyapp.database.TableCategory;
+import com.moneyapp.database.TableImage;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 
 import android.os.Bundle;
@@ -49,7 +49,7 @@ public class CategoryAddActivity extends SherlockActivity {
 		
         MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(this);
         
-        List<Image> imageList = db.getAllImagesType(0);
+        List<TableImage> imageList = db.getAllImagesType(0);
         
 		gridView.setAdapter(new CatAddImageAdapter(this, imageList));
 		
@@ -65,8 +65,7 @@ public class CategoryAddActivity extends SherlockActivity {
 			}
 		});
 		
-		addListenerOnButtonSave();
-		addListenerOnButtonCancel();	
+		addListenerOnButtonSave();	
 	}
 	
 	
@@ -93,7 +92,7 @@ public class CategoryAddActivity extends SherlockActivity {
 						// find the last category id for income/expense
 						int catId = db.getLastCategoryId();
 						
-						db.createCategory(new Category(db.getImageIdByRef((Integer) categoryImage.getTag()),
+						db.createCategory(new TableCategory(db.getImageIdByRef((Integer) categoryImage.getTag()),
 								catId + 1,categoryName.getText().toString(),0,null,categoryType.getSelectedItemPosition()));
 					}
 					
@@ -104,17 +103,5 @@ public class CategoryAddActivity extends SherlockActivity {
 			}
 		});
 		
-	}
-	
-	private void addListenerOnButtonCancel() {
-		buttonCancel = (Button) findViewById(R.id.buttonCatCancel);
-		 
-		buttonCancel.setOnClickListener(new View.OnClickListener() {
- 
-			@Override
-			public void onClick(View arg0) {
-				finish();
-			}
-		});
 	}
 }

@@ -7,6 +7,12 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="18" />
+    
+    <supports-screens
+		android:smallScreens="true"
+		android:normalScreens="true"
+		android:largeScreens= "true"
+		android:anyDensity="true" />
 
     <application
         android:allowBackup="true"
@@ -66,6 +72,18 @@
             android:name="com.moneyapp.SubCatEditActivity" 
             android:theme="@android:style/Theme.Dialog"
             android:excludeFromRecents="true">
-        </activity>             
+        </activity>        
+        <activity            
+            android:label="Transaction add"
+            android:name="com.moneyapp.TransactionAddActivity" 
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:excludeFromRecents="true">
+        </activity>     
+        <activity            
+            android:label="Choose account"
+            android:name="com.moneyapp.AccountChooseActivity" 
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:excludeFromRecents="true">
+        </activity>            
     </application>
 </manifest>

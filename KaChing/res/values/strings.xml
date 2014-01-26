@@ -1,49 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">KaChing</string>
-    <string name="no_accounts">No accounts are set.</string>
-    <string name="title_section3">B</string>
-    <string name="title_section2">A</string>
-    <string name="title_section1">T</string>
-    <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_transaction">TransactionActivity</string>
     <string name="title_activity_accounts">AccountsActivity</string>
-    <string name="title_section4">M</string>
     <string name="menu_insert">Add Account</string>
     <string name="menu_delete">Delete Account</string>
-    <string name="account_summary">Summary</string>
-	<string name="account_description">Delete Account</string>
-  	<string name="account_edit_summary">Summary</string>
-  	<string name="account_edit_description">Description</string>
-  	<string name="account_edit_confirm">Confirm</string>
-  	<string name="account_row">Account</string>	
-  	<string name="account_icon">Account icon</string>
-  	<string name="account_add">ADD A NEW ACCOUNT</string>
-  	<string name="account_edit">EDIT ACCOUNT</string>	
-  	<string name="account_name">Name</string>
-  	<string name="account_balance">Initial Balance</string>
-  	<string name="account_include_balance">Include in Balance</string>
-  	<string name="account_include_reports">Include in Reports</string>
-  	<string name="account_save">SAVE</string>
-  	<string name="account_cancel">Cancel</string>
-  	<string name="account_type">Type</string>
-  	<string name="account_type_prompt">Choose a type</string>
-  	<string name="category_type_prompt">Choose a type</string>  	
-  	<string name="account_name_blank">Please enter a name for the account.</string>
-  	<string name="account_delete">Delete</string>
   	<string name="action_add"></string>
-  	<string name="categoryImage">Image</string>
-  	<string name="category_name_blank">Please enter a name for the category.</string>
-  	<string name="category_name_exists">Category name already exists.</string>
-  	
-  	<string-array name="account_types">
-        <item>Cash</item>
-        <item>Bank</item>
-        <item>Credit Card</item>
-    </string-array>
     
-  	  	<string-array name="category_types">
+  	<!-- Category types -->    
+  	<string-array name="category_types">
         <item>Income</item>
         <item>Expense</item>
     </string-array>
@@ -54,10 +20,12 @@
     
   	<!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
+        <item >Main</item>
         <item >Entries</item>
         <item >Accounts</item>
         <item >Loans</item>
         <item >Recurring entries</item>
+        <item >Group 1</item>
         <item >Reports</item>
         <item >Savings</item>       
         <item >Budgets</item>
@@ -67,14 +35,36 @@
         <item >Database</item>
         <item >Settings</item>                       
     </string-array>
+ 
+    <!-- Nav Drawer Menu type -->
+    <!-- 1=groups, 0=items -->
+    <string-array name="naw_drawer_type">
+        <item >1</item>
+        <item >0</item>
+        <item >0</item>
+        <item >0</item>
+        <item >0</item>
+        <item >1</item>
+        <item >0</item>
+        <item >0</item>
+        <item >0</item>
+        <item >0</item>     
+        <item >0</item>
+        <item >0</item>
+        <item >0</item>
+        <item >0</item>                      
+    </string-array>
     
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
+    <!-- The ones numbered with 1 are groups -->
     <array name="nav_drawer_icons">
+        <item >1</item>        
         <item>drawable/ic_home</item>
         <item>drawable/ic_people</item>
         <item>drawable/ic_photos</item>
         <item>drawable/ic_communities</item>
+        <item >1</item>        
         <item>drawable/ic_pages</item>
         <item>drawable/ic_whats_hot</item>     
         <item>drawable/ic_home</item>
@@ -84,34 +74,11 @@
         <item>drawable/ic_pages</item>
         <item>drawable/ic_whats_hot</item>            
     </array>
-     
-    <!-- Category names -->
-    <string name="category1">Food</string>
-    <string name="category2">Home</string>
-    <string name="category3">Payroll</string>
-    
-    <!-- Subcategory names expenses -->
-    <!-- Food -->
-    <string name="subCategory1">Home</string>
-    <string name="subCategory2">Work</string>
-    <string name="subCategory3">Out</string>
-    <!-- Home -->
-    <string name="subCategory4">Repairs</string>
-    <string name="subCategory5">Car</string>
-    <string name="subCategory6">Cleaning</string>    
- 
-        
-    <!-- Subcategory names expenses -->
-    <!-- Payroll -->
-    <string name="subCategory7">Paycheck</string>
-    <string name="subCategory8">Bonus</string>     
-        
+  
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
-    
-    <string name="empty_string"></string>
 
-    <!-- TOASTS -->
+    <!-- Toast messages -->
     <string name="toast_contact_no_email">"Sorry, we could not find any e-mail apps on your device. Please install first and try again."</string>
     <string name="toast_unsupported_encoding">"Sorry, your device does not support UTF-8 encoding."</string>
     <string name="toast_sliding_menu_toggle">"Sliding menu toggled!"</string>
@@ -121,8 +88,46 @@
     <!-- Context menu -->
     <string name="cnt_menu_edit">Edit</string>
     <string name="cnt_menu_delete">Delete</string>    
+    <string name="cnt_menu_delete">Delete</string>        
     <string name="cnt_menu_subcategories">Subcategories</string>
     
+    <!-- Accounts -->
+	<string name="account_summary">Summary</string>
+	<string name="account_description">Delete Account</string>
+  	<string name="account_edit_summary">Summary</string>
+  	<string name="account_edit_description">Description</string>
+  	<string name="account_edit_confirm">Confirm</string>
+  	<string name="account_row">Account</string>	
+  	<string name="account_icon">Account icon</string>
+  	<string name="account_add">ADD A NEW ACCOUNT</string>   
+  	<string name="no_accounts">No accounts are set.</string>    
+  	<string name="account_edit">EDIT ACCOUNT</string>	
+  	<string name="account_name">Name</string>
+  	<string name="account_balance">Initial Balance</string>
+  	<string name="account_include_balance">Include in Balance</string>
+  	<string name="account_include_reports">Include in Reports</string>
+  	<string name="account_save">SAVE</string>
+  	<string name="account_cancel">Cancel</string>
+  	<string name="account_type">Type</string>
+  	<string name="account_type_prompt">Choose a type</string>
+  	<string name="account_name_blank">Please enter a name for the account.</string>
+  	<string name="account_delete">Delete</string>
+  	<string name="account_choose">CHOOSE ACCOUNT</string>
+  	  	
+   	<!-- Account types -->
+  	<string-array name="account_types">
+        <item>Cash</item>
+        <item>Bank</item>
+        <item>Credit Card</item>
+    </string-array>
+     	
+    <!-- Categories -->
+  	<string name="category_add">ADD CATEGORY</string>
+  	<string name="category_type_prompt">Choose a type</string>  	
+   	<string name="categoryImage">Image</string>
+  	<string name="category_name_blank">Please enter a name for the category.</string>
+  	<string name="category_name_exists">Category name already exists.</string>
+  	 	        
     <!-- Subcategories -->
     <string name="subcategory">SUBCATEGORIES</string>
     <string name="subcat_category">Category</string>
@@ -130,15 +135,43 @@
     <string name="subcat_name">Name</string>
     <string name="subcat_name_hint">Type the name</string>
     <string name="subcat_name_empty">Please enter a name for the subcategory.</string>
+  	<string name="subcategory_name_exists">Subcategory name already exists for this category.</string>    
+  	  	
+  	<!--  Transactions -->
+  	<string name="transaction_options">Transaction options</string>
+  	<string name="transaction_add">ADD TRANSACTION</string>  	
+  	<string name="transaction_empty_string"></string>
+  	<string name="transaction_amount">Amount</string>  	
+  	<string name="transaction_category">Category</string>  	  	
+  	<string name="transaction_account">Account</string>  	  	
+  	<string name="transaction_date">Date</string>  	  	
+  	<string name="transaction_amount_check">Please check the transaction amount.</string>  	  	
+  	<string name="transaction_account_check">Please choose an account.</string>    	
+  	<string name="transaction_date_check">Please choose a date.</string>    	  	
+  	
+  	<!--  Empty strings -->
+  	<string name="empty_string"></string>
+  	
+  	<!-- DUMMY DATA -->
+  	<!-- Category names -->
+    <string name="category1">Food</string>
+    <string name="category2">Home</string>
+    <string name="category3">Payroll</string>
     
-        <string name="github">GitHub</string>
-    <string name="github_label">SlidingMenu on GitHub</string>
+  	<!-- DUMMY DATA -->    
+    <!-- Subcategory names expenses -->
+    <!-- Food -->
+    <string name="subCategory1">Home</string>
+    <string name="subCategory2">Work</string>
+    <string name="subCategory3">Out</string>
+    <!-- Home -->
+    <string name="subCategory4">Repairs</string>
+    <string name="subCategory5">Car</string>
+    <string name="subCategory6">Cleaning</string>    
     
-        <string-array name="color_names">
-        <item>Red</item>
-        <item>Green</item>
-        <item>Blue</item>
-        <item>White</item>
-        <item>Black</item>
-    </string-array>
+  	<!-- DUMMY DATA -->    
+    <!-- Subcategory names incomes -->
+    <!-- Payroll -->
+    <string name="subCategory7">Paycheck</string>
+    <string name="subCategory8">Bonus</string>   
 </resources>

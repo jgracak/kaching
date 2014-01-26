@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.kaching.R;
-import com.moneyapp.database.Category;
+import com.moneyapp.database.TableCategory;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 
 import android.app.AlertDialog;
@@ -42,7 +42,7 @@ public class Tab2Fragment extends SherlockFragment {
         
         MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(getActivity().getBaseContext().getApplicationContext());
         
-        List<Category> catList = db.getAllExpenseCategories();
+        List<TableCategory> catList = db.getAllExpenseCategories();
         
 		gridView.setAdapter(new ImageAdapter(getActivity().getBaseContext().getApplicationContext(), 
 							catList));
@@ -71,7 +71,9 @@ public class Tab2Fragment extends SherlockFragment {
 									        switch (which){
 									        case DialogInterface.BUTTON_POSITIVE:
 									        	MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(getActivity());
-									        	db.deleteCategory(db.getCategory((Integer)catText.getTag()));
+									        	
+									        	db.deleteTransactionCat(db.getCategory((Integer)catText.getTag()));
+									        	db.deleteCategory(db.getCategory((Integer)catText.getTag()));								        	
 									        	db.close();
 									        	initView();
 									            break;

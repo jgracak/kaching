@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.kaching.R;
-import com.moneyapp.database.Category;
-import com.moneyapp.database.Image;
+import com.moneyapp.database.TableCategory;
+import com.moneyapp.database.TableImage;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 
 import android.os.Bundle;
@@ -27,7 +27,7 @@ public class CategoryEditActivity extends SherlockActivity {
 	TextView textView;
 	Button buttonSave;
 	Button buttonCancel;
-	Category cat;
+	TableCategory cat;
 	Spinner spinner;
 	
 	@Override
@@ -42,7 +42,7 @@ public class CategoryEditActivity extends SherlockActivity {
 		
         MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(this);
         
-        List<Image> imageList = db.getAllImagesType(0);
+        List<TableImage> imageList = db.getAllImagesType(0);
         
 		gridView.setAdapter(new CatAddImageAdapter(this, imageList));
 		
@@ -68,7 +68,7 @@ public class CategoryEditActivity extends SherlockActivity {
 		// getting the category
     	cat = db.getCategory(id);
     	
-    	Image image = db.getImage(cat.getIdImage());
+    	TableImage image = db.getImage(cat.getIdImage());
     	
     	imageView.setImageResource(image.getImage());
     	imageView.setTag(image.getImage());

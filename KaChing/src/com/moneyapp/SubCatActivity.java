@@ -5,8 +5,8 @@ import java.util.List;
 
 import com.actionbarsherlock.app.SherlockListActivity;
 import com.kaching.R;
-import com.moneyapp.database.Category;
-import com.moneyapp.database.Image;
+import com.moneyapp.database.TableCategory;
+import com.moneyapp.database.TableImage;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 
 import android.app.AlertDialog;
@@ -33,7 +33,7 @@ public class SubCatActivity extends SherlockListActivity  {
 	int id;	
 	ImageView imageView;
 	TextView textView;
-	Category cat;
+	TableCategory cat;
 	ImageButton buttonAdd;
 	
 	@Override
@@ -56,7 +56,7 @@ public class SubCatActivity extends SherlockListActivity  {
 		// getting the category
     	cat = db.getCategory(id);
     	
-    	Image image = db.getImage(cat.getIdImage());
+    	TableImage image = db.getImage(cat.getIdImage());
     	
     	imageView.setImageResource(image.getImage());
     	imageView.setTag(image.getImage());
@@ -103,9 +103,13 @@ public class SubCatActivity extends SherlockListActivity  {
 		        switch (which){
 		        case DialogInterface.BUTTON_POSITIVE:
 		        	MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
-		        	db.deleteCategory(db.getSubCategory(subCategoryHolder2.catId, subCategoryHolder2.subCatId));
-					//TODO
-					// Delete all transactions linked to subcategory
+		        	
+		        	// delete transactions
+		        	db.deleteTransactionSubCat(db.getSubCategory(subCategoryHolder2.catId, subCategoryHolder2.subCatId));
+		        	
+		        	// delete subcategory
+		        	db.deleteCategory(db.getSubCategory(subCategoryHolder2.catId, subCategoryHolder2.subCatId));	
+		        	
 		        	db.close();
 		        	SetSubCategoryList();
 		            break;
@@ -126,26 +130,16 @@ public class SubCatActivity extends SherlockListActivity  {
 	       // Reading all subcategories
 		
 	       MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
-	       List<Category> categories = db.getAllSubCategories(cat);    
+	       List<TableCategory> categories = db.getAllSubCategories(cat);    
 	       ArrayList<Subcategories> SubcategoryList = new ArrayList<Subcategories>();
 	        
-	       for (Category category : categories) {
+	       for (TableCategory category : categories) {
 	    	   SubcategoryList.add(new Subcategories(category.getIdCat(),category.getIdSubCat(),category.getSubCatDesc(),0));
 	       }
 	       
 	       ListAdapter listAdapter = new SubCategoryAdapter(this, R.layout.subcategory_list_item, SubcategoryList);
 	       
 	       setListAdapter(listAdapter);
-	       
-	       /*
-	       setOnItemClickListener(new OnItemClickListener() {
-	    	   @Override
-				public void onItemClick(AdapterView<?> arg0, View v, int position,
-						long id) {
-	    		   
-	    	   }
-	       }
-	       */
 	       
 	       ListView v = new ListView(getApplicationContext());
 		    v = getListView();
@@ -174,6 +168,7 @@ public class SubCatActivity extends SherlockListActivity  {
 					        	
 							} else if (arg0.getTitle().equals(getResources().getString(R.string.cnt_menu_delete))) {							
 								callDialog(subCategoryHolder);
+								return true;
 							}
 
 							return false;

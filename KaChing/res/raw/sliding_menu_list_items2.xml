@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items>
+    	<item id="13" name="Entries" icon="@drawable/ic_home" />
+		<item id="14" name="Accounts" icon="@drawable/ic_people" />
+		<item id="15" name="Loans" icon="@drawable/ic_photos" />
+		<item id="16" name="Recurring entries" icon="@drawable/ic_communities" />
+		
+</items>

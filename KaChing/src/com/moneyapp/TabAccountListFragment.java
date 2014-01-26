@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.kaching.R;
-import com.moneyapp.database.Account;
+import com.moneyapp.database.TableAccount;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 
 import android.os.Bundle;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -17,62 +22,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
-public class TabAccountListFragment extends SherlockListFragment{
-	
-   class Accounts {
-	   private Integer accountId;
-        private String accountDescription;
-        private Float accountBalance;
-        private Integer accountImage;
-
-        public Integer getAccountId() {
-        	return accountId;
-        }
-       
-        public String getDescription() {
-            return accountDescription;
-        }
-
-        public void setDescription(String description) {
-            accountDescription = description;
-        }
-
-        public Float getBalance() {
-            return accountBalance;
-        }
-        
-        public void setBalance(Float balance) {
-            accountBalance = balance;
-        }
-        
-        public void setImage(Integer imageNo) {
-        	accountImage = imageNo;
-        }
-        
-        public Integer getImage() {
-        	return accountImage;
-        }
-
-        public Accounts(Integer id, String description, Float balance, Integer image) {
-        	accountId = id;
-            accountDescription = description;
-            accountBalance = balance;
-            accountImage = image;
-        }
-    }
-
-   private class AccountViewHolder {
-	   Integer id;
-       TextView description;
-       TextView balance; 
-       ImageView image;
-   }
+public class TabAccountListFragment extends SherlockListFragment {
    
    public class AccountAdapter extends ArrayAdapter<Accounts> {
        private ArrayList<Accounts> items;
@@ -101,11 +59,6 @@ public class TabAccountListFragment extends SherlockListFragment{
            } else accountHolder = (AccountViewHolder)v.getTag(); 
 
            if (account != null) {
-        	   if (account.getImage() == 0) {
-        		   accountHolder.description.setText(R.string.account_add);       		 
-        		   accountHolder.balance.setText(""); 
-        		   accountHolder.image.setImageResource(R.drawable.plus);
-        	   } else {
             	   if (account.getBalance() < 0)
             		   accountHolder.balance.setTextColor(Color.RED);
             	   else
@@ -121,7 +74,6 @@ public class TabAccountListFragment extends SherlockListFragment{
             	   } else if (account.getImage() == 3) {
             		   accountHolder.image.setImageResource(R.drawable.credit_card);            		   
             	   }
-        	   }
            }
 
            return v;
@@ -131,7 +83,7 @@ public class TabAccountListFragment extends SherlockListFragment{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);
-
+		setHasOptionsMenu(true);
 		SetAccountView();	
 	}
 	
@@ -155,43 +107,94 @@ public class TabAccountListFragment extends SherlockListFragment{
 	public void SetAccountView() {
 	       // Reading all accounts
 	       MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
-	       List<Account> accounts = db.getAllAccounts();    
+	       List<TableAccount> accounts = db.getAllAccounts();    
 	       ArrayList<Accounts> AccountList = new ArrayList<Accounts>();
 	        
-	       for (Account account : accounts) {
+	       for (TableAccount account : accounts) {
 	       	AccountList.add(new Accounts(account.getId(),account.getDescription(),account.getStartingBalance(),account.getType()));
 	       }
-	       
-	       // Adding one last item which is used for inserting
-	       AccountList.add(new Accounts(null,null,null,0));
 	       
 	       ListAdapter listAdapter = new AccountAdapter(getActivity(), R.layout.account_list_item, AccountList);
 	       
 	       setListAdapter(listAdapter);
 	}
 	
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	    // Inflate the menu items for use in the action bar
+	    inflater.inflate(R.menu.activity_account, menu);
+	    super.onCreateOptionsMenu(menu, inflater);
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar actions click
+        switch (item.getItemId()) {
+        case R.id.account_add1:
+    		Intent i = new Intent(getActivity().getBaseContext().getApplicationContext(), AccountAddActivity.class);
+    		startActivity(i);
+        	return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+	
 	@Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 		
 	    ListView v = new ListView(getActivity().getBaseContext().getApplicationContext());
 	    v = getListView();
+	    
 	    v.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                     long id) {
-            	TextView c = (TextView) view.findViewById(R.id.account_description);
+            	final AccountViewHolder accountHolder = (AccountViewHolder) view.getTag();
             	
-            	AccountViewHolder accountHolder = (AccountViewHolder) view.getTag();
-            	if (c.getText().toString().equals(getResources().getString(R.string.account_add)))
-            	{
-            		//Add new account is clicked
-            		startActivity(new Intent(getActivity().getBaseContext().getApplicationContext(),AccountAddActivity.class));
-            	} else {
-            		//An account is clicked, a view/edit opens
-            		Intent i = new Intent(getActivity().getBaseContext().getApplicationContext(), AccountEditActivity.class);
-            		i.putExtra("account_id",accountHolder.id);
-            		startActivity(i);
-            	}
+            	PopupMenu popupMenu = new PopupMenu(getActivity().getApplicationContext(),view);
+				
+				popupMenu.getMenuInflater().inflate(R.menu.menu_account,popupMenu.getMenu());
+				popupMenu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+						
+							@Override
+							public boolean onMenuItemClick(android.view.MenuItem arg0) {
+								
+								if (arg0.getTitle().equals(getResources().getString(R.string.cnt_menu_edit))) {
+						    		Intent i = new Intent(getActivity().getBaseContext().getApplicationContext(), AccountEditActivity.class);
+						    		i.putExtra("account_id",accountHolder.id);
+						    		startActivity(i);
+						        	return true;
+								} else if (arg0.getTitle().equals(getResources().getString(R.string.cnt_menu_delete))) {
+									DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+									    @Override
+									    public void onClick(DialogInterface dialog, int which) {
+									        switch (which){
+									        case DialogInterface.BUTTON_POSITIVE:
+									        	MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(getActivity());
+									        	TableAccount account = new TableAccount(accountHolder.id);
+												
+									        	db.deleteTransactionAccount(account);
+												db.deleteAccount(account);
+												
+												SetAccountView();
+									        	db.close();
+									            break;
+									        case DialogInterface.BUTTON_NEGATIVE:
+									            //No button clicked
+									            break;
+									        }
+									    }
+									};
+									
+									AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+									builder.setMessage("Do you want to delete " + accountHolder.description.getText().toString() + 
+											" account? All transaction linked to this account will be deleted.").setPositiveButton("Yes", dialogClickListener)
+									    .setNegativeButton("No", dialogClickListener).show();
+									return true;
+								} 
+
+								return false;
+							}
+						});
+				popupMenu.show();
             }
         });
 	    

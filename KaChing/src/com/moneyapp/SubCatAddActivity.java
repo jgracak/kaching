@@ -1,7 +1,7 @@
 package com.moneyapp;
 
 import com.kaching.R;
-import com.moneyapp.database.Category;
+import com.moneyapp.database.TableCategory;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 
 import android.app.Activity;
@@ -15,7 +15,7 @@ public class SubCatAddActivity extends Activity {
 	Button buttonSave;
 	Button buttonCancel;
 	Integer id;
-	Category cat;
+	TableCategory cat;
 	
 	@Override
 	public void onCreate(Bundle bundle) {
@@ -61,15 +61,19 @@ public class SubCatAddActivity extends Activity {
 			public void onClick(View arg0) {
 				if (subcatName.getText().toString().trim().equals("")) {
 					Toast.makeText(getApplicationContext(), R.string.subcat_name_empty, Toast.LENGTH_LONG).show();	
-				} else {
+				} else {				
 					MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
 					
-					Category lastSubCat = db.getLastSubCategory(cat.getIdCat());
-					
-					db.createCategory(new Category(cat.getIdImage(),cat.getIdCat(),cat.getCatDesc(),lastSubCat.getIdSubCat() + 1,subcatName.getText().toString().trim(),cat.getType()));
-					
-					db.close();
-					finish();
+					if (db.getSubCategoryByName(subcatName.getText().toString().trim(), cat.getIdCat()) == true) {
+						Toast.makeText(getApplicationContext(), R.string.subcategory_name_exists, Toast.LENGTH_LONG).show();		
+					} else {
+						TableCategory lastSubCat = db.getLastSubCategory(cat.getIdCat());
+						
+						db.createCategory(new TableCategory(cat.getIdImage(),cat.getIdCat(),cat.getCatDesc(),lastSubCat.getIdSubCat() + 1,subcatName.getText().toString().trim(),cat.getType()));
+						
+						db.close();
+						finish();
+					}
 				}
 			}
 		});

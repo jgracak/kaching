@@ -3,8 +3,8 @@ package com.moneyapp;
 import java.util.List;
 
 import com.kaching.R;
-import com.moneyapp.database.Category;
-import com.moneyapp.database.Image;
+import com.moneyapp.database.TableCategory;
+import com.moneyapp.database.TableImage;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 
 import android.content.Context;
@@ -17,9 +17,9 @@ import android.widget.TextView;
  
 public class ImageAdapter extends BaseAdapter {
 	private Context context;
-	private List<Category> catList;
+	private List<TableCategory> catList;
  
-	public ImageAdapter(Context context, List<Category> catList) {
+	public ImageAdapter(Context context, List<TableCategory> catList) {
 		this.context = context;
 		this.catList = catList;
 	}
@@ -52,7 +52,7 @@ public class ImageAdapter extends BaseAdapter {
 			
 			MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
 			
-			Image image = db.getImage(catList.get(position).getIdImage());
+			TableImage image = db.getImage(catList.get(position).getIdImage());
 			imageView.setImageResource(image.getImage());
  
 		} else {

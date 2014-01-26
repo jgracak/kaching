@@ -3,7 +3,7 @@ package com.moneyapp;
 import java.util.List;
 
 import com.kaching.R;
-import com.moneyapp.database.Image;
+import com.moneyapp.database.TableImage;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,9 +14,9 @@ import android.widget.ImageView;
 
 public class CatAddImageAdapter extends BaseAdapter {
 	private Context context;
-	private List<Image> imageList;
+	private List<TableImage> imageList;
 	
-	public CatAddImageAdapter(Context context, List<Image> imageList) {
+	public CatAddImageAdapter(Context context, List<TableImage> imageList) {
 		this.context = context;
 		this.imageList = imageList;
 	}

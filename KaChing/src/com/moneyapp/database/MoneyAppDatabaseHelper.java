@@ -169,7 +169,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	
     // Account table methods
 	//Creating an account
-	public long createAccount(Account account) {
+	public long createAccount(TableAccount account) {
 	    SQLiteDatabase db = this.getWritableDatabase();
 	 
 	    ContentValues values = new ContentValues();
@@ -188,7 +188,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	// Getting a single account based on id
-	public Account getAccount(int id) {
+	public TableAccount getAccount(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 	 
 	    Cursor cursor = db.query(TABLE_ACCOUNTS, new String[] { COLUMN_ID,
@@ -199,7 +199,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    if (cursor != null) {
 	    	cursor.moveToFirst();
 	    	
-		    Account account = new Account(Integer.parseInt(cursor.getString(0)),
+		    TableAccount account = new TableAccount(Integer.parseInt(cursor.getString(0)),
 		            cursor.getString(1), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)),
 		            Float.parseFloat(cursor.getString(4)), Integer.parseInt(cursor.getString(5)),
 		            Integer.parseInt(cursor.getString(6)));
@@ -213,8 +213,8 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
     // Getting all accounts
-	public List<Account> getAllAccounts() {
-	    List<Account> accountList = new ArrayList<Account>();
+	public List<TableAccount> getAllAccounts() {
+	    List<TableAccount> accountList = new ArrayList<TableAccount>();
 	    // Select All Query
 	    String selectQuery = "SELECT  * FROM " + TABLE_ACCOUNTS;
 	 
@@ -224,7 +224,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    // looping through all rows and adding to list
 	    if (cursor.moveToFirst()) {
 	        do {
-	            Account account = new Account();
+	            TableAccount account = new TableAccount();
 	            account.setId(Integer.parseInt(cursor.getString(0)));
 	            account.setDescription(cursor.getString(1));
 	            account.setType(Integer.parseInt(cursor.getString(2)));
@@ -254,7 +254,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
     }
     
     // Updating single account
-	public int updateAccount(Account account) {
+	public int updateAccount(TableAccount account) {
 	    SQLiteDatabase db = this.getWritableDatabase();
 	 
 	    ContentValues values = new ContentValues();
@@ -271,7 +271,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
     // Deleting a single account
-	public void deleteAccount(Account account) {
+	public void deleteAccount(TableAccount account) {
 	    SQLiteDatabase db = this.getWritableDatabase();
 	    
 	    db.delete(TABLE_ACCOUNTS, COLUMN_ID + " = ?",
@@ -281,7 +281,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	
 	// Transaction table methods
 	//Creating a transaction
-	public long createTransaction(Transaction transaction) {
+	public long createTransaction(TableTransaction transaction) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 	    ContentValues values = new ContentValues();
@@ -300,7 +300,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	// Getting a single transaction based on id
-	public Transaction getTransaction(int id) {
+	public TableTransaction getTransaction(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 	 
 	    Cursor cursor = db.query(TABLE_TRANSACTIONS, new String[] { COLUMN_ID,
@@ -310,7 +310,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    if (cursor != null)
 	        cursor.moveToFirst();
 	 
-	    Transaction transaction = new Transaction(Integer.parseInt(cursor.getString(0)),
+	    TableTransaction transaction = new TableTransaction(Integer.parseInt(cursor.getString(0)),
 	    		componentTimestampToTime(Integer.parseInt(cursor.getString(1))), 
 	    		Integer.parseInt(cursor.getString(2)), 
 	            Float.parseFloat((cursor.getString(3))),
@@ -323,8 +323,8 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	// Getting all transactions
-	public List<Transaction> getAllTransactions() {
-	    List<Transaction> transactionList = new ArrayList<Transaction>();
+	public List<TableTransaction> getAllTransactions() {
+	    List<TableTransaction> transactionList = new ArrayList<TableTransaction>();
 	    // Select All Query
 	    String selectQuery = "SELECT  * FROM " + TABLE_TRANSACTIONS;
 	 
@@ -334,7 +334,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    // looping through all rows and adding to list
 	    if (cursor.moveToFirst()) {
 	        do {
-	        	Transaction transaction = new Transaction();
+	        	TableTransaction transaction = new TableTransaction();
 	        	transaction.setId(Integer.parseInt(cursor.getString(0)));
 	        	transaction.setTransDate(componentTimestampToTime(Integer.parseInt(cursor.getString(1))));
 	        	transaction.setIdCategory(Integer.parseInt(cursor.getString(2)));
@@ -363,7 +363,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
     }	
 	
     // Updating single transaction
-	public int updateTransaction(Transaction transaction) {
+	public int updateTransaction(TableTransaction transaction) {
 	    SQLiteDatabase db = this.getWritableDatabase();
 		
 	    ContentValues values = new ContentValues();
@@ -379,17 +379,67 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
 
     // Deleting a single transaction
-	public void deleteTransaction(Transaction transaction) {
+	public void deleteTransaction(TableTransaction transaction) {
 	    SQLiteDatabase db = this.getWritableDatabase();
 	    
 	    db.delete(TABLE_TRANSACTIONS, COLUMN_ID + " = ?",
 	            new String[] { String.valueOf(transaction.getId()) });
 	    db.close();
 	}	
+
+    // Deleting multiple transactions by category/subcategory
+	public void deleteTransactionCat(TableCategory cat) {
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    
+	    List<TableCategory> categoryList = new ArrayList<TableCategory>();
+	    // Select All Query
+	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (idCat = " + cat.getIdCat() + ")";
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	 
+	    // looping through all rows and adding to list
+	    if (cursor.moveToFirst()) {
+	        do {
+	        	TableCategory category = new TableCategory();
+	        	category.setId(cursor.getInt(0));
+	        	category.setIdImage(cursor.getInt(1));
+	            category.setIdCat(cursor.getInt(2));
+	            category.setCatDesc(cursor.getString(3));
+	            category.setIdSubCat(cursor.getInt(4));
+	            category.setSubCatDesc(cursor.getString(5));
+	            category.setType(cursor.getInt(6));
+	            
+	            // Adding category to list
+	        	categoryList.add(category);
+	        } while (cursor.moveToNext());
+	    }
+	    
+	    for (TableCategory category : categoryList) {
+	    	db.delete(TABLE_TRANSACTIONS, COLUMN_IDCATEGORY + " = ?",
+		            new String[] { String.valueOf(category.getId()) });
+	    }
+	    
+	    db.close();
+	}	
 	
+    // Deleting multiple transactions by subcategory
+	public void deleteTransactionSubCat(TableCategory cat) {
+	    SQLiteDatabase db = this.getWritableDatabase();
+
+	    db.delete(TABLE_TRANSACTIONS, COLUMN_IDCATEGORY + " = ?",
+	            new String[] { String.valueOf(cat.getId()) });
+	    db.close();
+	}		
+	
+	public void deleteTransactionAccount(TableAccount acc) {
+	    SQLiteDatabase db = this.getWritableDatabase();
+
+	    db.delete(TABLE_TRANSACTIONS, COLUMN_IDACCOUNT + " = ?",
+	            new String[] { String.valueOf(acc.getId()) });
+	    db.close();
+	}
 	// Images table methods
 	// Creating an image
-	public long createImage(Image image, int type) {
+	public long createImage(TableImage image, int type) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 	    ContentValues values = new ContentValues();
@@ -405,7 +455,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}	
 	
 	// Getting a single image based on id
-	public Image getImage(int id) {
+	public TableImage getImage(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 	 
 	    Cursor cursor = db.query(TABLE_IMAGES, new String[] { COLUMN_ID,
@@ -414,7 +464,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    if (cursor != null)
 	        cursor.moveToFirst();
 	 
-	    Image image = new Image(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2));
+	    TableImage image = new TableImage(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2));
 	    
 	    // return image
 	    return image;
@@ -435,8 +485,8 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	// Getting all images
-	public List<Image> getAllImages() {
-	    List<Image> imageList = new ArrayList<Image>();
+	public List<TableImage> getAllImages() {
+	    List<TableImage> imageList = new ArrayList<TableImage>();
 	    // Select All Query
 	    String selectQuery = "SELECT  * FROM " + TABLE_IMAGES;
 	 
@@ -446,7 +496,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    // looping through all rows and adding to list
 	    if (cursor.moveToFirst()) {
 	        do {
-	        	Image image = new Image();
+	        	TableImage image = new TableImage();
 	        	image.setId(cursor.getInt(0));
 	        	image.setImage(cursor.getInt(1));
 	        	image.setType(cursor.getInt(2));
@@ -460,8 +510,8 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    return imageList;
 	}
 	
-	public List<Image> getAllImagesType(int type) {
-	    List<Image> imageList = new ArrayList<Image>();
+	public List<TableImage> getAllImagesType(int type) {
+	    List<TableImage> imageList = new ArrayList<TableImage>();
 	    // Select All Query
 	    String selectQuery = "SELECT  * FROM " + TABLE_IMAGES + " WHERE type = " + type;
 	 
@@ -471,7 +521,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    // looping through all rows and adding to list
 	    if (cursor.moveToFirst()) {
 	        do {
-	        	Image image = new Image();
+	        	TableImage image = new TableImage();
 	        	image.setId(cursor.getInt(0));
 	        	image.setImage(cursor.getInt(1));
 	        	image.setType(cursor.getInt(2));
@@ -507,7 +557,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Updating single image
-	public int updateImage(Image image) {
+	public int updateImage(TableImage image) {
 	    SQLiteDatabase db = this.getWritableDatabase();
 		
 	    ContentValues values = new ContentValues();
@@ -519,7 +569,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
     
 	// Deleting a single image
-	public void deleteImage(Image image) {
+	public void deleteImage(TableImage image) {
 	    SQLiteDatabase db = this.getWritableDatabase();
 	    
 	    db.delete(TABLE_IMAGES, COLUMN_ID + " = ?",
@@ -531,12 +581,12 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	public void insertAllImages(SQLiteDatabase db){
 	    ContentValues values = new ContentValues();
 	    
-	    values.put(COLUMN_IMAGE, R.drawable.bank);	    
+	    values.put(COLUMN_IMAGE, R.drawable.cash);	    
 	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
 	    db.insert(TABLE_IMAGES, null, values);
 	    values.clear();
 
-	    values.put(COLUMN_IMAGE, R.drawable.cash);
+	    values.put(COLUMN_IMAGE, R.drawable.bank);
 	    values.put(COLUMN_IMAGE_TYPE,0); //Type 0 is for categories
 	    db.insert(TABLE_IMAGES, null, values);
 	    values.clear();
@@ -659,7 +709,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	
 	// Categories table methods
 	// Creating a category
-	public long createCategory(Category category) {
+	public long createCategory(TableCategory category) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 	    ContentValues values = new ContentValues();
@@ -679,7 +729,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}	
 	
 	// Getting a single category based on id
-	public Category getCategory(int id) {
+	public TableCategory getCategory(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 	 
 	    Cursor cursor = db.query(TABLE_CATEGORIES, new String[] { COLUMN_ID,
@@ -689,7 +739,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    if (cursor != null)
 	        cursor.moveToFirst();
 	 
-	    Category category = new Category(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2),
+	    TableCategory category = new TableCategory(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2),
 	    								cursor.getString(3),cursor.getInt(4),cursor.getString(5),
 	    								cursor.getInt(6));
 	    
@@ -698,8 +748,8 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	// Get subcategory based on category id and subcategory id
-	public Category getSubCategory(int idCat,int idSubcat) {
-		Category cat = new Category();
+	public TableCategory getSubCategory(int idCat,int idSubcat) {
+		TableCategory cat = new TableCategory();
 	    // Select All Query
 	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE IdCat = " + idCat + " AND idSubCat = " + idSubcat;
 	 
@@ -722,7 +772,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	// Get last subcategory in a category
-	public Category getLastSubCategory(int catId) {
+	public TableCategory getLastSubCategory(int catId) {
 	    SQLiteDatabase db = this.getWritableDatabase();
 	    
 	    Cursor cursor = db.query(TABLE_CATEGORIES, new String[] { COLUMN_ID,
@@ -733,7 +783,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    if (cursor != null)
 	        cursor.moveToLast();
 	 
-	    Category category = new Category(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2),
+	    TableCategory category = new TableCategory(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2),
 	    								cursor.getString(3),cursor.getInt(4),cursor.getString(5),
 	    								cursor.getInt(6));
 	    
@@ -742,8 +792,8 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	// Getting all categories
-	public List<Category> getAllCategories() {
-	    List<Category> categoryList = new ArrayList<Category>();
+	public List<TableCategory> getAllCategories() {
+	    List<TableCategory> categoryList = new ArrayList<TableCategory>();
 	    // Select All Query
 	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES;
 	 
@@ -753,7 +803,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    // looping through all rows and adding to list
 	    if (cursor.moveToFirst()) {
 	        do {
-	        	Category category = new Category();
+	        	TableCategory category = new TableCategory();
 	        	category.setId(cursor.getInt(0));
 	        	category.setIdImage(cursor.getInt(1));
 	            category.setIdCat(cursor.getInt(2));
@@ -772,8 +822,8 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	// Getting all income categories
-	public List<Category> getAllIncomeCategories() {
-	    List<Category> categoryList = new ArrayList<Category>();
+	public List<TableCategory> getAllIncomeCategories() {
+	    List<TableCategory> categoryList = new ArrayList<TableCategory>();
 	    // Select All Query
 	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (type = 0) AND (idSubCat = 0)";
 	 
@@ -783,7 +833,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    // looping through all rows and adding to list
 	    if (cursor.moveToFirst()) {
 	        do {
-	        	Category category = new Category();
+	        	TableCategory category = new TableCategory();
 	        	category.setId(cursor.getInt(0));
 	        	category.setIdImage(cursor.getInt(1));
 	            category.setIdCat(cursor.getInt(2));
@@ -802,8 +852,8 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}	
 	
 	// Getting all expense categories
-	public List<Category> getAllExpenseCategories() {
-	    List<Category> categoryList = new ArrayList<Category>();
+	public List<TableCategory> getAllExpenseCategories() {
+	    List<TableCategory> categoryList = new ArrayList<TableCategory>();
 	    // Select All Query
 	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (type = 1) AND (idSubCat = 0)";
 	 
@@ -813,7 +863,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    // looping through all rows and adding to list
 	    if (cursor.moveToFirst()) {
 	        do {
-	        	Category category = new Category();
+	        	TableCategory category = new TableCategory();
 	        	category.setId(cursor.getInt(0));
 	        	category.setIdImage(cursor.getInt(1));
 	            category.setIdCat(cursor.getInt(2));
@@ -831,9 +881,39 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    return categoryList;
 	}	
 
+	// Getting all categories by Id
+	public List<TableCategory> getAllCategoriesById(int id) {
+	    List<TableCategory> categoryList = new ArrayList<TableCategory>();
+	    // Select All Query
+	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (idCat = " + id + ")";
+	 
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	 
+	    // looping through all rows and adding to list
+	    if (cursor.moveToFirst()) {
+	        do {
+	        	TableCategory category = new TableCategory();
+	        	category.setId(cursor.getInt(0));
+	        	category.setIdImage(cursor.getInt(1));
+	            category.setIdCat(cursor.getInt(2));
+	            category.setCatDesc(cursor.getString(3));
+	            category.setIdSubCat(cursor.getInt(4));
+	            category.setSubCatDesc(cursor.getString(5));
+	            category.setType(cursor.getInt(6));
+	            
+	            // Adding category to list
+	        	categoryList.add(category);
+	        } while (cursor.moveToNext());
+	    }
+	 
+	    // return image list
+	    return categoryList;
+	}	
+	
 	// Getting all subcategories
-	public List<Category> getAllSubCategories(Category cat) {
-	    List<Category> categoryList = new ArrayList<Category>();
+	public List<TableCategory> getAllSubCategories(TableCategory cat) {
+	    List<TableCategory> categoryList = new ArrayList<TableCategory>();
 	    // Select All subcategories query
 	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (idCat = " + cat.getIdCat() + ")"
 	    						+ "AND (idSubCat > 0)";
@@ -844,7 +924,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    // looping through all rows and adding to list
 	    if (cursor.moveToFirst()) {
 	        do {
-	        	Category category = new Category();
+	        	TableCategory category = new TableCategory();
 	        	category.setId(cursor.getInt(0));
 	        	category.setIdImage(cursor.getInt(1));
 	            category.setIdCat(cursor.getInt(2));
@@ -874,6 +954,21 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
     }	
 
     // Get category by name
+    public boolean getSubCategoryByName(String name,int catId) {
+	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (idCat = " + catId + ")"
+				+ " AND (subCatDesc = '" + name + "')";
+
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	    
+	    if (cursor.getCount() > 0) {
+	    	return true;
+	    } else {
+	    	return false;
+	    }
+    }
+    
+    // Get subcategory by name and catid
     public boolean getCategoryName(String name) {
 		SQLiteDatabase db = this.getReadableDatabase();
 		
@@ -887,7 +982,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    } else {
 	    	return false;
 	    }
-    }
+    }    
     
     // Get last category id by type
     public int getCategoryIdByType(int type) {
@@ -920,7 +1015,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
     
     // Updating single category
-	public int updateCategory(Category category) {
+	public int updateCategory(TableCategory category) {
 	    SQLiteDatabase db = this.getWritableDatabase();
 	    
 	    ContentValues values = new ContentValues();
@@ -935,7 +1030,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
     // Updating single subcategory
-	public int updateSubCategoryName(Category category) {
+	public int updateSubCategoryName(TableCategory category) {
 	    SQLiteDatabase db = this.getWritableDatabase();
 	    
 	    ContentValues values = new ContentValues();
@@ -948,7 +1043,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
     
 	// Deleting a single category
-	public void deleteCategory(Category category) {
+	public void deleteCategory(TableCategory category) {
 	    SQLiteDatabase db = this.getWritableDatabase();
 	    
 	    db.delete(TABLE_CATEGORIES, COLUMN_ID + " = ?",
