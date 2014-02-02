@@ -1360,11 +1360,11 @@ containing a value of this type.
         public static final int accountNameNew=0x7f05003f;
         public static final int accountTypeChoice=0x7f050041;
         public static final int accountTypeChoiceEdit=0x7f050056;
-        public static final int account_add1=0x7f050093;
+        public static final int account_add1=0x7f050094;
         public static final int account_balance=0x7f05005f;
         public static final int account_description=0x7f05005e;
         public static final int account_image=0x7f05005d;
-        public static final int action_add=0x7f050094;
+        public static final int action_add=0x7f050095;
         public static final int addIconAccount=0x7f050085;
         public static final int addIconAmount=0x7f050083;
         public static final int addIconCategory=0x7f050084;
@@ -1383,9 +1383,9 @@ containing a value of this type.
         public static final int categoryItemImage=0x7f050069;
         public static final int categoryNameNew=0x7f050067;
         public static final int categoryTypeChoiceEdit=0x7f050068;
-        public static final int cnt_menu_delete=0x7f050091;
-        public static final int cnt_menu_edit=0x7f050090;
-        public static final int cnt_menu_subcategories=0x7f050092;
+        public static final int cnt_menu_delete=0x7f050092;
+        public static final int cnt_menu_edit=0x7f050091;
+        public static final int cnt_menu_subcategories=0x7f050093;
         public static final int container_framelayout=0x7f05006d;
         public static final int content_frame=0x7f05006e;
         public static final int counter=0x7f050071;
@@ -1406,7 +1406,7 @@ containing a value of this type.
         public static final int listMode=0x7f050002;
         public static final int margin=0x7f050012;
         public static final int menu_frame=0x7f050073;
-        public static final int menu_settings=0x7f050095;
+        public static final int menu_settings=0x7f050096;
         public static final int normal=0x7f050001;
         public static final int realtabcontent=0x7f050072;
         public static final int right=0x7f050011;
@@ -1428,15 +1428,16 @@ containing a value of this type.
         public static final int title=0x7f050070;
         public static final int transactionAccount=0x7f050089;
         public static final int transactionAmount=0x7f050087;
+        public static final int transactionCategories=0x7f05008b;
         public static final int transactionCategory=0x7f050088;
         public static final int transactionDate=0x7f05008a;
-        public static final int transaction_accTxt=0x7f05008f;
-        public static final int transaction_add=0x7f050096;
-        public static final int transaction_amount=0x7f05008d;
-        public static final int transaction_catImg=0x7f05008b;
-        public static final int transaction_catTxt=0x7f05008c;
-        public static final int transaction_options=0x7f050097;
-        public static final int transaction_subCatTxt=0x7f05008e;
+        public static final int transaction_accTxt=0x7f050090;
+        public static final int transaction_add=0x7f050097;
+        public static final int transaction_amount=0x7f05008e;
+        public static final int transaction_catImg=0x7f05008c;
+        public static final int transaction_catTxt=0x7f05008d;
+        public static final int transaction_options=0x7f050098;
+        public static final int transaction_subCatTxt=0x7f05008f;
         public static final int upperLayout=0x7f050048;
         public static final int useLogo=0x7f050004;
         public static final int wrap_content=0x7f050000;
@@ -1501,7 +1502,8 @@ containing a value of this type.
         public static final int subcategory_list_item=0x7f030034;
         public static final int tab_fragment=0x7f030035;
         public static final int transaction_add=0x7f030036;
-        public static final int transaction_list_item=0x7f030037;
+        public static final int transaction_categories=0x7f030037;
+        public static final int transaction_list_item=0x7f030038;
     }
     public static final class menu {
         public static final int actions=0x7f0e0000;

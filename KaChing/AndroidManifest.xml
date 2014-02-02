@@ -84,6 +84,12 @@
             android:name="com.moneyapp.AccountChooseActivity" 
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:excludeFromRecents="true">
-        </activity>            
+        </activity>         
+        <activity            
+            android:label="Choose account"
+            android:name="com.moneyapp.CategoryChooseActivity" 
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:excludeFromRecents="true">
+        </activity>    
     </application>
 </manifest>

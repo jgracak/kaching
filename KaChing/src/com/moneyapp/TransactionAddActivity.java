@@ -9,6 +9,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.kaching.R;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 import com.moneyapp.database.TableAccount;
+import com.moneyapp.database.TableCategory;
 import com.moneyapp.database.TableImage;
 import com.moneyapp.database.TableTransaction;
 
@@ -26,12 +27,16 @@ import android.widget.Toast;
 
 public class TransactionAddActivity extends SherlockFragmentActivity implements OnFragmentClickListener  {
 	public static final int DATE_PICKER_ACTION = 100;
-	private static final int MY_REQUEST_ID = 666;	
+	private static final int ACCOUNT_REQ_ID = 666;	
+	private static final int CATEGORY_REQ_ID = 777;	
+	
 	Button buttonSave;
 	TextView textViewDate;
 	Calendar calendar;
 	TextView textViewAccount;
 	ImageView imageViewAccount;
+	TextView textViewCategory;
+	ImageView imageViewCategory;
 	
 	@Override
 	public void onCreate(Bundle bundle) {
@@ -41,6 +46,7 @@ public class TransactionAddActivity extends SherlockFragmentActivity implements 
 		addListenerOnTextViewDate();
 		addListenerOnButtonSave();
 		addListenerOnTextViewAccount();
+		addListenerOnTextViewCategory();
 		
 		calendar = Calendar.getInstance();
 		
@@ -48,6 +54,19 @@ public class TransactionAddActivity extends SherlockFragmentActivity implements 
 		textViewDate.setText(calendar.get(Calendar.YEAR) + " - " + (calendar.get(Calendar.MONTH) + 1) + " - " + calendar.get(Calendar.DAY_OF_MONTH));
 	}
 	
+	private void addListenerOnTextViewCategory() {
+		textViewCategory = (TextView) findViewById(R.id.transactionCategory);
+		
+		textViewCategory.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+        		Intent i = new Intent(getApplicationContext(), CategoryChooseActivity.class);
+        		startActivityForResult(i, CATEGORY_REQ_ID);
+			}
+		});
+	}
+
 	private void addListenerOnTextViewAccount() {
 		textViewDate = (TextView) findViewById(R.id.transactionAccount);
 		
@@ -56,7 +75,7 @@ public class TransactionAddActivity extends SherlockFragmentActivity implements 
 			@Override
 			public void onClick(View v) {
         		Intent i = new Intent(getApplicationContext(), AccountChooseActivity.class);
-        		startActivityForResult(i, MY_REQUEST_ID);
+        		startActivityForResult(i, ACCOUNT_REQ_ID);
 			}
 		});
 	}
@@ -64,7 +83,7 @@ public class TransactionAddActivity extends SherlockFragmentActivity implements 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 	          Intent data) {
-	      if (requestCode == MY_REQUEST_ID) {
+	      if (requestCode == ACCOUNT_REQ_ID) {
 	          if (resultCode == RESULT_OK) {
 	        	
 	        	textViewAccount = (TextView) findViewById(R.id.transactionAccount);
@@ -72,7 +91,6 @@ public class TransactionAddActivity extends SherlockFragmentActivity implements 
 
 	        	MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
 	        	TableAccount account = db.getAccount(data.getIntExtra("accountId", 0));
-	        	
 	        	
 	        	if (account != null) {
 	        		textViewAccount.setText(account.getDescription());
@@ -85,6 +103,28 @@ public class TransactionAddActivity extends SherlockFragmentActivity implements 
 	        	
 	        	db.close();
 	          }
+	      } else if (requestCode == CATEGORY_REQ_ID) {
+	    	  if (resultCode == RESULT_OK) {
+		    	  textViewCategory = (TextView) findViewById(R.id.transactionCategory);
+		    	  imageViewCategory = (ImageView) findViewById(R.id.addIconCategory);
+		    	  
+		    	  MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
+		    	  TableCategory category = db.getCategory(data.getIntExtra("categoryId", 0));
+		    	  
+		    	  if (category != null) {
+		    		  if (category.getIdSubCat() == 0) {
+		    			  textViewCategory.setText(category.getCatDesc());
+		    		  } else {
+		    			  textViewCategory.setText(category.getCatDesc() + " > " + category.getSubCatDesc());
+		    		  }
+		    		  textViewCategory.setTag(category.getId());
+		    		  
+		    		  TableImage image = db.getImage(category.getIdImage());
+		    		  imageViewCategory.setImageResource(image.getImage());
+		    	  }
+		    	  
+		    	  db.close();
+	    	  }
 	      }
 	}
 
