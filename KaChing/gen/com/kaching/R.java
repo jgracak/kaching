@@ -1245,52 +1245,53 @@ containing a value of this type.
         public static final int ic_action_emo_wink_holo_light=0x7f0200a5;
         public static final int ic_action_emo_wonder_holo_dark=0x7f0200a6;
         public static final int ic_action_emo_wonder_holo_light=0x7f0200a7;
-        public static final int ic_action_github=0x7f0200a8;
-        public static final int ic_action_overflow=0x7f0200a9;
-        public static final int ic_action_sliding_menu=0x7f0200aa;
-        public static final int ic_budgets=0x7f0200ab;
-        public static final int ic_communities=0x7f0200ac;
-        public static final int ic_dialog_about=0x7f0200ad;
-        public static final int ic_dialog_alert=0x7f0200ae;
-        public static final int ic_drawer=0x7f0200af;
-        public static final int ic_home=0x7f0200b0;
-        public static final int ic_launcher=0x7f0200b1;
-        public static final int ic_menu_list_default=0x7f0200b2;
-        public static final int ic_more=0x7f0200b3;
-        public static final int ic_pages=0x7f0200b4;
-        public static final int ic_people=0x7f0200b5;
-        public static final int ic_photos=0x7f0200b6;
-        public static final int ic_transactions=0x7f0200b7;
-        public static final int ic_up_indicator=0x7f0200b8;
-        public static final int ic_whats_hot=0x7f0200b9;
-        public static final int layout_bg=0x7f0200ba;
-        public static final int list_item_bg_normal=0x7f0200bb;
-        public static final int list_item_bg_pressed=0x7f0200bc;
-        public static final int list_selector=0x7f0200bd;
-        public static final int lock=0x7f0200be;
-        public static final int more=0x7f0200bf;
-        public static final int more_light=0x7f0200c0;
-        public static final int muffin=0x7f0200c1;
-        public static final int plus=0x7f0200c2;
-        public static final int plus_blue=0x7f0200c3;
-        public static final int reminder=0x7f0200c4;
-        public static final int shadow=0x7f0200c5;
-        public static final int sliding_menu_shadow=0x7f0200c6;
-        public static final int spray=0x7f0200c7;
-        public static final int telephone=0x7f0200c8;
-        public static final int tick=0x7f0200c9;
-        public static final int time=0x7f0200ca;
-        public static final int transactions=0x7f0200cb;
-        public static final int transactions_light=0x7f0200cc;
-        public static final int trash=0x7f0200cd;
-        public static final int violin=0x7f0200ce;
-        public static final int wallet=0x7f0200cf;
-        public static final int world=0x7f0200d0;
+        public static final int ic_action_forward=0x7f0200a8;
+        public static final int ic_action_github=0x7f0200a9;
+        public static final int ic_action_overflow=0x7f0200aa;
+        public static final int ic_action_sliding_menu=0x7f0200ab;
+        public static final int ic_budgets=0x7f0200ac;
+        public static final int ic_communities=0x7f0200ad;
+        public static final int ic_dialog_about=0x7f0200ae;
+        public static final int ic_dialog_alert=0x7f0200af;
+        public static final int ic_drawer=0x7f0200b0;
+        public static final int ic_home=0x7f0200b1;
+        public static final int ic_launcher=0x7f0200b2;
+        public static final int ic_menu_list_default=0x7f0200b3;
+        public static final int ic_more=0x7f0200b4;
+        public static final int ic_pages=0x7f0200b5;
+        public static final int ic_people=0x7f0200b6;
+        public static final int ic_photos=0x7f0200b7;
+        public static final int ic_transactions=0x7f0200b8;
+        public static final int ic_up_indicator=0x7f0200b9;
+        public static final int ic_whats_hot=0x7f0200ba;
+        public static final int layout_bg=0x7f0200bb;
+        public static final int list_item_bg_normal=0x7f0200bc;
+        public static final int list_item_bg_pressed=0x7f0200bd;
+        public static final int list_selector=0x7f0200be;
+        public static final int lock=0x7f0200bf;
+        public static final int more=0x7f0200c0;
+        public static final int more_light=0x7f0200c1;
+        public static final int muffin=0x7f0200c2;
+        public static final int plus=0x7f0200c3;
+        public static final int plus_blue=0x7f0200c4;
+        public static final int reminder=0x7f0200c5;
+        public static final int shadow=0x7f0200c6;
+        public static final int sliding_menu_shadow=0x7f0200c7;
+        public static final int spray=0x7f0200c8;
+        public static final int telephone=0x7f0200c9;
+        public static final int tick=0x7f0200ca;
+        public static final int time=0x7f0200cb;
+        public static final int transactions=0x7f0200cc;
+        public static final int transactions_light=0x7f0200cd;
+        public static final int trash=0x7f0200ce;
+        public static final int violin=0x7f0200cf;
+        public static final int wallet=0x7f0200d0;
+        public static final int world=0x7f0200d1;
     }
     public static final class id {
         public static final int AddAccountLayout=0x7f050037;
         public static final int AddCategoryLayout=0x7f050064;
-        public static final int AddTransactionLayout=0x7f050081;
+        public static final int AddTransactionLayout=0x7f050088;
         public static final int EditAccountLayout=0x7f05004c;
         public static final int Line1=0x7f05003c;
         public static final int Line2=0x7f05003d;
@@ -1298,13 +1299,13 @@ containing a value of this type.
         public static final int Line4=0x7f050051;
         public static final int Line5=0x7f050052;
         public static final int Line6=0x7f050053;
-        public static final int LinearLayout1=0x7f05007b;
+        public static final int LinearLayout1=0x7f050082;
         public static final int RelativeLayout2=0x7f050038;
         public static final int RelativeLayout3=0x7f050046;
         public static final int RelativeLayout4=0x7f05005b;
         public static final int RelativeLayoutCategory=0x7f050065;
         public static final int RelativeLayoutEdit1=0x7f05004d;
-        public static final int TransactionLayout=0x7f050082;
+        public static final int TransactionLayout=0x7f050089;
         public static final int abs__action_bar=0x7f050025;
         public static final int abs__action_bar_container=0x7f050024;
         public static final int abs__action_bar_subtitle=0x7f050016;
@@ -1360,35 +1361,43 @@ containing a value of this type.
         public static final int accountNameNew=0x7f05003f;
         public static final int accountTypeChoice=0x7f050041;
         public static final int accountTypeChoiceEdit=0x7f050056;
-        public static final int account_add1=0x7f050094;
+        public static final int account_add1=0x7f05009b;
         public static final int account_balance=0x7f05005f;
         public static final int account_description=0x7f05005e;
         public static final int account_image=0x7f05005d;
-        public static final int action_add=0x7f050095;
-        public static final int addIconAccount=0x7f050085;
-        public static final int addIconAmount=0x7f050083;
-        public static final int addIconCategory=0x7f050084;
-        public static final int addIconDate=0x7f050086;
+        public static final int action_add=0x7f05009c;
+        public static final int addIconAccount=0x7f05008c;
+        public static final int addIconAmount=0x7f05008a;
+        public static final int addIconCategory=0x7f05008b;
+        public static final int addIconDate=0x7f05008d;
         public static final int add_cat_icon=0x7f050066;
         public static final int add_icon1=0x7f050039;
         public static final int add_icon2=0x7f05003a;
         public static final int add_icon3=0x7f05003b;
         public static final int buttonAdd=0x7f05004a;
-        public static final int buttonCancel=0x7f05007a;
-        public static final int buttonCatCancel=0x7f05006c;
+        public static final int buttonCancel=0x7f050081;
+        public static final int buttonCatCancel=0x7f050073;
         public static final int buttonCatSave=0x7f05006b;
         public static final int buttonDelete=0x7f05005c;
         public static final int buttonSave=0x7f050047;
+        public static final int categoryChoice=0x7f050070;
+        public static final int categoryChoseText=0x7f05006e;
         public static final int categoryGridView=0x7f05006a;
         public static final int categoryItemImage=0x7f050069;
+        public static final int categoryName=0x7f050080;
         public static final int categoryNameNew=0x7f050067;
+        public static final int categoryTypeChoice=0x7f05006f;
         public static final int categoryTypeChoiceEdit=0x7f050068;
-        public static final int cnt_menu_delete=0x7f050092;
-        public static final int cnt_menu_edit=0x7f050091;
-        public static final int cnt_menu_subcategories=0x7f050093;
-        public static final int container_framelayout=0x7f05006d;
-        public static final int content_frame=0x7f05006e;
-        public static final int counter=0x7f050071;
+        public static final int category_description=0x7f05006d;
+        public static final int category_image=0x7f05006c;
+        public static final int cntMenuCatNew=0x7f05009e;
+        public static final int cntMenuSubCatNew=0x7f05009f;
+        public static final int cnt_menu_delete=0x7f050099;
+        public static final int cnt_menu_edit=0x7f050098;
+        public static final int cnt_menu_subcategories=0x7f05009a;
+        public static final int container_framelayout=0x7f050074;
+        public static final int content_frame=0x7f050075;
+        public static final int counter=0x7f050078;
         public static final int disableHome=0x7f050009;
         public static final int edit_icon1=0x7f05004e;
         public static final int edit_icon2=0x7f05004f;
@@ -1396,48 +1405,49 @@ containing a value of this type.
         public static final int edit_query=0x7f05002b;
         public static final int frame_container=0x7f050060;
         public static final int fullscreen=0x7f050013;
-        public static final int gridView1=0x7f050080;
+        public static final int gridView1=0x7f050087;
         public static final int grid_item_image=0x7f050061;
         public static final int grid_item_label=0x7f050062;
         public static final int homeAsUp=0x7f050006;
-        public static final int icon=0x7f05006f;
+        public static final int icon=0x7f050076;
+        public static final int imageCategory=0x7f05007f;
         public static final int label=0x7f050063;
         public static final int left=0x7f050010;
         public static final int listMode=0x7f050002;
         public static final int margin=0x7f050012;
-        public static final int menu_frame=0x7f050073;
-        public static final int menu_settings=0x7f050096;
+        public static final int menu_frame=0x7f05007a;
+        public static final int menu_settings=0x7f05009d;
         public static final int normal=0x7f050001;
-        public static final int realtabcontent=0x7f050072;
+        public static final int realtabcontent=0x7f050079;
         public static final int right=0x7f050011;
-        public static final int row_icon=0x7f050074;
-        public static final int row_title=0x7f050075;
+        public static final int row_icon=0x7f05007b;
+        public static final int row_title=0x7f05007c;
         public static final int selected_view=0x7f050014;
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;
-        public static final int sliding_menu_frame=0x7f050076;
-        public static final int slidingmenumain=0x7f050077;
-        public static final int subCatNameText=0x7f050078;
-        public static final int subcatName=0x7f050079;
-        public static final int subcat_cat=0x7f05007d;
-        public static final int subcat_description=0x7f05007f;
-        public static final int subcat_image=0x7f05007e;
-        public static final int subcategory=0x7f05007c;
+        public static final int sliding_menu_frame=0x7f05007d;
+        public static final int slidingmenumain=0x7f05007e;
+        public static final int subCatNameText=0x7f050072;
+        public static final int subcatName=0x7f050071;
+        public static final int subcat_cat=0x7f050084;
+        public static final int subcat_description=0x7f050086;
+        public static final int subcat_image=0x7f050085;
+        public static final int subcategory=0x7f050083;
         public static final int tabMode=0x7f050003;
-        public static final int title=0x7f050070;
-        public static final int transactionAccount=0x7f050089;
-        public static final int transactionAmount=0x7f050087;
-        public static final int transactionCategories=0x7f05008b;
-        public static final int transactionCategory=0x7f050088;
-        public static final int transactionDate=0x7f05008a;
-        public static final int transaction_accTxt=0x7f050090;
-        public static final int transaction_add=0x7f050097;
-        public static final int transaction_amount=0x7f05008e;
-        public static final int transaction_catImg=0x7f05008c;
-        public static final int transaction_catTxt=0x7f05008d;
-        public static final int transaction_options=0x7f050098;
-        public static final int transaction_subCatTxt=0x7f05008f;
+        public static final int title=0x7f050077;
+        public static final int transactionAccount=0x7f050090;
+        public static final int transactionAmount=0x7f05008e;
+        public static final int transactionCategories=0x7f050092;
+        public static final int transactionCategory=0x7f05008f;
+        public static final int transactionDate=0x7f050091;
+        public static final int transaction_accTxt=0x7f050097;
+        public static final int transaction_add=0x7f0500a0;
+        public static final int transaction_amount=0x7f050095;
+        public static final int transaction_catImg=0x7f050093;
+        public static final int transaction_catTxt=0x7f050094;
+        public static final int transaction_options=0x7f0500a1;
+        public static final int transaction_subCatTxt=0x7f050096;
         public static final int upperLayout=0x7f050048;
         public static final int useLogo=0x7f050004;
         public static final int wrap_content=0x7f050000;
@@ -1477,42 +1487,48 @@ containing a value of this type.
         public static final int button_style=0x7f03001b;
         public static final int cat_grid=0x7f03001c;
         public static final int category_add=0x7f03001d;
-        public static final int category_edit=0x7f03001e;
-        public static final int container_fragment=0x7f03001f;
-        public static final int content_frame=0x7f030020;
-        public static final int drawer_list_item=0x7f030021;
-        public static final int fragment_categories=0x7f030022;
-        public static final int fragment_transaction=0x7f030023;
-        public static final int image_grid=0x7f030024;
-        public static final int list=0x7f030025;
-        public static final int menu_frame=0x7f030026;
-        public static final int row=0x7f030027;
-        public static final int row_group=0x7f030028;
-        public static final int sherlock_spinner_dropdown_item=0x7f030029;
-        public static final int sherlock_spinner_item=0x7f03002a;
-        public static final int sliding_menu_frame=0x7f03002b;
-        public static final int sliding_menu_holo_dark_list=0x7f03002c;
-        public static final int sliding_menu_holo_dark_list_row=0x7f03002d;
-        public static final int sliding_menu_holo_light_list=0x7f03002e;
-        public static final int sliding_menu_holo_light_list_row=0x7f03002f;
-        public static final int slidingmenumain=0x7f030030;
-        public static final int subcatadd_activity=0x7f030031;
-        public static final int subcatedit_activity=0x7f030032;
-        public static final int subcategory_add=0x7f030033;
-        public static final int subcategory_list_item=0x7f030034;
-        public static final int tab_fragment=0x7f030035;
-        public static final int transaction_add=0x7f030036;
-        public static final int transaction_categories=0x7f030037;
-        public static final int transaction_list_item=0x7f030038;
+        public static final int category_choose_list=0x7f03001e;
+        public static final int category_choose_list_item=0x7f03001f;
+        public static final int category_choose_subcat_add=0x7f030020;
+        public static final int category_edit=0x7f030021;
+        public static final int container_fragment=0x7f030022;
+        public static final int content_frame=0x7f030023;
+        public static final int drawer_list_item=0x7f030024;
+        public static final int fragment_categories=0x7f030025;
+        public static final int fragment_transaction=0x7f030026;
+        public static final int image_grid=0x7f030027;
+        public static final int list=0x7f030028;
+        public static final int menu_frame=0x7f030029;
+        public static final int row=0x7f03002a;
+        public static final int row_group=0x7f03002b;
+        public static final int sherlock_spinner_dropdown_item=0x7f03002c;
+        public static final int sherlock_spinner_item=0x7f03002d;
+        public static final int sliding_menu_frame=0x7f03002e;
+        public static final int sliding_menu_holo_dark_list=0x7f03002f;
+        public static final int sliding_menu_holo_dark_list_row=0x7f030030;
+        public static final int sliding_menu_holo_light_list=0x7f030031;
+        public static final int sliding_menu_holo_light_list_row=0x7f030032;
+        public static final int slidingmenumain=0x7f030033;
+        public static final int spinner_category=0x7f030034;
+        public static final int subcatadd_activity=0x7f030035;
+        public static final int subcatedit_activity=0x7f030036;
+        public static final int subcategory_add=0x7f030037;
+        public static final int subcategory_choose_list_item=0x7f030038;
+        public static final int subcategory_list_item=0x7f030039;
+        public static final int tab_fragment=0x7f03003a;
+        public static final int transaction_add=0x7f03003b;
+        public static final int transaction_categories=0x7f03003c;
+        public static final int transaction_list_item=0x7f03003d;
     }
     public static final class menu {
         public static final int actions=0x7f0e0000;
         public static final int activity_account=0x7f0e0001;
         public static final int activity_category=0x7f0e0002;
         public static final int activity_main=0x7f0e0003;
-        public static final int menu_account=0x7f0e0004;
-        public static final int menu_subcat=0x7f0e0005;
-        public static final int transactions_menu=0x7f0e0006;
+        public static final int categories_choose_new=0x7f0e0004;
+        public static final int menu_account=0x7f0e0005;
+        public static final int menu_subcat=0x7f0e0006;
+        public static final int transactions_menu=0x7f0e0007;
     }
     public static final class raw {
         public static final int sliding_menu_list_items=0x7f040000;
@@ -1622,22 +1638,33 @@ containing a value of this type.
         public static final int action_settings=0x7f0a0014;
         public static final int app_name=0x7f0a000d;
         /**  DUMMY DATA 
- Category names 
+ Category names expense 
          */
-        public static final int category1=0x7f0a004c;
-        public static final int category2=0x7f0a004d;
-        public static final int category3=0x7f0a004e;
+        public static final int categoryExpense1=0x7f0a0052;
+        public static final int categoryExpense2=0x7f0a0053;
         public static final int categoryImage=0x7f0a0037;
+        /**  Category names income 
+         */
+        public static final int categoryIncome1=0x7f0a0054;
+        public static final int categoryIncome2=0x7f0a0055;
+        public static final int categoryIncome3=0x7f0a0056;
+        public static final int categoryIncome4=0x7f0a0057;
+        public static final int categoryIncome5=0x7f0a0058;
         /**  Categories 
          */
         public static final int category_add=0x7f0a0035;
+        public static final int category_choose=0x7f0a003b;
+        public static final int category_icon=0x7f0a003a;
         public static final int category_name_blank=0x7f0a0038;
         public static final int category_name_exists=0x7f0a0039;
+        public static final int category_prompt=0x7f0a003e;
         public static final int category_type_prompt=0x7f0a0036;
+        public static final int cnt_menu_cat_new=0x7f0a003c;
         public static final int cnt_menu_delete=0x7f0a001e;
         /**  Context menu 
          */
         public static final int cnt_menu_edit=0x7f0a001d;
+        public static final int cnt_menu_subcat_new=0x7f0a003d;
         public static final int cnt_menu_subcategories=0x7f0a001f;
         /**  Content Description 
          */
@@ -1646,7 +1673,7 @@ containing a value of this type.
         public static final int drawer_open=0x7f0a0015;
         /**   Empty strings 
          */
-        public static final int empty_string=0x7f0a004b;
+        public static final int empty_string=0x7f0a0051;
         public static final int menu_delete=0x7f0a0012;
         public static final int menu_insert=0x7f0a0011;
         public static final int menu_settings=0x7f0a000e;
@@ -1655,29 +1682,50 @@ containing a value of this type.
  Subcategory names expenses 
  Food 
          */
-        public static final int subCategory1=0x7f0a004f;
-        public static final int subCategory2=0x7f0a0050;
-        public static final int subCategory3=0x7f0a0051;
+        public static final int subCategoryExpense101=0x7f0a0059;
+        public static final int subCategoryExpense102=0x7f0a005a;
+        public static final int subCategoryExpense103=0x7f0a005b;
         /**  Home 
          */
-        public static final int subCategory4=0x7f0a0052;
-        public static final int subCategory5=0x7f0a0053;
-        public static final int subCategory6=0x7f0a0054;
+        public static final int subCategoryExpense201=0x7f0a005c;
+        public static final int subCategoryExpense202=0x7f0a005d;
+        public static final int subCategoryExpense203=0x7f0a005e;
         /**  DUMMY DATA 
  Subcategory names incomes 
  Payroll 
          */
-        public static final int subCategory7=0x7f0a0055;
-        public static final int subCategory8=0x7f0a0056;
-        public static final int subcat_add_button=0x7f0a003c;
-        public static final int subcat_category=0x7f0a003b;
-        public static final int subcat_name=0x7f0a003d;
-        public static final int subcat_name_empty=0x7f0a003f;
-        public static final int subcat_name_hint=0x7f0a003e;
+        public static final int subCategoryIncome101=0x7f0a005f;
+        public static final int subCategoryIncome102=0x7f0a0060;
+        public static final int subCategoryIncome103=0x7f0a0061;
+        /**  Drug money 
+         */
+        public static final int subCategoryIncome201=0x7f0a0062;
+        public static final int subCategoryIncome202=0x7f0a0063;
+        public static final int subCategoryIncome203=0x7f0a0064;
+        /**  Bribe 
+         */
+        public static final int subCategoryIncome301=0x7f0a0065;
+        public static final int subCategoryIncome302=0x7f0a0066;
+        public static final int subCategoryIncome303=0x7f0a0067;
+        /**  Hits 
+         */
+        public static final int subCategoryIncome401=0x7f0a0068;
+        public static final int subCategoryIncome402=0x7f0a0069;
+        public static final int subCategoryIncome403=0x7f0a006a;
+        /**  Bank robbery 
+         */
+        public static final int subCategoryIncome501=0x7f0a006b;
+        public static final int subCategoryIncome502=0x7f0a006c;
+        public static final int subCategoryIncome503=0x7f0a006d;
+        public static final int subcat_add_button=0x7f0a0041;
+        public static final int subcat_category=0x7f0a0040;
+        public static final int subcat_name=0x7f0a0042;
+        public static final int subcat_name_empty=0x7f0a0044;
+        public static final int subcat_name_hint=0x7f0a0043;
         /**  Subcategories 
          */
-        public static final int subcategory=0x7f0a003a;
-        public static final int subcategory_name_exists=0x7f0a0040;
+        public static final int subcategory=0x7f0a003f;
+        public static final int subcategory_name_exists=0x7f0a0045;
         public static final int title_activity_accounts=0x7f0a0010;
         public static final int title_activity_transaction=0x7f0a000f;
         /**  Toast messages 
@@ -1687,18 +1735,19 @@ containing a value of this type.
         public static final int toast_sliding_menu_no_action_default=0x7f0a001c;
         public static final int toast_sliding_menu_toggle=0x7f0a001a;
         public static final int toast_unsupported_encoding=0x7f0a0019;
-        public static final int transaction_account=0x7f0a0046;
-        public static final int transaction_account_check=0x7f0a0049;
-        public static final int transaction_add=0x7f0a0042;
-        public static final int transaction_amount=0x7f0a0044;
-        public static final int transaction_amount_check=0x7f0a0048;
-        public static final int transaction_category=0x7f0a0045;
-        public static final int transaction_date=0x7f0a0047;
-        public static final int transaction_date_check=0x7f0a004a;
-        public static final int transaction_empty_string=0x7f0a0043;
+        public static final int transaction_account=0x7f0a004b;
+        public static final int transaction_account_check=0x7f0a004e;
+        public static final int transaction_add=0x7f0a0047;
+        public static final int transaction_amount=0x7f0a0049;
+        public static final int transaction_amount_check=0x7f0a004d;
+        public static final int transaction_category=0x7f0a004a;
+        public static final int transaction_category_check=0x7f0a0050;
+        public static final int transaction_date=0x7f0a004c;
+        public static final int transaction_date_check=0x7f0a004f;
+        public static final int transaction_empty_string=0x7f0a0048;
         /**   Transactions 
          */
-        public static final int transaction_options=0x7f0a0041;
+        public static final int transaction_options=0x7f0a0046;
     }
     public static final class style {
         /** 

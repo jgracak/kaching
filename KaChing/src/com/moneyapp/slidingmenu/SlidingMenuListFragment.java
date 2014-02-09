@@ -32,7 +32,7 @@ public class SlidingMenuListFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		ArrayList<NavListItem> NavListItemList = new ArrayList<NavListItem>();
+		ArrayList<NavListItem> navListItemList = new ArrayList<NavListItem>();
 
 		String[] listItems = getResources().getStringArray(
 				R.array.nav_drawer_items);
@@ -49,17 +49,17 @@ public class SlidingMenuListFragment extends ListFragment {
 						listItemsIcons[i].toString(), null,
 						getActivity().getApplicationContext().getPackageName());
 
-				NavListItemList.add(new NavListItem(navListItem,
+				navListItemList.add(new NavListItem(navListItem,
 						imageResource));
 			} else {
-				NavListItemList.add(new NavListItem(navListItem, null));
+				navListItemList.add(new NavListItem(navListItem, null));
 			}
 
 			i++;
 		}
 
 		NavListAdapter adapter = new NavListAdapter(getActivity(),
-				R.layout.row, NavListItemList);
+				R.layout.row, navListItemList);
 
 		setListAdapter(adapter);
 	}

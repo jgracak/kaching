@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/cntMenuCatNew"
+        android:title="@string/cnt_menu_cat_new"/>
+    <item
+        android:id="@+id/cntMenuSubCatNew"
+        android:title="@string/cnt_menu_subcat_new"/>
+</menu>

@@ -127,6 +127,12 @@
    	<string name="categoryImage">Image</string>
   	<string name="category_name_blank">Please enter a name for the category.</string>
   	<string name="category_name_exists">Category name already exists.</string>
+  	<string name="category_icon">Category icon</string>  	
+  	<string name="category_choose">CHOOSE CATEGORY</string>  	
+  	<string name="cnt_menu_cat_new">New Category</string>
+  	<string name="cnt_menu_subcat_new">New Subcategory</string>  
+  	<string name="category_prompt">Choose a category</string>    	
+  		
   	 	        
     <!-- Subcategories -->
     <string name="subcategory">SUBCATEGORIES</string>
@@ -147,31 +153,62 @@
   	<string name="transaction_date">Date</string>  	  	
   	<string name="transaction_amount_check">Please check the transaction amount.</string>  	  	
   	<string name="transaction_account_check">Please choose an account.</string>    	
-  	<string name="transaction_date_check">Please choose a date.</string>    	  	
+  	<string name="transaction_date_check">Please choose a date.</string>    	
+  	<string name="transaction_category_check">Please choose a category.</string>  	  	  	
   	
   	<!--  Empty strings -->
   	<string name="empty_string"></string>
   	
   	<!-- DUMMY DATA -->
-  	<!-- Category names -->
-    <string name="category1">Food</string>
-    <string name="category2">Home</string>
-    <string name="category3">Payroll</string>
+  	<!-- Category names expense -->
+    <string name="categoryExpense1">Food</string>
+    <string name="categoryExpense2">Home</string>
+    
+    <!-- Category names income -->
+    <string name="categoryIncome1">Payroll</string>
+ 	<string name="categoryIncome2">Drug money</string>
+ 	<string name="categoryIncome3">Bribe</string>
+ 	<string name="categoryIncome4">Hits</string>
+ 	<string name="categoryIncome5">Bank robbery</string>
     
   	<!-- DUMMY DATA -->    
     <!-- Subcategory names expenses -->
+    
     <!-- Food -->
-    <string name="subCategory1">Home</string>
-    <string name="subCategory2">Work</string>
-    <string name="subCategory3">Out</string>
+    <string name="subCategoryExpense101">Home</string>
+    <string name="subCategoryExpense102">Work</string>
+    <string name="subCategoryExpense103">Out</string>
     <!-- Home -->
-    <string name="subCategory4">Repairs</string>
-    <string name="subCategory5">Car</string>
-    <string name="subCategory6">Cleaning</string>    
+    <string name="subCategoryExpense201">Repairs</string>
+    <string name="subCategoryExpense202">Car</string>
+    <string name="subCategoryExpense203">Cleaning</string>    
     
   	<!-- DUMMY DATA -->    
     <!-- Subcategory names incomes -->
+
     <!-- Payroll -->
-    <string name="subCategory7">Paycheck</string>
-    <string name="subCategory8">Bonus</string>   
+    <string name="subCategoryIncome101">Paycheck</string>
+    <string name="subCategoryIncome102">Bonus</string>   
+    <string name="subCategoryIncome103">Raise</string>       
+    
+    <!-- Drug money -->
+    <string name="subCategoryIncome201">Sold to kids</string>
+    <string name="subCategoryIncome202">Sold to cops</string>   
+    <string name="subCategoryIncome203">Sold to nuns</string>       
+    
+    <!-- Bribe -->
+    <string name="subCategoryIncome301">President</string>
+    <string name="subCategoryIncome302">Boss</string>   
+    <string name="subCategoryIncome303">Pope</string>       
+    
+    <!-- Hits -->
+    <string name="subCategoryIncome401">Neighbour\'s dog</string>
+    <string name="subCategoryIncome402">Keyboard</string>   
+    <string name="subCategoryIncome403">Mouse</string>       
+    
+    <!-- Bank robbery -->
+    <string name="subCategoryIncome501">Bank of America</string>
+    <string name="subCategoryIncome502">Zaba</string>   
+    <string name="subCategoryIncome503">PBZ</string>           
+        
 </resources>

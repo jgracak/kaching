@@ -42,7 +42,7 @@ public class Tab2Fragment extends SherlockFragment {
         
         MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(getActivity().getBaseContext().getApplicationContext());
         
-        List<TableCategory> catList = db.getAllExpenseCategories();
+        List<TableCategory> catList = db.getAllExpenseCategories(MoneyAppDatabaseHelper.GET_ALL_CAT_EXPENSE);
         
 		gridView.setAdapter(new ImageAdapter(getActivity().getBaseContext().getApplicationContext(), 
 							catList));

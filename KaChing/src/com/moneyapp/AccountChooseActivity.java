@@ -89,7 +89,6 @@ public class AccountChooseActivity extends SherlockActivity {
 	   }
 
 	private void addListenerOnButtonNew() {
-		// TODO Auto-generated method stub
 		buttonAdd = (ImageButton) findViewById(R.id.buttonAdd);
 		
 		buttonAdd.setOnClickListener(new View.OnClickListener() {

@@ -18,6 +18,10 @@ import android.util.Log;
 public class MoneyAppDatabaseHelper extends SQLiteOpenHelper { 
 	
 	private static MoneyAppDatabaseHelper sInstance = null;
+	public static final Integer GET_ALL_INCOME = 101;
+	public static final Integer GET_ALL_CAT_INCOME = 102;
+	public static final Integer GET_ALL_EXPENSE = 201;
+	public static final Integer GET_ALL_CAT_EXPENSE = 202;	
 	
 	// Logcat tag
     private static final String LOG = "MoneyAppDatabaseHelper";
@@ -167,7 +171,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 	
-    // Account table methods
+    // ------------------ Account table methods ------------------
 	//Creating an account
 	public long createAccount(TableAccount account) {
 	    SQLiteDatabase db = this.getWritableDatabase();
@@ -279,7 +283,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    db.close();
 	}
 	
-	// Transaction table methods
+	// ------------------ Transaction table methods ------------------
 	//Creating a transaction
 	public long createTransaction(TableTransaction transaction) {
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -437,7 +441,8 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	            new String[] { String.valueOf(acc.getId()) });
 	    db.close();
 	}
-	// Images table methods
+	
+	// ------------------ Images table methods ------------------
 	// Creating an image
 	public long createImage(TableImage image, int type) {
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -707,7 +712,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    values.clear();
 	}
 	
-	// Categories table methods
+	// ------------------ Categories table methods ------------------
 	// Creating a category
 	public long createCategory(TableCategory category) {
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -822,10 +827,19 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	// Getting all income categories
-	public List<TableCategory> getAllIncomeCategories() {
+	// This method has 2 modes
+	public List<TableCategory> getAllIncomeCategories(Integer mode) {
 	    List<TableCategory> categoryList = new ArrayList<TableCategory>();
+	    String selectQuery;
+	    
 	    // Select All Query
-	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (type = 0) AND (idSubCat = 0)";
+	    if (mode == GET_ALL_INCOME) {
+	    	 selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (type = 0) order by idCat asc, idSubCat asc";
+	    } else if (mode == GET_ALL_CAT_INCOME ) {
+	    	selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (type = 0) AND (idSubCat = 0) order by idCat asc, idSubCat asc";
+	    } else {
+	    	return null;
+	    }
 	 
 	    SQLiteDatabase db = this.getWritableDatabase();
 	    Cursor cursor = db.rawQuery(selectQuery, null);
@@ -852,10 +866,19 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}	
 	
 	// Getting all expense categories
-	public List<TableCategory> getAllExpenseCategories() {
+	public List<TableCategory> getAllExpenseCategories(Integer mode) {
 	    List<TableCategory> categoryList = new ArrayList<TableCategory>();
+	    String selectQuery;
+	    
 	    // Select All Query
-	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (type = 1) AND (idSubCat = 0)";
+	    
+	    if (mode == GET_ALL_EXPENSE) {
+	    	 selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (type = 1) order by idCat asc, idSubCat asc";
+	    } else if (mode == GET_ALL_CAT_EXPENSE ) {
+	    	selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " WHERE (type = 1) AND (idSubCat = 0) order by idCat asc, idSubCat asc";
+	    } else {
+	    	return null;
+	    }
 	 
 	    SQLiteDatabase db = this.getWritableDatabase();
 	    Cursor cursor = db.rawQuery(selectQuery, null);
@@ -1055,103 +1078,282 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	private void insertAllCategories(SQLiteDatabase db) {
 	    ContentValues values = new ContentValues();
 	    
+	    //EXPENSE
+	    //CATEGORY 1	    
 	    values.put(COLUMN_IDIMAGE, 1);	    
 	    values.put(COLUMN_IDCAT, 1);
-	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category1));
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryExpense1));
 	    values.put(COLUMN_IDSUBCAT, 0);
 	    values.put(COLUMN_CATTYPE, 1);
 	    db.insert(TABLE_CATEGORIES, null, values);
 	    
+	    //CATEGORY 1 - SUBCATEGORY 1	    	    
 	    values.clear();
 	    values.put(COLUMN_IDIMAGE, 1);	    
 	    values.put(COLUMN_IDCAT, 1);
-	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category1));
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryExpense1));
 	    values.put(COLUMN_IDSUBCAT, 1);
-	    values.put(COLUMN_SUBCATDESC,App.context.getResources().getString(R.string.subCategory1));
+	    values.put(COLUMN_SUBCATDESC,App.context.getResources().getString(R.string.subCategoryExpense101));
 	    values.put(COLUMN_CATTYPE, 1);
 	    db.insert(TABLE_CATEGORIES, null, values);
 	    
+	    //CATEGORY 1 - SUBCATEGORY 2		    
 	    values.clear();
 	    values.put(COLUMN_IDIMAGE, 1);	    
 	    values.put(COLUMN_IDCAT, 1);
-	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category1));
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryExpense1));
 	    values.put(COLUMN_IDSUBCAT, 2);
-	    values.put(COLUMN_SUBCATDESC,App.context.getResources().getString(R.string.subCategory2));
+	    values.put(COLUMN_SUBCATDESC,App.context.getResources().getString(R.string.subCategoryExpense102));
 	    values.put(COLUMN_CATTYPE, 1);
 	    db.insert(TABLE_CATEGORIES, null, values);
 	    
+	    //CATEGORY 1 - SUBCATEGORY 3		    
 	    values.clear();
 	    values.put(COLUMN_IDIMAGE, 1);	    
 	    values.put(COLUMN_IDCAT, 1);
-	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category1));
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryExpense1));
 	    values.put(COLUMN_IDSUBCAT, 3);
-	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategory3));
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryExpense103));
 	    values.put(COLUMN_CATTYPE, 1);
 	    db.insert(TABLE_CATEGORIES, null, values);
         
+	    //CATEGORY 2		    
 	    values.clear();
 	    values.put(COLUMN_IDIMAGE, 2);	    
 	    values.put(COLUMN_IDCAT, 2);
-	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category2));
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryExpense2));
 	    values.put(COLUMN_IDSUBCAT, 0);
 	    values.put(COLUMN_CATTYPE, 1);
 	    db.insert(TABLE_CATEGORIES, null, values);
 	    
+	    //CATEGORY 2 - SUBCATEGORY 1	    
 	    values.clear();
 	    values.put(COLUMN_IDIMAGE, 2);	    
 	    values.put(COLUMN_IDCAT, 2);
-	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category2));
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryExpense2));
 	    values.put(COLUMN_IDSUBCAT, 1);
-	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategory4));
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryExpense201));
 	    values.put(COLUMN_CATTYPE, 1);
 	    db.insert(TABLE_CATEGORIES, null, values);
 	    
+	    //CATEGORY 2 - SUBCATEGORY 2	    
 	    values.clear();
 	    values.put(COLUMN_IDIMAGE, 2);	    
 	    values.put(COLUMN_IDCAT, 2);
-	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category2));
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryExpense2));
 	    values.put(COLUMN_IDSUBCAT, 2);
-	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategory5));
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryExpense202));
 	    values.put(COLUMN_CATTYPE, 1);
 	    db.insert(TABLE_CATEGORIES, null, values);
 	    
+	    //CATEGORY 2 - SUBCATEGORY 3	    
 	    values.clear();
 	    values.put(COLUMN_IDIMAGE, 2);	    
 	    values.put(COLUMN_IDCAT, 2);
-	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category2));
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryExpense2));
 	    values.put(COLUMN_IDSUBCAT, 3);
-	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategory6));
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryExpense203));
 	    values.put(COLUMN_CATTYPE, 1);
 	    db.insert(TABLE_CATEGORIES, null, values);
-	    
+
+	    //INCOME
+	    //CATEGORY 1
 	    values.clear();
 	    values.put(COLUMN_IDIMAGE, 3);	    
 	    values.put(COLUMN_IDCAT, 3);
-	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category3));
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome1));
 	    values.put(COLUMN_IDSUBCAT, 0);
 	    values.put(COLUMN_CATTYPE, 0);
 	    db.insert(TABLE_CATEGORIES, null, values);
 	    
+	    //CATEGORY 1 - SUBCATEGORY 1
 	    values.clear();
 	    values.put(COLUMN_IDIMAGE, 3);	    
 	    values.put(COLUMN_IDCAT, 3);
-	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category3));
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome1));
 	    values.put(COLUMN_IDSUBCAT, 1);
-	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategory7));
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryIncome101));
 	    values.put(COLUMN_CATTYPE, 0);
 	    db.insert(TABLE_CATEGORIES, null, values);
 	    
+	    //CATEGORY 1 - SUBCATEGORY 2
 	    values.clear();
 	    values.put(COLUMN_IDIMAGE, 3);	    
 	    values.put(COLUMN_IDCAT, 3);
-	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.category3));
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome1));
 	    values.put(COLUMN_IDSUBCAT, 2);
-	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategory8));
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryIncome102));
 	    values.put(COLUMN_CATTYPE, 0);
 	    db.insert(TABLE_CATEGORIES, null, values);
+
+	    //CATEGORY 1 - SUBCATEGORY 3
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 3);	    
+	    values.put(COLUMN_IDCAT, 3);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome1));
+	    values.put(COLUMN_IDSUBCAT, 3);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryIncome103));
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);	    
+
+	    //CATEGORY 2
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 4);	    
+	    values.put(COLUMN_IDCAT, 4);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome2));
+	    values.put(COLUMN_IDSUBCAT, 0);
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);
+	    
+	    //CATEGORY 2 - SUBCATEGORY 1
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 4);	    
+	    values.put(COLUMN_IDCAT, 4);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome2));
+	    values.put(COLUMN_IDSUBCAT, 1);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryIncome201));
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);	 	
+	    
+	    //CATEGORY 2 - SUBCATEGORY 2
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 4);	    
+	    values.put(COLUMN_IDCAT, 4);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome2));
+	    values.put(COLUMN_IDSUBCAT, 2);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryIncome202));
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);	 	  
+	    
+	    //CATEGORY 2 - SUBCATEGORY 3
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 4);	    
+	    values.put(COLUMN_IDCAT, 4);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome2));
+	    values.put(COLUMN_IDSUBCAT, 3);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryIncome203));
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);		 
+	    
+	    //CATEGORY 3
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 5);	    
+	    values.put(COLUMN_IDCAT, 5);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome3));
+	    values.put(COLUMN_IDSUBCAT, 0);
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);
+	    
+	    //CATEGORY 3 - SUBCATEGORY 1
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 5);	    
+	    values.put(COLUMN_IDCAT, 5);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome3));
+	    values.put(COLUMN_IDSUBCAT, 1);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryIncome301));
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);		    
+	    
+	    //CATEGORY 3 - SUBCATEGORY 2
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 5);	    
+	    values.put(COLUMN_IDCAT, 5);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome3));
+	    values.put(COLUMN_IDSUBCAT, 2);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryIncome302));
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);		    
+	    
+	    //CATEGORY 3 - SUBCATEGORY 3
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 5);	    
+	    values.put(COLUMN_IDCAT, 5);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome3));
+	    values.put(COLUMN_IDSUBCAT, 3);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryIncome303));
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);		    
+	    
+	    //CATEGORY 4
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 6);	    
+	    values.put(COLUMN_IDCAT, 6);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome4));
+	    values.put(COLUMN_IDSUBCAT, 0);
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);
+	    
+	    //CATEGORY 4 - SUBCATEGORY 1
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 6);	    
+	    values.put(COLUMN_IDCAT, 6);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome4));
+	    values.put(COLUMN_IDSUBCAT, 1);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryIncome401));
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);		    
+	    
+	    //CATEGORY 4 - SUBCATEGORY 2
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 6);	    
+	    values.put(COLUMN_IDCAT, 6);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome4));
+	    values.put(COLUMN_IDSUBCAT, 2);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryIncome402));
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);		    
+	    
+	    //CATEGORY 4 - SUBCATEGORY 3
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 6);	    
+	    values.put(COLUMN_IDCAT, 6);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome4));
+	    values.put(COLUMN_IDSUBCAT, 3);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryIncome403));
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);		    
+	    
+	    //CATEGORY 5
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 7);	    
+	    values.put(COLUMN_IDCAT, 7);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome5));
+	    values.put(COLUMN_IDSUBCAT, 0);
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);
+	    
+	    //CATEGORY 5 - SUBCATEGORY 1
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 7);	    
+	    values.put(COLUMN_IDCAT, 7);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome5));
+	    values.put(COLUMN_IDSUBCAT, 1);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryIncome501));
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);		    
+	    
+	    //CATEGORY 5 - SUBCATEGORY 2
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 7);	    
+	    values.put(COLUMN_IDCAT, 7);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome5));
+	    values.put(COLUMN_IDSUBCAT, 2);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryIncome502));
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);		    
+	    
+	    //CATEGORY 5 - SUBCATEGORY 3
+	    values.clear();
+	    values.put(COLUMN_IDIMAGE, 7);	    
+	    values.put(COLUMN_IDCAT, 7);
+	    values.put(COLUMN_CATDESC,App.context.getResources().getString(R.string.categoryIncome5));
+	    values.put(COLUMN_IDSUBCAT, 3);
+	    values.put(COLUMN_SUBCATDESC, App.context.getResources().getString(R.string.subCategoryIncome503));
+	    values.put(COLUMN_CATTYPE, 0);
+	    db.insert(TABLE_CATEGORIES, null, values);		    
 	}
 	
-	// Help methods
+	// ------------------ Help methods ------------------
 	// Convert time to timestamp
 	public int componentTimeToTimestamp(int year, int month, int day, int hour, int minute) {
 

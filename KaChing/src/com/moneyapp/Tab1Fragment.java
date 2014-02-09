@@ -69,7 +69,7 @@ public class Tab1Fragment extends SherlockFragment {
         
         MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(getActivity().getBaseContext().getApplicationContext());
         
-        List<TableCategory> catList = db.getAllIncomeCategories();
+        List<TableCategory> catList = db.getAllIncomeCategories(MoneyAppDatabaseHelper.GET_ALL_CAT_INCOME);
         
 		gridView.setAdapter(new ImageAdapter(getActivity().getBaseContext().getApplicationContext(), 
 				catList));

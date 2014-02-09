@@ -5,6 +5,39 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+        <!-- upper part -->
+    <RelativeLayout
+        android:id="@+id/upperLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@color/list_pressed2" >
+
+        <TextView
+            android:id="@+id/categoryChoseText"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/list_pressed2"
+            android:gravity="center"
+            android:text="@string/category_choose"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" >
+        </TextView>
+
+        <ImageButton
+            android:id="@+id/buttonAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+			android:src="@drawable/plus"       
+			android:background="@color/list_pressed2"			     
+            android:layout_alignParentRight="true"
+            android:layout_alignRight="@+id/categoryChoseText"
+            android:contentDescription="@string/subcat_add_button"
+            android:gravity="center" />
+    </RelativeLayout>
+    
     <android.support.v4.app.FragmentTabHost
         android:id="@android:id/tabhost"
         android:layout_width="match_parent"
@@ -22,6 +55,5 @@
         android:id="@+id/realtabcontent"
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="1" />    
-    
+         />    
 </LinearLayout>

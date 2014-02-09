@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+        <!-- upper part -->
+    <RelativeLayout
+        android:id="@+id/upperLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@color/list_pressed2" >
+
+        <TextView
+            android:id="@+id/categoryChoseText"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/list_pressed2"
+            android:gravity="center"
+            android:text="@string/category_choose"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" >
+        </TextView>
+    </RelativeLayout>
+    
+    <RelativeLayout
+         android:id="@+id/RelativeLayout2"
+         android:layout_below="@id/upperLayout"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:minHeight="300dp"
+         android:layout_alignParentRight="true"
+         android:layout_alignParentLeft="true"
+         android:layout_marginTop="10dp"
+         android:layout_marginLeft="10dp"
+         android:layout_marginRight="10dp"
+         android:background="@drawable/layout_bg"
+         android:orientation="horizontal" >
+
+	     <Spinner
+	        android:id="@+id/categoryTypeChoice"
+	        android:layout_marginBottom="15dp"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"    
+	        android:entries="@array/category_types"
+	        android:prompt="@string/category_type_prompt" />
+        
+	     <Spinner
+	        android:id="@+id/categoryChoice"
+	        android:layout_marginBottom="15dp"	        
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"    
+	        android:layout_below="@+id/categoryTypeChoice"	        
+	        android:prompt="@string/category_prompt" />
+
+	   <EditText
+	       android:id="@+id/subcatName"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:layout_below="@+id/categoryChoice"
+	       android:layout_marginLeft="15dp"
+	       android:layout_marginTop="20dp"
+	       android:layout_toRightOf="@+id/subCatNameText"
+	       android:ems="10"
+	       android:hint="@string/subcat_name_hint"
+	       android:inputType="textCapWords" >
+
+	       <requestFocus />
+	   </EditText>
+
+	   <TextView
+	       android:id="@+id/subCatNameText"
+	       android:layout_width="wrap_content"
+	       android:layout_height="30dp"
+	       android:layout_alignBottom="@+id/subcatName"
+	       android:layout_alignParentLeft="true"
+	       android:layout_marginLeft="14dp"
+	       android:text="@string/subcat_name"
+	       android:textSize="20sp" />
+            
+    </RelativeLayout>    
+   
+    <!-- Bottom layout and button for save -->
+    
+   	 <RelativeLayout
+      	  	android:id="@+id/RelativeLayout3"
+      	  	android:layout_width="wrap_content"
+       	 	android:layout_height="50dp"
+       	 	android:layout_alignParentBottom="true"
+       	 	android:layout_alignParentLeft="true"
+       		android:layout_alignParentRight="true"
+        	android:background="@color/list_pressed2" >
+   		    
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:background="#00000000"
+            android:text="@string/account_save"
+            android:textColor="@color/White"
+            android:textSize="20sp"
+            android:gravity="center" />
+    </RelativeLayout>   
+</RelativeLayout>

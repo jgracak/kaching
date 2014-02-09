@@ -168,18 +168,27 @@ public class TransactionAddActivity extends SherlockFragmentActivity implements 
 				textViewAccount = (TextView) findViewById(R.id.transactionAccount);
 				float amount;	
 				
+				//Amount check
 				try {
 					amount = Float.parseFloat(transactionAmount.getText().toString());
 				} catch (Exception e) {
 					Toast.makeText(getApplicationContext(), R.string.transaction_amount_check, Toast.LENGTH_LONG).show();	
 					return;
 				}
-
+				
+				//Category check
+				if (textViewCategory.getText().toString().equals("")) {
+					Toast.makeText(getApplicationContext(), R.string.transaction_category_check, Toast.LENGTH_LONG).show();	
+					return;
+				}
+					
+				//Account check
 				if (textViewAccount.getText().toString().equals("")) {
 					Toast.makeText(getApplicationContext(), R.string.transaction_account_check, Toast.LENGTH_LONG).show();	
 					return;
 				}
 				
+				//Date check
 				Time time = new Time();
 				if (calendar == null) {
 					Toast.makeText(getApplicationContext(), R.string.transaction_account_check, Toast.LENGTH_LONG).show();	
@@ -189,14 +198,11 @@ public class TransactionAddActivity extends SherlockFragmentActivity implements 
 				time.set(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
 				
 				MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
-				//TODO
-				//kategorije
 				
-				db.createTransaction(new TableTransaction(time,4,amount,"test1",(Integer) textViewAccount.getTag())); 
+				db.createTransaction(new TableTransaction(time,(Integer) textViewCategory.getTag(),amount,"test1",(Integer) textViewAccount.getTag())); 
 				
 				db.close();
 				finish();
-				
 			}
 		});
 		
