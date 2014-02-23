@@ -57,11 +57,9 @@ public class CategoryChooseSubcatAddActivity extends Activity {
                 // Depend on first spinner value set adapter to 2nd spinner
             	
 	            if(position == 0){
-	            	//TODO spajam spinner s income vrijednostima
 	            	initSpinner(INCOME);
 	            	
 	            } else {
-	            	//TODO spajam spinner s expense vrijednostima
 	            	initSpinner(EXPENSE);
 	            } 
             }

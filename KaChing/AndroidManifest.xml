@@ -80,6 +80,12 @@
             android:excludeFromRecents="true">
         </activity>     
         <activity            
+            android:label="Transaction edit"
+            android:name="com.moneyapp.TransactionEditActivity" 
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:excludeFromRecents="true">
+        </activity>          
+        <activity            
             android:label="Choose an account"
             android:name="com.moneyapp.AccountChooseActivity" 
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
@@ -94,6 +100,17 @@
             android:label="Choose a category"
             android:name="com.moneyapp.CategoryChooseSubcatAddActivity" 
             android:excludeFromRecents="true">
-        </activity>            
+        </activity>        
+        <activity            
+            android:label="Choose filters"
+            android:name="com.moneyapp.TransactionsFilter" 
+            android:excludeFromRecents="true">
+        </activity>  
+        <activity            
+            android:label="Enter amount"
+            android:name="com.moneyapp.FilterAmountActivity" 
+            android:theme="@android:style/Theme.Dialog"            
+            android:excludeFromRecents="true">
+        </activity>          
     </application>
 </manifest>

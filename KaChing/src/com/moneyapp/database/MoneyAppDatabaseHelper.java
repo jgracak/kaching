@@ -37,6 +37,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_TRANSACTIONS = "Transactions";
     private static final String TABLE_IMAGES = "Images";
     private static final String TABLE_CATEGORIES = "Categories";    
+    private static final String TABLE_SETTINGS = "Settings";
  
     // Common column names
     private static final String COLUMN_ID = "_id";
@@ -67,6 +68,9 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_IDSUBCAT = "idSubCat";      
     public static final String COLUMN_SUBCATDESC = "subCatDesc";     
     public static final String COLUMN_CATTYPE = "type";
+    
+    // SETTINGS Table - column names
+    public static final String COLUMN_TESTDATA = "testData";
     
     // Table Create Statements
     // Accounts table create statement
@@ -115,6 +119,14 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	        + COLUMN_SUBCATDESC + " text, "
 	        + COLUMN_CATTYPE + " integer not null"
 	        + ");";  
+
+    // Settings table create statement
+    private static final String CREATE_TABLE_SETTINGS = "create table "
+    		+ TABLE_SETTINGS
+	        + "(" 
+	        + COLUMN_ID + " integer primary key autoincrement, " 
+	        + COLUMN_TESTDATA + " integer not null "
+	        + ");";   
     
     public static MoneyAppDatabaseHelper getInstance(Context context) {
         
@@ -138,15 +150,22 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	// Method is called during creation of the database
     @Override
     public void onCreate(SQLiteDatabase db) {
-    	
+    	if (db == null) {
+    		db = this.getWritableDatabase();
+    	}
         // creating required tables
-        db.execSQL(CREATE_TABLE_ACCOUNTS);
-        db.execSQL(CREATE_TABLE_TRANSACTIONS);
-        db.execSQL(CREATE_TABLE_IMAGES);
-        db.execSQL(CREATE_TABLE_CATEGORIES);
-        
-        insertAllImages(db);
-        insertAllCategories(db);
+    	try {
+    		db.execSQL(CREATE_TABLE_ACCOUNTS);
+            db.execSQL(CREATE_TABLE_TRANSACTIONS);
+            db.execSQL(CREATE_TABLE_IMAGES);
+            db.execSQL(CREATE_TABLE_CATEGORIES);
+            db.execSQL(CREATE_TABLE_SETTINGS);
+            
+            insertAllImages(db);
+            insertAllCategories(db);   
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
     }
 
 	// Method is called during an upgrade of the database,
@@ -168,7 +187,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORIES);
         
         // create new tables
-        onCreate(db);
+        //onCreate(db);
     }
 	
     // ------------------ Account table methods ------------------
@@ -217,8 +236,8 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
     // Getting all accounts
-	public List<TableAccount> getAllAccounts() {
-	    List<TableAccount> accountList = new ArrayList<TableAccount>();
+	public ArrayList<TableAccount> getAllAccounts() {
+	    ArrayList<TableAccount> accountList = new ArrayList<TableAccount>();
 	    // Select All Query
 	    String selectQuery = "SELECT  * FROM " + TABLE_ACCOUNTS;
 	 
@@ -283,6 +302,100 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    db.close();
 	}
 	
+	// All total balance
+    public Float getAllAccountsBalance() {
+        String countQuery = "SELECT  SUM(startingbalance) FROM " + TABLE_ACCOUNTS + " WHERE " + COLUMN_INCLUDEINBALANCE + " = 1";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        Float startingbalance = (float) 0;
+        if (cursor.moveToFirst()) {
+        	startingbalance = cursor.getFloat(0);
+        }
+        cursor.close();
+        
+        countQuery = "SELECT SUM(" + COLUMN_AMOUNT + ") FROM " + TABLE_TRANSACTIONS + 
+        				" JOIN " + TABLE_ACCOUNTS + " ON " + TABLE_TRANSACTIONS + "." + COLUMN_IDACCOUNT + "=" + TABLE_ACCOUNTS + "." + COLUMN_ID;
+        
+        cursor = db.rawQuery(countQuery, null);
+        
+        Float balance = (float) 0;
+        
+        if (cursor.moveToFirst()) {
+        	balance = cursor.getFloat(0);
+        }
+        cursor.close();
+        
+        db.close();
+        // return count
+        return balance + startingbalance;
+    }
+	
+    // Get total assets
+    public Float getAssetsBalance() {
+    	SQLiteDatabase db = this.getReadableDatabase();
+    	List<TableAccount> accountList = getAllAccounts();
+    	
+    	Float totalAssetsBalance = (float) 0;
+    	
+    	for (TableAccount account : accountList) {
+    		Float accountBalance = getAccountBalance(account.getId());
+    		if (accountBalance < 0) {
+    			totalAssetsBalance += accountBalance;
+    		}
+    	}
+    	
+    	db.close();
+    	
+    	return totalAssetsBalance;
+    }
+    
+    // Get total liabilities
+    public Float getLiabilitiesBalance() {
+    	SQLiteDatabase db = this.getReadableDatabase();
+    	List<TableAccount> accountList = getAllAccounts();
+    	
+    	Float totalLiabilitiesBalance = (float) 0;
+    	
+    	for (TableAccount account : accountList) {
+    		Float accountBalance = getAccountBalance(account.getId());
+    		if (accountBalance >= 0) {
+    			totalLiabilitiesBalance += accountBalance;
+    		}
+    	}
+    	
+    	db.close();
+    	
+    	return totalLiabilitiesBalance;
+    }
+    
+    // Get balance of a single account
+    public Float getAccountBalance(Integer accountId) {    	
+    	SQLiteDatabase db = this.getReadableDatabase();
+    	String countQuery = "SELECT  SUM(startingbalance) FROM " + TABLE_ACCOUNTS + " WHERE " + COLUMN_ID + " = " + accountId;
+        
+        Cursor cursor = db.rawQuery(countQuery, null);
+        Float startingbalance = (float) 0;
+        if (cursor.moveToFirst()) {
+        	startingbalance = cursor.getFloat(0);
+        }
+        cursor.close();
+        
+        countQuery = "SELECT SUM(" + COLUMN_AMOUNT + ") FROM " + TABLE_TRANSACTIONS + " WHERE " + COLUMN_IDACCOUNT + " = " + accountId;
+        
+        cursor = db.rawQuery(countQuery, null);
+        
+        Float balance = (float) 0;
+        
+        if (cursor.moveToFirst()) {
+        	balance = cursor.getFloat(0);
+        }
+        cursor.close();
+        
+        db.close();
+        // return count
+        return balance + startingbalance;
+    }
+    
 	// ------------------ Transaction table methods ------------------
 	//Creating a transaction
 	public long createTransaction(TableTransaction transaction) {
@@ -290,7 +403,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 		
 	    ContentValues values = new ContentValues();
 	    
-	    values.put(COLUMN_TRANSDATE, (transaction.getTransDate().toMillis(false) / 1000L));	    
+	    values.put(COLUMN_TRANSDATE, (transaction.getTransDate()));	    
 	    values.put(COLUMN_IDCATEGORY, transaction.getIdCategory()); 
 	    values.put(COLUMN_AMOUNT, transaction.getAmount());
 	    values.put(COLUMN_NOTE, transaction.getNote());
@@ -315,7 +428,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	        cursor.moveToFirst();
 	 
 	    TableTransaction transaction = new TableTransaction(Integer.parseInt(cursor.getString(0)),
-	    		componentTimestampToTime(Integer.parseInt(cursor.getString(1))), 
+	    		cursor.getLong(1), 
 	    		Integer.parseInt(cursor.getString(2)), 
 	            Float.parseFloat((cursor.getString(3))),
 	            cursor.getString(4), 
@@ -340,7 +453,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	        do {
 	        	TableTransaction transaction = new TableTransaction();
 	        	transaction.setId(Integer.parseInt(cursor.getString(0)));
-	        	transaction.setTransDate(componentTimestampToTime(Integer.parseInt(cursor.getString(1))));
+	        	transaction.setTransDate(cursor.getLong(1));
 	        	transaction.setIdCategory(Integer.parseInt(cursor.getString(2)));
 	        	transaction.setAmount(Float.parseFloat((cursor.getString(3))));	            
 	            transaction.setNote(cursor.getString(4));
@@ -371,7 +484,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    SQLiteDatabase db = this.getWritableDatabase();
 		
 	    ContentValues values = new ContentValues();
-	    values.put(COLUMN_TRANSDATE, (transaction.getTransDate().toMillis(false) / 1000L));	   
+	    values.put(COLUMN_TRANSDATE, (transaction.getTransDate()));	   
 	    values.put(COLUMN_IDCATEGORY, transaction.getIdCategory()); 
 		values.put(COLUMN_AMOUNT, transaction.getAmount());
 		values.put(COLUMN_NOTE, transaction.getNote());
@@ -434,6 +547,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    db.close();
 	}		
 	
+	// Delete multiple transactions by account
 	public void deleteTransactionAccount(TableAccount acc) {
 	    SQLiteDatabase db = this.getWritableDatabase();
 
@@ -441,6 +555,78 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	            new String[] { String.valueOf(acc.getId()) });
 	    db.close();
 	}
+	
+	// Get Transaction dates in range
+	// TODO Add range argument
+	public ArrayList<Long> getTransactionDates() {
+		ArrayList<Long> dateList = new ArrayList<Long>();
+	    // Select All Query
+	    String selectQuery = "SELECT DISTINCT " + COLUMN_TRANSDATE + "  FROM " + TABLE_TRANSACTIONS + " ORDER BY " +
+	    						COLUMN_TRANSDATE + " ASC";
+	 
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	 
+	    // looping through all rows and adding to list
+	    if (cursor.moveToFirst()) {
+	        do {
+	            // Adding transaction to list
+	        	dateList.add(cursor.getLong(0));
+	        } while (cursor.moveToNext());
+	    }
+	 
+	    // return transaction list
+	    return dateList;
+	}
+	
+	// Get Balance by date
+	public String getBalanceByDate(Long date) {
+	    // Select All Query
+	    String selectQuery = "SELECT SUM(" + COLUMN_AMOUNT + ") FROM " + TABLE_TRANSACTIONS + " WHERE " +
+	    						COLUMN_TRANSDATE + "= " + date;
+	 
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	 
+	    Float balance = (float) 0;
+	    
+	    // looping through all rows and adding to list
+	    if (cursor.moveToFirst()) {
+	    	balance = cursor.getFloat(0);
+	    }
+	    
+	    // return transaction list
+	    return balance.toString();
+	}
+	
+	// Get transactions by date
+	public List<TableTransaction> getTransactionByDate(Long date) {
+	    List<TableTransaction> transactionList = new ArrayList<TableTransaction>();
+	    // Select All Query
+	    String selectQuery = "SELECT  * FROM " + TABLE_TRANSACTIONS + " WHERE " + COLUMN_TRANSDATE + "= " + date;
+	 
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	 
+	    // looping through all rows and adding to list
+	    if (cursor.moveToFirst()) {
+	        do {
+	        	TableTransaction transaction = new TableTransaction();
+	        	transaction.setId(Integer.parseInt(cursor.getString(0)));
+	        	transaction.setTransDate(cursor.getLong(1));
+	        	transaction.setIdCategory(Integer.parseInt(cursor.getString(2)));
+	        	transaction.setAmount(Float.parseFloat((cursor.getString(3))));	            
+	            transaction.setNote(cursor.getString(4));
+	            transaction.setIdAccount(Integer.parseInt(cursor.getString(5)));
+	            
+	            // Adding transaction to list
+	            transactionList.add(transaction);
+	        } while (cursor.moveToNext());
+	    }
+	 
+	    // return transaction list
+	    return transactionList;
+	}	
 	
 	// ------------------ Images table methods ------------------
 	// Creating an image
@@ -800,7 +986,7 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	public List<TableCategory> getAllCategories() {
 	    List<TableCategory> categoryList = new ArrayList<TableCategory>();
 	    // Select All Query
-	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES;
+	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES  + " order by idCat asc, idSubCat asc";
 	 
 	    SQLiteDatabase db = this.getWritableDatabase();
 	    Cursor cursor = db.rawQuery(selectQuery, null);
@@ -1353,6 +1539,43 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	    db.insert(TABLE_CATEGORIES, null, values);		    
 	}
 	
+	// ------------------ Settings table methods ------------------	
+	// Insert dummy data check
+	public long insertDummyData(Integer inserted) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+	    ContentValues values = new ContentValues();
+	    
+	    values.put(COLUMN_TESTDATA, 1);	    
+	    
+	    // insert row
+	    long transaction_id = db.insert(TABLE_SETTINGS, null, values);
+	    db.close(); // Closing database connection
+	    
+	    return transaction_id;
+	}
+	
+	// Check dummy data
+	public boolean checkDummyData() {
+		String selectQuery = "SELECT " + COLUMN_TESTDATA + " FROM " + TABLE_SETTINGS;
+
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	    
+	    if (cursor.moveToFirst()) {
+	    	if (cursor.getInt(0) == 1) {
+	    		db.close();
+		    	return true;
+	    	} else {
+	    		db.close();
+		    	return false;
+	    	}
+	    } else {
+	    	db.close();
+	    	return false;
+	    }
+	}	
+	
 	// ------------------ Help methods ------------------
 	// Convert time to timestamp
 	public int componentTimeToTimestamp(int year, int month, int day, int hour, int minute) {
@@ -1371,19 +1594,88 @@ public class MoneyAppDatabaseHelper extends SQLiteOpenHelper {
 	
 	// Convert timestamp to time
 	public Time componentTimestampToTime(int timestamp) {
-		Calendar c = Calendar.getInstance();
-		c.setTimeInMillis(timestamp * 1000);
+		//Calendar c = Calendar.getInstance();
+		//c.setTimeInMillis(timestamp * 1000);
 		
 		Time time = new Time();
 		time.set(timestamp * 1000L);
-		/*
-		time.year = c.get(Calendar.YEAR);
-		time.month = c.get(Calendar.MONTH);
-		time.monthDay = c.get(Calendar.DAY_OF_MONTH);
-		time.hour = c.get(Calendar.HOUR);
-		time.minute = c.get(Calendar.MINUTE);
-		time.second = c.get(Calendar.SECOND);
-		*/
 		return time;
+	}
+	
+	public void insertDummyData() {
+		if (checkDummyData() == true) {
+			return;
+		}
+
+		// Inserting Accounts
+		Log.d("Insert: ", "Inserting .."); 
+        createAccount(new TableAccount("Cash",1,1,123,1,1));        
+        createAccount(new TableAccount("Bank",2,1,155,1,1));   
+        createAccount(new TableAccount("Credit Card",3,1,167,1,1));   
+        createAccount(new TableAccount("Savings",1,1,-178,1,1));   
+		
+        // Reading all accounts
+        Log.d("Reading: ", "Reading all accounts.."); 
+        List<TableAccount> accounts = getAllAccounts();       
+         
+        for (TableAccount account : accounts) {
+            String log = "Id: "+account.getId()+"| Description: " + account.getDescription() + "| Type: " + account.getType() +
+            		"| Book ID: " + account.getBookId() + "| Starting balance: " + account.getStartingBalance() +
+            		"| Exclude from balance: " + account.getExcludeFromBalance() + "| Exclude from reports: " +
+            		account.getExcludeFromReports();
+                // Writing Accounts to log
+            
+            Log.d("Name: ", log);
+        }
+        
+        // Inserting Transactions
+		Log.d("Insert: ", "Inserting .."); 
+		Time time = new Time();
+		time.set(1, 1, 2014);
+
+        createTransaction(new TableTransaction(time.toMillis(false),1,1,"test1",1));     
+        time.month += 1;       
+        createTransaction(new TableTransaction(time.toMillis(false),2,2,"test2",1));  
+        time.month -= 5;
+        createTransaction(new TableTransaction(time.toMillis(false),3,3,"test3",3));    
+        createTransaction(new TableTransaction(time.toMillis(false),4,-4,"test4",1));             
+        createTransaction(new TableTransaction(time.toMillis(false),5,5,null,1));  
+        createTransaction(new TableTransaction(time.toMillis(false),6,6,null,1));  
+        createTransaction(new TableTransaction(time.toMillis(false),7,-7,null,1));  
+        time.monthDay += 3;
+        createTransaction(new TableTransaction(time.toMillis(false),8,8,null,2));  
+        time.monthDay += 1;
+        createTransaction(new TableTransaction(time.toMillis(false),9,-9,null,3));  
+        createTransaction(new TableTransaction(time.toMillis(false),10,10,null,1));  
+        time.monthDay += 1;
+        createTransaction(new TableTransaction(time.toMillis(false),11,-11,null,3));  
+        time.monthDay += 1;
+        createTransaction(new TableTransaction(time.toMillis(false),12,12,null,1));  
+        time.monthDay += 1;
+        createTransaction(new TableTransaction(time.toMillis(false),13,13,null,3));  
+        createTransaction(new TableTransaction(time.toMillis(false),14,-14,null,3));          
+        
+        // Reading all transaction
+        Log.d("Reading: ", "Reading all transactions.."); 
+        List<TableTransaction> transactions = getAllTransactions();       
+         
+        for (TableTransaction transaction : transactions) {
+            String log = "Id: " + transaction.getId()+
+            		      "| transDate: " + transaction.getTransDate().toString() + 
+            		      "| idCategory: " + transaction.getIdCategory() +
+            		      "| amount: " + transaction.getAmount() + 
+            		      "| note: " + transaction.getNote() +
+            		      "| idAccount: " + transaction.getIdAccount();
+                // Writing Transactions to log
+            
+            Log.d("Name: ", log);    
+        }
+        
+        Log.d("Balance: ",getAllAccountsBalance().toString());
+        Log.d("Balance: ",getAssetsBalance().toString());
+        Log.d("Balance: ",getLiabilitiesBalance().toString());
+        
+        // We added dummy data and we don't want to add it again
+        insertDummyData(1);
 	}
 }

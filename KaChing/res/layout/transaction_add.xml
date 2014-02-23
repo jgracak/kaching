@@ -77,6 +77,16 @@
 			android:contentDescription="@string/transaction_empty_string"             
             android:layout_marginTop="52dp"
             android:src="@drawable/ic_people" />		
+            
+		<ImageView
+            android:id="@+id/addIconNote"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignLeft="@id/addIconDate"
+            android:layout_alignTop="@id/addIconDate"
+			android:contentDescription="@string/transaction_empty_string"             
+            android:layout_marginTop="52dp"
+            android:src="@drawable/ic_people" />			
 		
         <!-- Straight lines under EditText boxes -->
          
@@ -116,7 +126,16 @@
              android:layout_alignBottom="@id/addIconDate"
              android:layout_alignLeft="@id/Line1"
              android:layout_alignRight="@+id/Line1"
-             android:background="@android:color/darker_gray" />         
+             android:background="@android:color/darker_gray" />    
+    
+         <View
+             android:id="@+id/Line5"
+             android:layout_width="wrap_content"
+             android:layout_height="1dp"
+             android:layout_alignBottom="@id/addIconNote"
+             android:layout_alignLeft="@id/Line1"
+             android:layout_alignRight="@+id/Line1"
+             android:background="@android:color/darker_gray" />   
 
         <!-- EditText boxes and Spinner -->
         
@@ -168,6 +187,19 @@
          	android:layout_alignLeft="@id/Line4"
          	android:layout_alignRight="@id/Line4"
          	android:layout_alignBottom="@id/Line4" />
+         
+        <EditText
+            android:id="@+id/transactionNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_alignLeft="@id/Line5"
+			android:layout_alignRight="@id/Line5"
+			android:layout_alignBottom="@id/Line5"
+            android:hint="@string/transaction_note"
+         	android:inputType="textCapSentences"            
+            android:ems="10"
+            android:background="#00000000"
+            android:textSize="20sp" />         
               
      </RelativeLayout>
 

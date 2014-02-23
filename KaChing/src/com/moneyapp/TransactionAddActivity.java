@@ -1,5 +1,6 @@
 package com.moneyapp;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -30,6 +31,8 @@ public class TransactionAddActivity extends SherlockFragmentActivity implements 
 	private static final int ACCOUNT_REQ_ID = 666;	
 	private static final int CATEGORY_REQ_ID = 777;	
 	
+	Integer transactionId;
+	Integer mode;
 	Button buttonSave;
 	TextView textViewDate;
 	Calendar calendar;
@@ -37,21 +40,109 @@ public class TransactionAddActivity extends SherlockFragmentActivity implements 
 	ImageView imageViewAccount;
 	TextView textViewCategory;
 	ImageView imageViewCategory;
+	TableTransaction transaction;	
+	EditText textViewNote;
 	
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		setContentView(R.layout.transaction_add);
+		
+		transactionId = 0;
+		
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			transactionId = extras.getInt("transaction_id");
+			mode = extras.getInt("mode");
+		}
+		
+		if (transactionId == 0) {
+			setContentView(R.layout.transaction_add);
+		} else if (mode == TransactionsFragment.EDIT_MODE) {
+			setContentView(R.layout.transaction_edit);
+		} else {
+			setContentView(R.layout.transaction_copy);
+		}
+		
+		if (transactionId != 0) {
+			MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
+			
+			transaction = db.getTransaction(transactionId);
+			
+			// Set amount
+			EditText transactionAmount = (EditText) findViewById(R.id.transactionAmount);
+			transactionAmount.setText(String.valueOf(transaction.getAmount()));
+			
+			// Set account
+			textViewAccount = (TextView) findViewById(R.id.transactionAccount);
+	    	imageViewAccount = (ImageView) findViewById(R.id.addIconAccount);
+
+	    	TableAccount account = db.getAccount(transaction.getIdAccount());
+	    	
+	    	if (account != null) {
+	    		textViewAccount.setText(account.getDescription());
+	    		textViewAccount.setTag(account.getId());
+	    		
+	    		TableImage image = db.getImage(account.getType());
+	    		imageViewAccount.setImageResource(image.getImage());
+	    	}
+	    	
+			// Set category
+	    	textViewCategory = (TextView) findViewById(R.id.transactionCategory);
+	  	    imageViewCategory = (ImageView) findViewById(R.id.addIconCategory);
+	  	  
+	  	    TableCategory category = db.getCategory(transaction.getIdCategory());
+	  	  
+	  	    if (category != null) {
+	  	    	if (category.getIdSubCat() == 0) {
+	  	    		textViewCategory.setText(category.getCatDesc());
+	  	    	} else {
+	  	    		textViewCategory.setText(category.getCatDesc() + " > " + category.getSubCatDesc());
+	  	    	}
+	  	    	textViewCategory.setTag(category.getId());
+	  		  
+	  	    	TableImage image = db.getImage(category.getIdImage());
+	  	    	imageViewCategory.setImageResource(image.getImage());
+	  	    }
+	  	    
+			// Set date
+	  	    Time time = new Time();
+	  	    time.set(transaction.getTransDate());
+	  	    
+	  	    calendar = Calendar.getInstance();
+	  	    calendar.set(Calendar.YEAR, time.year);
+	  	    calendar.set(Calendar.MONTH, time.month);
+	  	    calendar.set(Calendar.DAY_OF_MONTH, time.monthDay);
+	  	    
+	  	    textViewDate = (TextView) findViewById(R.id.transactionDate);
+	  	    
+	  	    Date date = new Date(transaction.getTransDate());
+	  	    SimpleDateFormat fmtOut = new SimpleDateFormat("dd-MM-yyyy");
+	  	  
+			textViewDate.setText(fmtOut.format(date));
+			textViewDate.setTag(transaction.getTransDate());
+			
+			// Set note
+			textViewNote = (EditText) findViewById(R.id.transactionNote);
+			textViewNote.setText(transaction.getNote());
+			
+			db.close();
+		} else {
+			calendar = Calendar.getInstance();
+			
+			textViewDate = (TextView) findViewById(R.id.transactionDate);
+			
+			textViewDate.setText(calendar.get(Calendar.DAY_OF_MONTH) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.YEAR));
+			
+			Time time = new Time();
+			time.set(calendar.get(Calendar.DAY_OF_MONTH),calendar.get(Calendar.MONTH),calendar.get(Calendar.YEAR));
+			
+			textViewDate.setTag(time.toMillis(false));
+		}
 		
 		addListenerOnTextViewDate();
 		addListenerOnButtonSave();
 		addListenerOnTextViewAccount();
 		addListenerOnTextViewCategory();
-		
-		calendar = Calendar.getInstance();
-		
-		textViewDate = (TextView) findViewById(R.id.transactionDate);
-		textViewDate.setText(calendar.get(Calendar.YEAR) + " - " + (calendar.get(Calendar.MONTH) + 1) + " - " + calendar.get(Calendar.DAY_OF_MONTH));
 	}
 	
 	private void addListenerOnTextViewCategory() {
@@ -68,9 +159,9 @@ public class TransactionAddActivity extends SherlockFragmentActivity implements 
 	}
 
 	private void addListenerOnTextViewAccount() {
-		textViewDate = (TextView) findViewById(R.id.transactionAccount);
+		textViewAccount = (TextView) findViewById(R.id.transactionAccount);
 		
-		textViewDate.setOnClickListener(new View.OnClickListener() {
+		textViewAccount.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -138,6 +229,11 @@ public class TransactionAddActivity extends SherlockFragmentActivity implements 
 				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 // Create and show the dialog.
                 DatePickerFragment newFragment = new DatePickerFragment();
+                
+            	Bundle bundle = new Bundle();
+                bundle.putLong("longDate", (Long)textViewDate.getTag());
+                newFragment.setArguments(bundle);
+
                 newFragment.show(ft, "datePicker");				
 			}
 		});
@@ -153,8 +249,12 @@ public class TransactionAddActivity extends SherlockFragmentActivity implements 
 	public void onFragmentClick(int action, Object object) {
 		calendar = (Calendar) object;
 		textViewDate = (TextView) findViewById(R.id.transactionDate);
-		textViewDate.setText(calendar.get(Calendar.YEAR) + " - " + (calendar.get(Calendar.MONTH) + 1) + " - " + calendar.get(Calendar.DAY_OF_MONTH));
-		//Toast.makeText(getApplicationContext(), c.get(Calendar.YEAR) + " - " + c.get(Calendar.MONTH), Toast.LENGTH_LONG).show();
+		textViewDate.setText(calendar.get(Calendar.DAY_OF_MONTH) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.YEAR));
+		
+		Time time = new Time();
+		time.set(calendar.get(Calendar.DAY_OF_MONTH),calendar.get(Calendar.MONTH),calendar.get(Calendar.YEAR));
+		
+		textViewDate.setTag(time.toMillis(false));
 	}
 
 	public void addListenerOnButtonSave() {
@@ -165,6 +265,7 @@ public class TransactionAddActivity extends SherlockFragmentActivity implements 
 			@Override
 			public void onClick(View arg0) { 	
 				EditText transactionAmount = (EditText) findViewById(R.id.transactionAmount);
+				textViewNote = (EditText) findViewById(R.id.transactionNote);
 				textViewAccount = (TextView) findViewById(R.id.transactionAccount);
 				float amount;	
 				
@@ -191,15 +292,24 @@ public class TransactionAddActivity extends SherlockFragmentActivity implements 
 				//Date check
 				Time time = new Time();
 				if (calendar == null) {
-					Toast.makeText(getApplicationContext(), R.string.transaction_account_check, Toast.LENGTH_LONG).show();	
+					Toast.makeText(getApplicationContext(), R.string.transaction_date_check, Toast.LENGTH_LONG).show();	
 					return;
 				}
 				
-				time.set(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
+				time.set(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
 				
 				MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(null);
 				
-				db.createTransaction(new TableTransaction(time,(Integer) textViewCategory.getTag(),amount,"test1",(Integer) textViewAccount.getTag())); 
+				if (transactionId == 0) {
+					db.createTransaction(new TableTransaction((Long)textViewDate.getTag(),(Integer) textViewCategory.getTag(),amount,
+							textViewNote.getText().toString(),(Integer) textViewAccount.getTag())); 
+				} else if (mode == TransactionsFragment.EDIT_MODE) {
+					db.updateTransaction(new TableTransaction(transactionId,(Long)textViewDate.getTag(),(Integer) textViewCategory.getTag(),amount,
+							textViewNote.getText().toString(),(Integer) textViewAccount.getTag())); 
+				} else {
+					db.createTransaction(new TableTransaction((Long)textViewDate.getTag(),(Integer) textViewCategory.getTag(),amount,
+							textViewNote.getText().toString(),(Integer) textViewAccount.getTag())); 
+				}
 				
 				db.close();
 				finish();

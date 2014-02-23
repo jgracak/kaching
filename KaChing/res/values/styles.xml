@@ -16,11 +16,15 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="android:windowBackground">@color/pozadina</item>
         <item name="android:actionBarStyle">@style/AppTheme.MyActionBar</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_action_sliding_menu</item>
+        <item name="homeAsUpIndicator">@drawable/ic_action_sliding_menu</item>
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     
-    <style name="AppTheme.MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">#4c66a4</item>
+    <style name="AppTheme.MyActionBar" parent="@style/Widget.Sherlock.ActionBar">
+        <item name="android:background">@drawable/actionbar_color</item>     
+        <item name="android:displayOptions">showHome|homeAsUp|showTitle</item>   
+        <item name="displayOptions">showHome|homeAsUp|showTitle</item>
         <item name="android:titleTextStyle">@style/AppTheme.ActionBar.TitleTextStyle</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>

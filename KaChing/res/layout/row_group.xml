@@ -6,13 +6,15 @@
 
     <TextView
         android:id="@+id/row_title"
+        android:layout_marginTop="20dp"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:background="@drawable/row_border_group"
         android:gravity="center_vertical"
         android:padding="10dp"
         android:text="Medium Text"
-        android:background="#11000000"
+        android:textColor="#767c8b"
         android:textAppearance="@android:style/TextAppearance.Medium" />
 
 </LinearLayout>

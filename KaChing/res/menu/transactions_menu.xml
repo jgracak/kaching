@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/transaction_add"
+    <item android:id="@+id/transactionAdd"
           android:icon="@drawable/plus"
           android:title="@string/action_add"
           android:showAsAction="always" />
-    <item android:id="@+id/transaction_options"
+    <item android:id="@+id/transactionOptions"
           android:icon="@drawable/ic_action_overflow"
-          android:title="@string/transaction_options"
-          android:showAsAction="always" />    
+          android:title="@string/action_add"
+          android:showAsAction="always">
+	    <menu>
+		    <item android:id="@+id/transactionFilter"
+		          android:icon="@drawable/ic_action_location_searching"
+		          android:title="@string/transaction_filter"
+		          android:showAsAction="never"/>    
+		    <item android:id="@+id/transactionViewPeriod"
+		          android:icon="@drawable/ic_action_go_to_today"
+		          android:title="@string/transaction_view_period"
+		          android:showAsAction="never"/>  
+		    <item android:id="@+id/transactionGroupBy"
+		          android:icon="@drawable/ic_action_chat"
+		          android:title="@string/transaction_group_by"
+		          android:showAsAction="never"/>  
+		    <item android:id="@+id/transactionSearch"
+		          android:icon="@drawable/ic_action_labels"
+		          android:title="@string/transaction_search"
+		          android:showAsAction="never"/>    
+	    </menu>     
+    </item>     
 </menu>

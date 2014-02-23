@@ -1,6 +1,7 @@
 package com.moneyapp;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -13,6 +14,8 @@ import com.actionbarsherlock.app.SherlockDialogFragment;
 public class DatePickerFragment extends SherlockDialogFragment implements android.app.DatePickerDialog.OnDateSetListener {
 
     private OnFragmentClickListener mListener;
+    Long longDate;
+    Calendar calendar;
 
     @Override
     public void onAttach(Activity activity) {
@@ -26,11 +29,17 @@ public class DatePickerFragment extends SherlockDialogFragment implements androi
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Use the current date as the default date in the picker
-        final Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
+    	if (calendar == null) {
+    		Bundle args = getArguments();
+    		calendar = Calendar.getInstance();
+    		if (args != null) {
+        		calendar.setTimeInMillis(args.getLong("longDate"));
+        	}
+    	}
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         // Create a new instance of DatePickerDialog and return it
         return new DatePickerDialog(getActivity(), this, year, month, day);
@@ -39,11 +48,10 @@ public class DatePickerFragment extends SherlockDialogFragment implements androi
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         // Do something with the date chosen by the user
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, monthOfYear);
-        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, monthOfYear);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-        mListener.onFragmentClick(TransactionAddActivity.DATE_PICKER_ACTION, c);
+        mListener.onFragmentClick(TransactionAddActivity.DATE_PICKER_ACTION, calendar);
     }
 }

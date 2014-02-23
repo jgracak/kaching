@@ -3,7 +3,7 @@ package com.moneyapp;
 public class Accounts {
 	   private Integer accountId;
        private String accountDescription;
-       private Float accountBalance;
+       private Float accountStartingBalance;
        private Integer accountImage;
 
        public Integer getAccountId() {
@@ -18,12 +18,12 @@ public class Accounts {
            accountDescription = description;
        }
 
-       public Float getBalance() {
-           return accountBalance;
+       public Float getStartingBalance() {
+           return accountStartingBalance;
        }
        
        public void setBalance(Float balance) {
-           accountBalance = balance;
+           accountStartingBalance = balance;
        }
        
        public void setImage(Integer imageNo) {
@@ -37,7 +37,7 @@ public class Accounts {
        public Accounts(Integer id, String description, Float balance, Integer image) {
        	accountId = id;
            accountDescription = description;
-           accountBalance = balance;
+           accountStartingBalance = balance;
            accountImage = image;
        }
 }

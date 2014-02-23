@@ -13,7 +13,7 @@
         	 android:layout_alignParentLeft="true"
         	 android:layout_alignParentRight="true"
         	 android:layout_alignParentTop="true"
-        	 android:background="@color/list_pressed2"
+        	 android:background="@drawable/actionbar_color"
         	 android:gravity="center"
          	 android:text="@string/account_edit"
          	 android:textColor="#FFFFFF"
@@ -76,7 +76,7 @@
              android:layout_alignParentRight="true"
              android:layout_marginRight="15dp"
              android:layout_marginLeft="30dp"
-             android:background="@android:color/darker_gray" />
+             android:background="@color/underline" />
          
          <View
              android:id="@+id/Line5"
@@ -85,7 +85,7 @@
              android:layout_alignBottom="@id/edit_icon2"
              android:layout_alignLeft="@id/Line4"
              android:layout_alignRight="@id/Line4"
-             android:background="@android:color/darker_gray" />
+             android:background="@color/underline" />
          
          <View
              android:id="@+id/Line6"
@@ -94,7 +94,7 @@
              android:layout_alignBottom="@id/edit_icon3"
              android:layout_alignLeft="@id/Line4"
              android:layout_alignRight="@+id/Line4"
-             android:background="@android:color/darker_gray" />
+             android:background="@color/underline" />
          
                 <!-- EditText boxes and Spinner -->
         
@@ -186,17 +186,34 @@
        	 	android:layout_alignParentBottom="true"
        	 	android:layout_alignParentLeft="true"
        		android:layout_alignParentRight="true"
-        	android:background="@color/list_pressed2" >
+        	android:background="@drawable/actionbar_color" >
       
         <Button
             android:id="@+id/buttonSave"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:background="#00000000"
+            android:gravity="center" />
+        
+        <TextView 
+            android:id="@+id/buttonSaveText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
             android:text="@string/account_save"
             android:textColor="@color/White"
             android:textSize="20sp"
-            android:gravity="center" />
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+        
+        <ImageView
+            android:id="@+id/Tick_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignRight="@id/buttonSaveText"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="50dp"
+            android:src="@drawable/ic_action_accept" />
         
         
     </RelativeLayout>

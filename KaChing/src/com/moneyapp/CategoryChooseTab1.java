@@ -116,7 +116,7 @@ public class CategoryChooseTab1 extends SherlockListFragment {
 				} else subCategoryListItemHolder = (SubCategoryListItemHolder)v.getTag();
 				
 				subCategoryListItemHolder.id = categoryListItem.id;
-				subCategoryListItemHolder.iconRes.setImageResource(R.drawable.ic_action_forward);
+				subCategoryListItemHolder.iconRes.setImageResource(R.drawable.navigation_forward);
 				subCategoryListItemHolder.subCatName.setText(categoryListItem.subCatName);
 			}
 			

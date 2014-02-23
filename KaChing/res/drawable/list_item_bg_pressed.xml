@@ -1,9 +1,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
   <gradient
-      android:startColor="@color/list_background"
-      android:centerColor="@color/list_background"
-      android:endColor="@color/list_pressed2"
-      android:shape="ring"
-      android:angle="0" />
+      android:startColor="@color/slide_menu_pressed_color"
+      android:centerColor="@color/slide_menu_pressed_color"
+      android:endColor="@color/slide_menu_pressed_color" />
 </shape>

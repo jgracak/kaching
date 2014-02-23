@@ -22,7 +22,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.kaching.R;
-import com.moneyapp.TabAccountListFragment.AccountAdapter;
+import com.moneyapp.AccountsFragment.AccountAdapter;
 import com.moneyapp.database.MoneyAppDatabaseHelper;
 import com.moneyapp.database.TableAccount;
 
@@ -67,12 +67,12 @@ public class AccountChooseActivity extends SherlockActivity {
 	           } else accountHolder = (AccountViewHolder)v.getTag(); 
 	
 	           if (account != null) {
-	            	   if (account.getBalance() < 0)
+	            	   if (account.getStartingBalance() < 0)
 	            		   accountHolder.balance.setTextColor(Color.RED);
 	            	   else
 	            		   accountHolder.balance.setTextColor(getResources().getColor(R.color.DarkGreen));
 	            		
-	            	   accountHolder.balance.setText(Float.toString(account.getBalance()));
+	            	   accountHolder.balance.setText(Float.toString(account.getStartingBalance()));
 	            	   accountHolder.description.setText(account.getDescription());
 	            	   
 	            	   if (account.getImage() == 1) {

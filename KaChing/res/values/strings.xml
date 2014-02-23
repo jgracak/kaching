@@ -7,31 +7,48 @@
     <string name="menu_insert">Add Account</string>
     <string name="menu_delete">Delete Account</string>
   	<string name="action_add"></string>
+	<string name="action_settings">Settings</string>
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>  	
     
   	<!-- Category types -->    
   	<string-array name="category_types">
         <item>Income</item>
         <item>Expense</item>
     </string-array>
-
-    <string name="action_settings">Settings</string>
-    <string name="drawer_open">Slider Menu Opened</string>
-    <string name="drawer_close">Slider Menu Closed</string>
+    
+  	<!-- Category types filter -->    
+  	<string-array name="category_types_filter">
+        <item>All</item>  	    
+        <item>Income</item>
+        <item>Expense</item>
+    </string-array>
+    
+  	<!-- Amount types filter -->    
+  	<string-array name="amount_filters">
+        <item>All</item>  	    
+        <item>Exact</item>
+        <item>Over</item>
+        <item>Under</item>
+        <item>Between</item>
+    </string-array>
     
   	<!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
-        <item >Main</item>
+        <item >MAIN</item>
         <item >Entries</item>
-        <item >Accounts</item>
-        <item >Loans</item>
         <item >Recurring entries</item>
-        <item >Group 1</item>
+        <item >Accounts</item>
+        <item >Categories</item>
+        <item >REPORTS</item>
         <item >Reports</item>
-        <item >Savings</item>       
+        <item >Loans</item>
+        <item >Forecast</item>
+        <item >PLANNING</item>       
         <item >Budgets</item>
         <item >Projects</item>     
-        <item >Forecast</item>    
-        <item >Categories</item>
+        <item >Savings</item>
+        <item >OPTIONS</item>    
         <item >Database</item>
         <item >Settings</item>                       
     </string-array>
@@ -43,16 +60,18 @@
         <item >0</item>
         <item >0</item>
         <item >0</item>
-        <item >0</item>
+        <item >2</item>
         <item >1</item>
         <item >0</item>
         <item >0</item>
+        <item >2</item>
+        <item >1</item>     
         <item >0</item>
-        <item >0</item>     
         <item >0</item>
+        <item >2</item>
+        <item >1</item>
         <item >0</item>
-        <item >0</item>
-        <item >0</item>                      
+        <item >2</item>                      
     </string-array>
     
     <!-- Nav Drawer List Item Icons -->
@@ -68,9 +87,11 @@
         <item>drawable/ic_pages</item>
         <item>drawable/ic_whats_hot</item>     
         <item>drawable/ic_home</item>
+        <item >1</item>
         <item>drawable/ic_people</item>
         <item>drawable/ic_photos</item>
         <item>drawable/ic_communities</item>
+        <item >1</item>
         <item>drawable/ic_pages</item>
         <item>drawable/ic_whats_hot</item>            
     </array>
@@ -87,9 +108,13 @@
     
     <!-- Context menu -->
     <string name="cnt_menu_edit">Edit</string>
-    <string name="cnt_menu_delete">Delete</string>    
-    <string name="cnt_menu_delete">Delete</string>        
+    <string name="cnt_menu_delete">Delete</string> 
+    <string name="cnt_menu_copy">Copy</string>           
     <string name="cnt_menu_subcategories">Subcategories</string>
+    <string name="transaction_filter">Filter</string>
+    <string name="transaction_view_period">View period</string>
+    <string name="transaction_group_by">Group by</string>   
+    <string name="transaction_search">Search</string>
     
     <!-- Accounts -->
 	<string name="account_summary">Summary</string>
@@ -113,6 +138,18 @@
   	<string name="account_name_blank">Please enter a name for the account.</string>
   	<string name="account_delete">Delete</string>
   	<string name="account_choose">CHOOSE ACCOUNT</string>
+  	<string name="account_prompt">Choose an account</string>      	
+  	<string name="account_filter">Account</string>	  	
+  	<string name="account_all">All</string>  	
+  	
+  	<!-- Amount -->
+  	<string name="amount_prompt">Choose an amount</string>     
+	<string name="amount_filter">Amount</string>     
+	<string name="amount_hint">Enter an amount</string>
+	<string name="amount_exact">Exact amount</string>	
+	<string name="amount_over">Amount over</string>	
+	<string name="amount_under">Amount under</string>	
+	<string name="amount_between">Amount between</string>				
   	  	
    	<!-- Account types -->
   	<string-array name="account_types">
@@ -132,6 +169,7 @@
   	<string name="cnt_menu_cat_new">New Category</string>
   	<string name="cnt_menu_subcat_new">New Subcategory</string>  
   	<string name="category_prompt">Choose a category</string>    	
+  	<string name="category_all">All</string>
   		
   	 	        
     <!-- Subcategories -->
@@ -146,15 +184,26 @@
   	<!--  Transactions -->
   	<string name="transaction_options">Transaction options</string>
   	<string name="transaction_add">ADD TRANSACTION</string>  	
+	<string name="transaction_edit">EDIT TRANSACTION</string>  	  	
+	<string name="transaction_copy">COPY TRANSACTION</string>  	  	
   	<string name="transaction_empty_string"></string>
   	<string name="transaction_amount">Amount</string>  	
   	<string name="transaction_category">Category</string>  	  	
   	<string name="transaction_account">Account</string>  	  	
   	<string name="transaction_date">Date</string>  	  	
+   	<string name="transaction_note">Note</string>  	  	 	
   	<string name="transaction_amount_check">Please check the transaction amount.</string>  	  	
   	<string name="transaction_account_check">Please choose an account.</string>    	
   	<string name="transaction_date_check">Please choose a date.</string>    	
-  	<string name="transaction_category_check">Please choose a category.</string>  	  	  	
+  	<string name="transaction_category_check">Please choose a category.</string>  	
+  	<string name="transaction_balance">Balance</string>  	  	
+  	<string name="transaction_type">Type</string>
+  	<string name="transaction_subcategory">Subcategory</string>
+  	<string name="transaction_filter_header">FILTER TRANSACTIONS</string>  	
+  	
+  	<!--  Transactions -->
+  	<string name="filter_cancel">Cancel</string>  	
+	<string name="filter_save">Save</string>  	  	
   	
   	<!--  Empty strings -->
   	<string name="empty_string"></string>

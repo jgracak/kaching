@@ -1,11 +1,8 @@
 package com.moneyapp.database;
 
-
-import android.text.format.Time;
-
 public class TableTransaction {
 	int id;
-	Time transDate;
+	Long transDate;
 	int idCategory;
 	float amount;
 	String note;
@@ -16,7 +13,7 @@ public class TableTransaction {
 		
 	}
 	
-	public TableTransaction (int id, Time transDate, int idCategory, float amount, String note, int idAccount){
+	public TableTransaction (int id, Long transDate, int idCategory, float amount, String note, int idAccount){
 		this.id = id;
 		this.transDate = transDate;
 		this.idCategory = idCategory;
@@ -25,7 +22,7 @@ public class TableTransaction {
 		this.idAccount = idAccount;
 	}
 
-	public TableTransaction (Time transDate, int idCategory, float amount, String note, int idAccount){
+	public TableTransaction (Long transDate, int idCategory, float amount, String note, int idAccount){
 		this.transDate = transDate;
 		this.idCategory = idCategory;
 		this.amount = amount;
@@ -38,7 +35,7 @@ public class TableTransaction {
 		this.id = id;
 	}
 
-	public void setTransDate(Time transDate){
+	public void setTransDate(Long transDate){
 		this.transDate = transDate;
 	}
 
@@ -63,7 +60,7 @@ public class TableTransaction {
 		return id;
 	}
 	
-	public Time getTransDate(){
+	public Long getTransDate(){
 		return transDate;
 	}
 	

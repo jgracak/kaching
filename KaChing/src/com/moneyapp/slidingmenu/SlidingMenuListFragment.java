@@ -11,16 +11,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.kaching.R;
 import com.moneyapp.CategoriesFragment;
 import com.moneyapp.MainActivity;
-import com.moneyapp.TabAccountListFragment;
+import com.moneyapp.AccountsFragment;
 import com.moneyapp.TransactionsFragment;
 
 public class SlidingMenuListFragment extends ListFragment {
+	public static final Integer FIRST_MENU_ITEM = 0;
+	public static final Integer LAST_MENU_ITEM = 2;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,7 +35,7 @@ public class SlidingMenuListFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		ArrayList<NavListItem> navListItemList = new ArrayList<NavListItem>();
+		ArrayList<NavListItem> NavListItemList = new ArrayList<NavListItem>();
 
 		String[] listItems = getResources().getStringArray(
 				R.array.nav_drawer_items);
@@ -44,42 +47,50 @@ public class SlidingMenuListFragment extends ListFragment {
 		for (String navListItem : listItems) {
 			int imageResource;
 			int type = Integer.parseInt(listItemsType[i].toString());
-			if (type == 0) {
+			if ((type == 0) || (type == 2)) {
 				imageResource = getResources().getIdentifier(
 						listItemsIcons[i].toString(), null,
 						getActivity().getApplicationContext().getPackageName());
 
-				navListItemList.add(new NavListItem(navListItem,
+				NavListItemList.add(new NavListItem(i, type, navListItem,
 						imageResource));
 			} else {
-				navListItemList.add(new NavListItem(navListItem, null));
+				NavListItemList.add(new NavListItem(i, type, navListItem, null));
 			}
 
 			i++;
 		}
 
 		NavListAdapter adapter = new NavListAdapter(getActivity(),
-				R.layout.row, navListItemList);
+				R.layout.row, NavListItemList);
 
 		setListAdapter(adapter);
 	}
 
 	private class NavListItem {
+		public Integer id;
+		public Integer type;
 		public String tag;
 		public Integer iconRes;
 
-		public NavListItem(String tag, Integer iconRes) {
+		public NavListItem(Integer id, Integer type, String tag, Integer iconRes) {
+			this.id = id;
+			this.type = type;
 			this.tag = tag;
 			this.iconRes = iconRes;
 		}
 	}
 
 	private class NavListItemHolder {
+		Integer id;
+		Integer type;
 		TextView tag;
 		ImageView iconRes;
 	}
 
 	private class NavListGroupHolder {
+		Integer id;
+		Integer type;
 		TextView tag;
 	}
 
@@ -114,9 +125,25 @@ public class SlidingMenuListFragment extends ListFragment {
 					navListItemHolder.iconRes = (ImageView) v.findViewById(R.id.row_icon);
 					v.setTag(navListItemHolder);
 				} else navListItemHolder = (NavListItemHolder)v.getTag();
-				
+				navListItemHolder.id = navListItem.id;
+				navListItemHolder.type = navListItem.type;
 				navListItemHolder.tag.setText(navListItem.tag);
 				navListItemHolder.iconRes.setImageResource(navListItem.iconRes);
+				
+				// Sliding menu dividers
+				
+				float density = v.getResources().getDisplayMetrics().density;	//conversion from px to dp
+			
+				if(navListItemHolder.type == LAST_MENU_ITEM) {
+					navListItemHolder.tag.setBackgroundResource(R.drawable.row_border_transparent);
+					navListItemHolder.iconRes.setBackgroundResource(R.drawable.row_border_transparent);
+					navListItemHolder.iconRes.setPadding((int)(5*density), (int)(12*density), (int)(12 * density), (int)(12*density));
+				}
+				else {
+					navListItemHolder.tag.setBackgroundResource(R.drawable.row_border);
+					navListItemHolder.iconRes.setBackgroundResource(R.drawable.row_border);				
+					navListItemHolder.iconRes.setPadding((int)(5*density), (int)(12*density), (int)(12 * density), (int)(12*density));
+				}
 				
 				return v;
 				
@@ -131,8 +158,16 @@ public class SlidingMenuListFragment extends ListFragment {
 					v.setOnClickListener(null);
 				} else navListGroupHolder = (NavListGroupHolder)v.getTag();
 				
-				navListGroupHolder.tag.setText(navListItem.tag);				
-				
+				navListGroupHolder.id = navListItem.id;
+				navListGroupHolder.id = navListItem.type;
+				navListGroupHolder.tag.setText(navListItem.tag);	
+				LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)navListGroupHolder.tag.getLayoutParams();
+				if (navListGroupHolder.id == FIRST_MENU_ITEM) {
+					params.setMargins(0, 0, 0, 0); //substitute parameters for left, top, right, bottom
+				} else {
+					params.setMargins(0, 20, 0, 0); //substitute parameters for left, top, right, bottom
+				}
+				navListGroupHolder.tag.setLayoutParams(params);
 				return v;
 			}
 		}
@@ -157,58 +192,50 @@ public class SlidingMenuListFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView lv, View v, int position, long id) {
 		Fragment newContent = null;
-		String[] listItems = getResources().getStringArray(
-				R.array.nav_drawer_items);
-		String[] listItemsIcons = getResources().getStringArray(
-				R.array.nav_drawer_icons);
+		String[] listItems = getResources().getStringArray(R.array.nav_drawer_items);
+		String[] listItemsIcons = getResources().getStringArray(R.array.nav_drawer_icons);
 		int imageResource;
-
+		
 		switch (position) {
-		case 0:
-			break;
-		case 1:
-			imageResource = getResources().getIdentifier(
-					listItemsIcons[1].toString(), null,
-					getActivity().getApplicationContext().getPackageName());
+		//case 0: MAIN
+		case 1: //Entries
+			imageResource = getResources().getIdentifier(listItemsIcons[1].toString(), null, getActivity().getApplicationContext().getPackageName());
 			getActivity().getActionBar().setIcon(imageResource);
 			getActivity().getActionBar().setTitle(listItems[1].toString());
 			newContent = new TransactionsFragment();
 			break;
-		case 2:
-			imageResource = getResources().getIdentifier(
-					listItemsIcons[2].toString(), null,
-					getActivity().getApplicationContext().getPackageName());
+		case 2: //Recurring Entries
+			break;
+		case 3: //Accounts
+			imageResource = getResources().getIdentifier(listItemsIcons[3].toString(), null, getActivity().getApplicationContext().getPackageName());
 			getActivity().getActionBar().setIcon(imageResource);
-			getActivity().getActionBar().setTitle(listItems[2].toString());
-			newContent = new TabAccountListFragment();
+			getActivity().getActionBar().setTitle(listItems[3].toString());			
+			newContent = new AccountsFragment();
 			break;
-		case 3:
-			break;
-		case 4:
-			break;
-		case 5:
-			break;
-		case 6:
-			break;
-		case 7:
-			break;
-		case 8:
-			break;
-		case 9:
-			break;
-		case 10:
-			break;
-		case 11:
-			imageResource = getResources().getIdentifier(
-					listItemsIcons[11].toString(), null,
-					getActivity().getApplicationContext().getPackageName());
+		case 4: //Categories
+			imageResource = getResources().getIdentifier(listItemsIcons[4].toString(), null, getActivity().getApplicationContext().getPackageName());
 			getActivity().getActionBar().setIcon(imageResource);
-			getActivity().getActionBar().setTitle(listItems[11].toString());
-			newContent = new CategoriesFragment();
+			getActivity().getActionBar().setTitle(listItems[4].toString());			
+			newContent = new CategoriesFragment();	
 			break;
-		case 12:
+		//case 5: REPORTS
+		case 6: //Reports
 			break;
-		case 13:
+		case 7: //Loans
+			break;
+		case 8: //Forecast
+			break;
+		//case 9:PLANNING
+		case 10: //Budgets				
+			break;
+		case 11: //Projects
+			break;
+		case 12: //Savings
+			break;
+		//case 13: OPTIONS
+		case 14: //Database
+			break;
+		case 15: //Settings
 			break;
 		}
 		if (newContent != null)
@@ -219,10 +246,10 @@ public class SlidingMenuListFragment extends ListFragment {
 	private void switchFragment(Fragment fragment) {
 		if (getActivity() == null)
 			return;
-
+		
 		if (getActivity() instanceof MainActivity) {
 			MainActivity fca = (MainActivity) getActivity();
 			fca.switchContent(fragment);
-		}
+		} 
 	}
 }

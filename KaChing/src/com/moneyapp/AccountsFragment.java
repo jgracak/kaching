@@ -30,7 +30,7 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-public class TabAccountListFragment extends SherlockListFragment {
+public class AccountsFragment extends SherlockListFragment {
    
    public class AccountAdapter extends ArrayAdapter<Accounts> {
        private ArrayList<Accounts> items;
@@ -45,7 +45,7 @@ public class TabAccountListFragment extends SherlockListFragment {
        public View getView(int pos, View convertView, ViewGroup parent) {
            View v = convertView;
            
-           Accounts  account = items.get(pos);
+           Accounts account = items.get(pos);
            
            if (v == null) {
                LayoutInflater vi = (LayoutInflater)getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -59,12 +59,17 @@ public class TabAccountListFragment extends SherlockListFragment {
            } else accountHolder = (AccountViewHolder)v.getTag(); 
 
            if (account != null) {
-            	   if (account.getBalance() < 0)
+            	   if (account.getStartingBalance() < 0)
             		   accountHolder.balance.setTextColor(Color.RED);
             	   else
             		   accountHolder.balance.setTextColor(getResources().getColor(R.color.DarkGreen));
-            		
-            	   accountHolder.balance.setText(Float.toString(account.getBalance()));
+            	
+            	   MoneyAppDatabaseHelper db = MoneyAppDatabaseHelper.getInstance(getActivity());
+            	   
+            	   accountHolder.balance.setText(Float.toString(db.getAccountBalance(account.getAccountId())));
+            	   
+            	   db.close();
+            	   
             	   accountHolder.description.setText(account.getDescription());
             	   
             	   if (account.getImage() == 1) {

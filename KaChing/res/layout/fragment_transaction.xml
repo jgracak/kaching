@@ -2,15 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp" >
+    android:orientation="vertical">
      
     <ListView
         android:id="@id/android:list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:dividerHeight="0dp"
+        android:divider="@color/pozadina"
         android:drawSelectorOnTop="false" >
     </ListView>
+    
+    <RelativeLayout
+  	  	android:id="@+id/RelativeLayout3"
+  	  	android:layout_width="fill_parent"
+   	 	android:layout_height="40dp"
+      	android:background="@drawable/actionbar_color" >
+      	
+       <TextView 
+            android:id="@+id/balanceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:text="@string/transaction_balance"
+            android:textColor="@color/White"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            />
+            
+       <TextView 
+            android:id="@+id/balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:text="@string/empty_string"
+            android:textColor="@color/White"
+            android:textSize="20sp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"            
+            android:layout_marginRight="10dp"
+            />       
+	</RelativeLayout>
 </LinearLayout>
